@@ -1,17 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -77,21 +78,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Column(
                           children: [
-                            Text(
-                              'Se connecter',
-                              style: kHintTextStyle,
+                            GestureDetector(
+                              onTap: () => AppNavigation.goToLogin(context),
+                              child: Text(
+                                'Se connecter',
+                                style: kTextStyle,
+                              ),
                             ),
                           ],
                         ),
                         VerticalDivider(
                           thickness: 2,
                         ),
-                        GestureDetector(
-                          onTap: () => AppNavigation.goToSignUp(context),
-                          child: Text(
-                            'S\'inscrire',
-                            style: kTextStyle,
-                          ),
+                        Text(
+                          'S\'inscrire',
+                          style: kHintTextStyle,
                         ),
                       ],
                     )),
@@ -105,21 +106,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          _buildBtn(
+                              () => print('S\'inscrire avec Facebook'),
+                              FontAwesomeIcons.facebook,
+                              AppTheme.facebookColor,
+                              'S\'inscrire avec Facebook'),
                           Text(
-                            "Pseudo/email",
-                            style: kLabelStyle,
+                            '- OU -',
+                            style: TextStyle(
+                              color: AppTheme.primaryColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                          _buildEmail(),
-                          SizedBox(
-                            height: height * 2 / 100,
-                          ),
-                          Text(
-                            "Mot de passe",
-                            style: kLabelStyle,
-                          ),
-                          _buildPassword(),
-                          _buildLoginBtn(),
-                          _buildForgotPasswordBtn()
                         ],
                       ),
                     )
@@ -133,78 +131,61 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildEmail() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-      child: Container(
-        decoration: kBoxDecorationStyle,
-        child: TextField(
-          cursorColor: AppTheme.primaryColor,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hoverColor: AppTheme.primaryAccentColor,
-            fillColor: AppTheme.primaryAccentColor,
-            focusColor: AppTheme.primaryAccentColor,
-          ),
-          style: kHintTextStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-      child: Container(
-        decoration: kBoxDecorationStyle,
-        child: TextField(
-          cursorColor: AppTheme.primaryColor,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hoverColor: AppTheme.primaryAccentColor,
-            fillColor: AppTheme.primaryAccentColor,
-            focusColor: AppTheme.primaryAccentColor,
-          ),
-          style: kHintTextStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoginBtn() {
+  Widget _buildBtn(Function onTap, IconData logo, Color color, String text) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => AppNavigation.goToIntro(context),
+        onPressed: onTap,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: AppTheme.primaryAccentColor,
-        child: Text(
-          'Se Connecter',
-          style: TextStyle(
-            color: AppTheme.whiteColor,
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-          ),
+        color: color,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: [
+
+            FaIcon(
+             FontAwesomeIcons.facebookF,
+              color: AppTheme.whiteColor,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                color: AppTheme.whiteColor,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.center,
-      child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Mot de passe oubliée ?',
-          style: kHintTextStyle,
+  Widget _buildSocialBtn(Function onTap, AssetImage logo, Color color) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 60.0,
+        width: 60.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, 2),
+              blurRadius: 6.0,
+            ),
+          ],
+          image: DecorationImage(
+            image: logo,
+          ),
         ),
       ),
     );

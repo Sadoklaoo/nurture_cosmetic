@@ -10,6 +10,7 @@ class AppTheme {
   static const Color yellowColor = Color(0xffFF9F1C);
   static const Color greyColor = Color(0xffC1BCBC);
   static const Color greyWhiteColor = Color(0xffE9E9E9);
+  static const Color facebookColor = Color(0xff4267B2);
 
 
   static const Color deepPurpleColor = Colors.deepPurple;
