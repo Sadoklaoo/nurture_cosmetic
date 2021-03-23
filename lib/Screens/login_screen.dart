@@ -6,6 +6,9 @@ import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
 
+import '../Widgets/TextFieldWidget.dart';
+import '../Widgets/TextFieldWidget.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -79,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text(
                               'Se connecter',
-                              style: kHintTextStyle,
+                              style: kTitleStyle,
                             ),
                           ],
                         ),
@@ -141,10 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: TextField(
           cursorColor: AppTheme.primaryColor,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hoverColor: AppTheme.primaryAccentColor,
-            fillColor: AppTheme.primaryAccentColor,
-            focusColor: AppTheme.primaryAccentColor,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.primaryAccentColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.greyWhiteColor),
+            ),
           ),
           style: kHintTextStyle,
         ),
@@ -160,10 +165,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: TextField(
           cursorColor: AppTheme.primaryColor,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hoverColor: AppTheme.primaryAccentColor,
-            fillColor: AppTheme.primaryAccentColor,
-            focusColor: AppTheme.primaryAccentColor,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.primaryAccentColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.greyWhiteColor),
+            ),
           ),
           style: kHintTextStyle,
         ),
@@ -204,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Mot de passe oubliée ?',
-          style: kHintTextStyle,
+          style: kTitleStyle,
         ),
       ),
     );

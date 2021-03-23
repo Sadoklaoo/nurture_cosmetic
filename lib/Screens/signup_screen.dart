@@ -7,6 +7,8 @@ import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
 
+import '../Widgets/TextFieldWidget.dart';
+
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -92,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         Text(
                           'S\'inscrire',
-                          style: kHintTextStyle,
+                          style: kTitleStyle,
                         ),
                       ],
                     )),
@@ -108,15 +110,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           _buildBtn(
                               () => print('S\'inscrire avec Facebook'),
-                              FontAwesomeIcons.facebook,
+                              FontAwesomeIcons.facebookF,
                               AppTheme.facebookColor,
                               'S\'inscrire avec Facebook'),
-                          Text(
-                            '- OU -',
-                            style: TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontWeight: FontWeight.w400,
+                          Center(
+                            child: Text(
+                              '- OU -',
+                              style: TextStyle(
+                                color: AppTheme.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                          ),
+                          _buildBtn(
+                              () =>  AppNavigation.goToNewAccount(context),
+                              FontAwesomeIcons.solidEnvelope,
+                              AppTheme.primaryAccentColor,
+                              'S\'inscrire avec Email'),
+                          SizedBox(
+                            height: height * 2 / 100,
+                          ),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text:
+                                    'En appuyant sur s\'inscrire, vous reconnaissez que vous avez accepté ',
+                                style: TextStyle(
+                                  color: AppTheme.primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                )),
+                            TextSpan(
+                                text: 'les conditions générales ',
+                                style: TextStyle(
+                                  color: AppTheme.greenColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                                text: 'et lu ',
+                                style: TextStyle(
+                                  color: AppTheme.primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                )),
+                            TextSpan(
+                                text: 'la politique de confidentialité.',
+                                style: TextStyle(
+                                  color: AppTheme.greenColor,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ])),
+                          SizedBox(
+                            height: height * 5 / 100,
                           ),
                         ],
                       ),
@@ -135,22 +180,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15.0),
       width: double.infinity,
+      // ignore: deprecated_member_use
       child: RaisedButton(
         elevation: 5.0,
         onPressed: onTap,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         color: color,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-
             FaIcon(
-             FontAwesomeIcons.facebookF,
+              logo,
               color: AppTheme.whiteColor,
+            ),
+            SizedBox(
+              width: 10,
             ),
             Text(
               text,
@@ -162,30 +209,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo, Color color) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
         ),
       ),
     );

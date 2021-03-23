@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
 import 'Screens/login_screen.dart';
@@ -9,6 +10,7 @@ import 'Screens/splash_screen.dart';
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
   "/signup": (BuildContext context) => SignUpScreen(),
+  "/newaccount": (BuildContext context) => NewAccountScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 

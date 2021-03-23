@@ -7,6 +7,13 @@ import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 final kHintTextStyle = TextStyle(
   color: AppTheme.primaryColor,
   fontSize: 15,
+  fontWeight: FontWeight.w500,
+
+);
+
+final kTitleStyle = TextStyle(
+  color: AppTheme.primaryColor,
+  fontSize: 15,
   fontWeight: FontWeight.bold,
 
 );
