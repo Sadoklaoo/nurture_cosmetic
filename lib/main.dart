@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'package:nurture_cosmetic/Screens/account_pin_screen.dart';
 import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
+import 'Screens/account_number_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
@@ -11,12 +13,14 @@ var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
   "/signup": (BuildContext context) => SignUpScreen(),
   "/newaccount": (BuildContext context) => NewAccountScreen(),
+  "/pinaccount" : (BuildContext context) => AccountPinScreen(),
+  "/numberaccount" : (BuildContext context) => AccountNumberScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
   "/4got": (BuildContext context) => ForgotScreen(),
   "/pinpassword" : (BuildContext context) => PasswordPinScreen(),
-  "/pinaccount" : (BuildContext context) => AccountPinScreen(),
+
   "/newpassword": (BuildContext context) => ChangePasswordScreen(),
   "/home": (BuildContext context) => HomeScreen(),
   "/pending": (BuildContext context) => PendingScreen(),

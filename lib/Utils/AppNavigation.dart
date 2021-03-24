@@ -38,6 +38,9 @@ class AppNavigation {
   static void goToPin(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/pinaccount");
   }
+  static void goToNumber(BuildContext context) {
+    Navigator.pushReplacementNamed(context, "/numberaccount");
+  }
   static void goToPending(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/pending");
   }
