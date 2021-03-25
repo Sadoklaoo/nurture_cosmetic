@@ -8,6 +8,8 @@ import 'Screens/account_number_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
+import 'Screens/test_screen.dart';
+import 'Screens/skip_or_take_screen.dart';
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
@@ -15,6 +17,8 @@ var routes = <String, WidgetBuilder>{
   "/newaccount": (BuildContext context) => NewAccountScreen(),
   "/pinaccount" : (BuildContext context) => AccountPinScreen(),
   "/numberaccount" : (BuildContext context) => AccountNumberScreen(),
+  "/skiportake" : (BuildContext context) => SkipOrTakeScreen(),
+  "/test" : (BuildContext context) => TestScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 

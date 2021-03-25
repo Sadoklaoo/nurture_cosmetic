@@ -265,7 +265,7 @@ class OtpScreen extends StatelessWidget {
 
     if (pinIndex == 4) {
       print(strPin);
-      AppNavigation.goToLogin(context);
+      AppNavigation.goToSkipOrTake(context);
     }
   }
 

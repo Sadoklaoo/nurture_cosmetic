@@ -221,7 +221,7 @@ class OtpScreen extends StatelessWidget {
 
                         onPressed: () {
                           if (numberController.text.length==8){
-                            print(numberController.text);
+                            AppNavigation.goToPin(context);
                           }
 
                         },

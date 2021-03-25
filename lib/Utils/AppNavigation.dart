@@ -53,5 +53,10 @@ class AppNavigation {
   static void goToNotifications(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/notifications");
   }
-
+  static void goToSkipOrTake(BuildContext context) {
+    Navigator.pushReplacementNamed(context, "/skiportake");
+  }
+  static void goToTest(BuildContext context) {
+    Navigator.pushReplacementNamed(context, "/test");
+  }
 }
