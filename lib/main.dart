@@ -5,6 +5,7 @@ import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
 import 'Screens/account_number_screen.dart';
+import 'Screens/home_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
@@ -19,6 +20,7 @@ var routes = <String, WidgetBuilder>{
   "/numberaccount" : (BuildContext context) => AccountNumberScreen(),
   "/skiportake" : (BuildContext context) => SkipOrTakeScreen(),
   "/test" : (BuildContext context) => TestScreen(),
+  "/home": (BuildContext context) => HomeScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
@@ -26,7 +28,7 @@ var routes = <String, WidgetBuilder>{
   "/pinpassword" : (BuildContext context) => PasswordPinScreen(),
 
   "/newpassword": (BuildContext context) => ChangePasswordScreen(),
-  "/home": (BuildContext context) => HomeScreen(),
+
   "/pending": (BuildContext context) => PendingScreen(),
   "/history": (BuildContext context) => HistoryScreen(),
   "/settings": (BuildContext context) => SettingsScreen(),

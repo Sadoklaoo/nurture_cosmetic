@@ -210,7 +210,7 @@ class _SkipOrTakeScreenState extends State<SkipOrTakeScreen> {
         new Radio(
           value: value,
           groupValue: groupValue,
-          onChanged: methodCall,
+          //onChanged: methodCall,
         ),
         new Text(
           'Second',

@@ -1,6 +1,7 @@
 class AppStrings {
   static const String app_icon = "assets/images/app_icon.png";
   static const String logo_icon = "assets/images/logo.png";
+  static const String home_icon = "assets/images/icon_home.png";
   static const String meddoc_icon = "assets/images/medicaments.png";
   static const String med_icon = "assets/images/med.png";
   static const String name = "PharmApp";
