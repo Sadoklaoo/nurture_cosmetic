@@ -2,23 +2,10 @@ class AppStrings {
   static const String app_icon = "assets/images/app_icon.png";
   static const String logo_icon = "assets/images/logo.png";
   static const String home_icon = "assets/images/icon_home.png";
-  static const String meddoc_icon = "assets/images/medicaments.png";
-  static const String med_icon = "assets/images/med.png";
-  static const String name = "PharmApp";
-  static const String slogon = "Access Anytime & Anywhere\n For Everyone";
-  static const String wt1 = "WELCOME";
-  static const String wc1 =
-      "Flutkart is Premium Online Shopping\n Platform for Everyone";
-  static const String wt2 = "DISCOVER PRODUCT";
-  static const String wc2 =
-      "Search Latest and Featured Product\n With Best Price";
-  static const String wt3 = "ADD TO CART";
-  static const String wc3 =
-      "Add to Cart All Product You need\n And Checkout the Order";
-  static const String wt4 = "VERIFY AND RECEIVE";
-  static const String wc4 =
-      "We Will Verify Your Order\n Pay the bill and Receive the Product";
-  static const String skip = "SKIP";
-  static const String next = "NEXT";
-  static const String gotIt = "GOT IT";
+  static const String skin_icon = "assets/images/skin_logo.png";
+  static const String face_icon = "assets/images/face_logo.png";
+  static const String hair_icon = "assets/images/hair_logo.png";
+  static const String pers_icon = "assets/images/pers_logo.png";
+  static const String name = "Nurture Cosmetic";
+
 }

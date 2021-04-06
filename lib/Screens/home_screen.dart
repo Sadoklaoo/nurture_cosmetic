@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
@@ -47,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   _buildSugguestions(),
-                  RecommendedApps()
+                  categorySelector(),
+                  productTypeSelector(),
+                  natureSelector()
                 ],
               ),
             ),
@@ -192,98 +195,199 @@ class _HomeScreenState extends State<HomeScreen> {
             ]));
   }
 
-  Widget RecommendedApps() {
+  //Nature
+  Widget natureSelector() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+
         Padding(
-          padding: EdgeInsets.all(8.0),
-          child: labelContainer('Recommended for you'),
+          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
+          child: labelContainer('Nature',"Selectionner une nature pour visualiser ses produits."),
         ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: appsContainer(),
-        ),
+        natureList(),
       ],
     );
   }
-
-  Widget appsContainer() {
+  Widget natureList() {
     return Container(
-        height: 160.0,
+        height: 110.0,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             imageSection(
-                'https://lh3.googleusercontent.com/ZZPdzvlpK9r_Df9C3M7j1rNRi7hhHRvPhlklJ3lfi5jk86Jd1s0Y5wcQ1QgbVaAP5Q=s180-rw',
-                'Faceebook','4.1'),
+                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryAccentColor),
             SizedBox(
-              width: 20.0,
+              width: 8.0,
             ),
             imageSection(
-                'https://lh3.googleusercontent.com/00APBMVQh3yraN704gKCeM63KzeQ-zHUi5wK6E9TjRQ26McyqYBt-zy__4i8GXDAfeys=s180-rw',
-                'Linkedin','4.6'),
+                AppStrings.face_icon,"Soins de visage",AppTheme.primaryAccentColor),
             SizedBox(
-              width: 20.0,
+              width: 8.0,
             ),
             imageSection(
-                'https://lh3.googleusercontent.com/jcbqFma-5e91cY9MlEasA-fvCRJK493MxphrqbBd8oS74FtYg00IXeOAn0ahsLprxIA=s180-rw',
-                'Netflix','4.8'),
+                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryAccentColor),
             SizedBox(
-              width: 20.0,
+              width: 8.0,
             ),
             imageSection(
-                'https://lh3.googleusercontent.com/F5B6GGdo6tAVNApr2X2p35igQhYBouuPA3uuIu3LEPHsIl7JPMHA1sn4-5J2B78JWA=s180-rw',
-                'Flutter','5.0'),
+                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryAccentColor),
+
+          ],
+        ));
+  }
+  //Produit
+  Widget productTypeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+
+        Padding(
+          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
+          child: labelContainer('Type de produit',"Selectionner un type pour visualiser ses produits."),
+        ),
+        productTypeList(),
+      ],
+    );
+  }
+  Widget productTypeList() {
+    return Container(
+        height: 110.0,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            imageSection(
+                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryColor),
             SizedBox(
-              width: 20.0,
+              width: 8.0,
             ),
             imageSection(
-                'https://lh3.googleusercontent.com/uOjFCUkQ4w56akZTg_AAGYsyiFd1UB3-Rd8KYDoiIpD05VzkTz647PO3B_2v9sPg2BM=s180-rw',
-                'Pinterest','4.9'),
+                AppStrings.face_icon,"Soins de visage",AppTheme.primaryColor),
             SizedBox(
-              width: 20.0,
+              width: 8.0,
             ),
             imageSection(
-                'https://lh3.googleusercontent.com/aYbdIM1abwyVSUZLDKoE0CDZGRhlkpsaPOg9tNnBktUQYsXflwknnOn2Ge1Yr7rImGk=s180-rw',
-                'Instagram','4.8'),
+                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(
+                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryColor),
+
+          ],
+        ));
+  }
+  //Category
+  Widget categorySelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+
+        Padding(
+          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
+          child: labelContainer('Category',"Selectionner une categorie pour visualiser ses produits."),
+        ),
+        categoryList(),
+      ],
+    );
+  }
+  Widget categoryList() {
+    return Container(
+        height: 110.0,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            imageSection(
+                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(
+                AppStrings.face_icon,"Soins de visage",AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(
+                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(
+                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryAccentColor),
+
           ],
         ));
   }
 
-  Widget imageSection(String imageVal, String appVal,String rateVal) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 100.0,
-          width: 100.0,
-          decoration: new BoxDecoration(
-            image: DecorationImage(
-              image: new NetworkImage(imageVal),
-              fit: BoxFit.fill,
-            ),
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
 
-      ],
+  //Design
+  Widget imageSection(String imageVal,String title, Color color) {
+    return Container(
+      height: 110.0,
+      width: 110.0,
+
+      decoration: new BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20.0),
+
+      ),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top:10.0),
+            child: Container(
+              height: 60.0,
+              width:60.0,
+              decoration: new BoxDecoration(
+
+                image: DecorationImage(
+                  image: AssetImage(
+                      imageVal,
+                  ),
+                  fit: BoxFit.fitWidth,
+                ),
+
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top:5.0),
+            child: AutoSizeText(
+              title,
+              softWrap: true,
+              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12.0,color: AppTheme.whiteColor),
+              maxLines: 2,
+            )
+            /*Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.0,color: AppTheme.whiteColor),
+            ),*/
+
+          ),
+
+        ],
+      ),
     );
   }
-  Widget labelContainer(String labelVal) {
-    return Row(
+  Widget labelContainer(String labelVal,String subLabelVal) {
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           labelVal,
           style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: AppTheme.primaryColor),
         ),
-
+        Text(
+          subLabelVal,
+          style: TextStyle(fontWeight: FontWeight.normal,fontSize: 12.0,color: AppTheme.greyColor),
+        ),
       ],
     );
   }
-
+ //End Design
 
 
 }
