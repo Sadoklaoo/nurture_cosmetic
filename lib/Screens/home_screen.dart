@@ -216,22 +216,27 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             imageSection(
-                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryAccentColor),
+                AppStrings.naturel,"Naturel",AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.face_icon,"Soins de visage",AppTheme.primaryAccentColor),
+                AppStrings.eco,"Eco",AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryAccentColor),
+                AppStrings.organic,"Organique",AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryAccentColor),
+                AppStrings.bio,"Bio",AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(
+                AppStrings.vegan,"Vegan",AppTheme.primaryAccentColor),
 
           ],
         ));
@@ -257,22 +262,22 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             imageSection(
-                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryColor),
+                AppStrings.creme,"Crème de beauté",AppTheme.primaryColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.face_icon,"Soins de visage",AppTheme.primaryColor),
+                AppStrings.cosmetics,"Cosmétiques",AppTheme.primaryColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryColor),
+                AppStrings.parfum,"Parfums",AppTheme.primaryColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryColor),
+                AppStrings.kit,"Kits cosmétiques",AppTheme.primaryColor),
 
           ],
         ));
@@ -344,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   image: AssetImage(
                       imageVal,
                   ),
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.contain,
                 ),
 
               ),
