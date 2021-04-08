@@ -1,23 +1,19 @@
-import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
-import 'package:nurture_cosmetic/Utils/hometoptabs.dart';
-import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
-
-import '../Widgets/TextFieldWidget.dart';
-import '../Widgets/TextFieldWidget.dart';
-
+import 'package:shrink_sidemenu/shrink_sidemenu.dart';
+import 'package:nurture_cosmetic/Widgets/Drawer.dart';
+import 'package:nurture_cosmetic/Widgets/SearchEngine.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -28,30 +24,36 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: Container(
-          color: AppTheme.whiteColor,
-          height: height,
-          width: width,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _buildHomeHeader(),
-                  _buildSearchBar(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _buildSugguestions(),
-                  categorySelector(),
-                  productTypeSelector(),
-                  natureSelector()
-                ],
+    return SideMenu(
+      background: AppTheme.primaryColor,
+      key: _sideMenuKey,
+      menu: buildMenu(context),
+      type: SideMenuType.slideNRotate,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Container(
+            color: AppTheme.whiteColor,
+            height: height,
+            width: width,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildHomeHeader(),
+                    _buildSearchBar(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _buildSugguestions(),
+                    categorySelector(),
+                    productTypeSelector(),
+                    natureSelector()
+                  ],
+                ),
               ),
             ),
           ),
@@ -89,10 +91,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Image.asset(
-            AppStrings.home_icon,
-            width: 60,
-            height: 60,
+          GestureDetector(
+            onTap: () {
+              final _state = _sideMenuKey.currentState;
+              if (_state.isOpened)
+                _state.closeSideMenu();
+              else
+                _state.openSideMenu();
+            },
+            child: Image.asset(
+              AppStrings.home_icon,
+              width: 60,
+              height: 60,
+            ),
           ),
         ],
       ),
@@ -102,40 +113,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSearchBar() {
     return Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppTheme.searchBgColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 6.0,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextField(
-            onTap: () {
-              showSearch(context: context, delegate: DataSeach());
-            },
-            cursorColor: AppTheme.greyColor,
-            decoration: InputDecoration(
-              contentPadding:
-                  EdgeInsets.only(top: 20), // add padding to adjust text
-              isDense: true,
-              hintText: "Search",
-              hintStyle: TextStyle(
-                color: AppTheme.greyColor,
-              ),
-              prefixIcon: Icon(
-                Icons.search,
-                size: 25,
-                color: AppTheme.greyColor,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppTheme.greyColor),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppTheme.searchBgColor),
+        child: GestureDetector(
+          onTap: () {
+            showSearch(context: context, delegate: DataSeach());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.searchBgColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 6.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+
+              enabled: false,
+              cursorColor: AppTheme.greyColor,
+              decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.only(top: 13), // add padding to adjust text
+                isDense: true,
+                hintText: "Search",
+                hintStyle: TextStyle(
+                  color: AppTheme.greyColor,
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 25,
+                  color: AppTheme.greyColor,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.greyColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.searchBgColor),
+                ),
               ),
             ),
           ),
@@ -152,11 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 child: TabBar(
                   isScrollable: true,
-                  unselectedLabelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                  unselectedLabelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                   labelColor: AppTheme.primaryColor,
                   unselectedLabelColor: AppTheme.greyColor,
                   indicatorColor: Colors.transparent,
-                  labelPadding: EdgeInsets.only(left:15),
+                  labelPadding: EdgeInsets.only(left: 15),
                   labelStyle:
                       TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   tabs: [
@@ -200,15 +216,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
         Padding(
-          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
-          child: labelContainer('Nature',"Selectionner une nature pour visualiser ses produits."),
+          padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
+          child: labelContainer('Nature',
+              "Selectionner une nature pour visualiser ses produits."),
         ),
         natureList(),
       ],
     );
   }
+
   Widget natureList() {
     return Container(
         height: 110.0,
@@ -216,45 +233,44 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             imageSection(
-                AppStrings.naturel,"Naturel",AppTheme.primaryAccentColor),
+                AppStrings.naturel, "Naturel", AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(AppStrings.eco, "Eco", AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.eco,"Eco",AppTheme.primaryAccentColor),
+                AppStrings.organic, "Organique", AppTheme.primaryAccentColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(AppStrings.bio, "Bio", AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.organic,"Organique",AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.bio,"Bio",AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.vegan,"Vegan",AppTheme.primaryAccentColor),
-
+                AppStrings.vegan, "Vegan", AppTheme.primaryAccentColor),
           ],
         ));
   }
+
   //Produit
   Widget productTypeSelector() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
         Padding(
-          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
-          child: labelContainer('Type de produit',"Selectionner un type pour visualiser ses produits."),
+          padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
+          child: labelContainer('Type de produit',
+              "Selectionner un type pour visualiser ses produits."),
         ),
         productTypeList(),
       ],
     );
   }
+
   Widget productTypeList() {
     return Container(
         height: 110.0,
@@ -262,120 +278,116 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             imageSection(
-                AppStrings.creme,"Crème de beauté",AppTheme.primaryColor),
+                AppStrings.creme, "Crème de beauté", AppTheme.primaryColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.cosmetics,"Cosmétiques",AppTheme.primaryColor),
+                AppStrings.cosmetics, "Cosmétiques", AppTheme.primaryColor),
+            SizedBox(
+              width: 8.0,
+            ),
+            imageSection(AppStrings.parfum, "Parfums", AppTheme.primaryColor),
             SizedBox(
               width: 8.0,
             ),
             imageSection(
-                AppStrings.parfum,"Parfums",AppTheme.primaryColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.kit,"Kits cosmétiques",AppTheme.primaryColor),
-
+                AppStrings.kit, "Kits cosmétiques", AppTheme.primaryColor),
           ],
         ));
   }
+
   //Category
   Widget categorySelector() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
         Padding(
-          padding: EdgeInsets.only(top:10.0,bottom: 8.0),
-          child: labelContainer('Category',"Selectionner une categorie pour visualiser ses produits."),
+          padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
+          child: labelContainer('Category',
+              "Selectionner une categorie pour visualiser ses produits."),
         ),
         categoryList(),
       ],
     );
   }
+
   Widget categoryList() {
     return Container(
         height: 110.0,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
-            imageSection(
-                AppStrings.skin_icon,"Soins de la peau",AppTheme.primaryAccentColor),
+            imageSection(AppStrings.skin_icon, "Soins de la peau",
+                AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
-            imageSection(
-                AppStrings.face_icon,"Soins de visage",AppTheme.primaryAccentColor),
+            imageSection(AppStrings.face_icon, "Soins de visage",
+                AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
-            imageSection(
-                AppStrings.hair_icon,"Soins de cheveaux",AppTheme.primaryAccentColor),
+            imageSection(AppStrings.hair_icon, "Soins de cheveaux",
+                AppTheme.primaryAccentColor),
             SizedBox(
               width: 8.0,
             ),
-            imageSection(
-                AppStrings.pers_icon,"Soins personelles",AppTheme.primaryAccentColor),
-
+            imageSection(AppStrings.pers_icon, "Soins personelles",
+                AppTheme.primaryAccentColor),
           ],
         ));
   }
 
-
   //Design
-  Widget imageSection(String imageVal,String title, Color color) {
+  Widget imageSection(String imageVal, String title, Color color) {
     return Container(
       height: 110.0,
       width: 110.0,
-
       decoration: new BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20.0),
-
       ),
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top:10.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: Container(
               height: 60.0,
-              width:60.0,
+              width: 60.0,
               decoration: new BoxDecoration(
-
                 image: DecorationImage(
                   image: AssetImage(
-                      imageVal,
+                    imageVal,
                   ),
                   fit: BoxFit.contain,
                 ),
-
               ),
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.only(top:5.0),
-            child: AutoSizeText(
-              title,
-              softWrap: true,
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12.0,color: AppTheme.whiteColor),
-              maxLines: 2,
-            )
-            /*Text(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: AutoSizeText(
+                title,
+                softWrap: true,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.0,
+                    color: AppTheme.whiteColor),
+                maxLines: 2,
+              )
+              /*Text(
               title,
               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.0,color: AppTheme.whiteColor),
             ),*/
 
-          ),
-
+              ),
         ],
       ),
     );
   }
-  Widget labelContainer(String labelVal,String subLabelVal) {
+
+  Widget labelContainer(String labelVal, String subLabelVal) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
@@ -383,101 +395,23 @@ class _HomeScreenState extends State<HomeScreen> {
       children: <Widget>[
         Text(
           labelVal,
-          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: AppTheme.primaryColor),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+              color: AppTheme.primaryColor),
         ),
         Text(
           subLabelVal,
-          style: TextStyle(fontWeight: FontWeight.normal,fontSize: 12.0,color: AppTheme.greyColor),
+          style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 12.0,
+              color: AppTheme.greyColor),
         ),
       ],
     );
   }
- //End Design
-
+  //End Design
 
 }
 
-class DataSeach extends SearchDelegate<String> {
-  final cities = [
-    "Nabeul",
-    "Tunis",
-    "Hammemt",
-    "Ariana",
-    "Sousse",
-  ];
 
-  final recentCities = [
-    "Nabeul",
-    "Tunis",
-    "Hammemt",
-  ];
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    // action for app bar
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // leading icon for the left of the app bar
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-        ),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // show results
-    return Center(
-      child: Container(
-        height: 100,
-        width: 100,
-        child: Card(
-          color: Colors.red,
-          child: Center(
-            child: Text(query),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // show sugguestions
-    final suggestionList = query.isEmpty
-        ? recentCities
-        : cities.where((element) => element.startsWith(query)).toList();
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-          onTap: () {
-            showResults(context);
-          },
-          leading: Icon(Icons.location_city),
-          title: RichText(
-              text: TextSpan(
-                  text: suggestionList[index].substring(0, query.length),
-                  style: TextStyle(
-                      color: AppTheme.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                  children: [
-                TextSpan(
-                    text: suggestionList[index].substring(query.length),
-                    style: TextStyle(color: Colors.grey, fontSize: 15))
-              ]))),
-      itemCount: suggestionList.length,
-    );
-  }
-}

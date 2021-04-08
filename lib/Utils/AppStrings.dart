@@ -18,6 +18,7 @@ class AppStrings {
   static const String vegan = "assets/images/vegan.png";
   static const String organic = "assets/images/organic.png";
 
+  static const String product = "assets/images/product_icon.png";
 
   static const String name = "Nurture Cosmetic";
 

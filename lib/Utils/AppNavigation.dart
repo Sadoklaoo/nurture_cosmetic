@@ -59,4 +59,7 @@ class AppNavigation {
   static void goToTest(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/test");
   }
+  static void goToFilter(BuildContext context) {
+    Navigator.pushNamed(context, "/filter");
+  }
 }

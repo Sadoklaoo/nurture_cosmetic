@@ -3,7 +3,7 @@ import 'package:liquid_ui/liquid_ui.dart';
 import 'package:nurture_cosmetic/Screens/account_pin_screen.dart';
 import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
-
+import 'package:nurture_cosmetic/Widgets/FilterEngine.dart';
 import 'Screens/account_number_screen.dart';
 import 'Screens/home_screen.dart';
 import 'Screens/login_screen.dart';
@@ -21,6 +21,7 @@ var routes = <String, WidgetBuilder>{
   "/skiportake" : (BuildContext context) => SkipOrTakeScreen(),
   "/test" : (BuildContext context) => TestScreen(),
   "/home": (BuildContext context) => HomeScreen(),
+  "/filter": (BuildContext context) => FilterEngine(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
