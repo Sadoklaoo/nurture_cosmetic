@@ -1,5 +1,7 @@
+import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
@@ -24,6 +26,15 @@ class _FilterEngineState extends State<FilterEngine> {
     {'id': '3', 'image': AppStrings.parfum, 'name': "Parfums"},
     {'id': '4', 'image': AppStrings.kit, 'name': "Kits cosmétiques"}
   ];
+  List<String> tags = [];
+  List<String> options = [
+    'Bio',
+    'Eco',
+    'Naturel',
+    'Organique',
+    'Vegan',
+  ];
+
   String _currentCat;
   String _currentType;
   @override
@@ -93,6 +104,8 @@ class _FilterEngineState extends State<FilterEngine> {
                 _buildOrder(height),
                 _buildCategorySelector(height),
                 _buildProductTypeSelector(height),
+                _buildNatureSelector(height),
+                _buildConfirmBtn()
               ],
             ),
           ),
@@ -233,8 +246,6 @@ class _FilterEngineState extends State<FilterEngine> {
         SizedBox(
           height: height * 2 / 100,
         ),
-
-
         Center(
           child: Container(
             decoration: BoxDecoration(
@@ -274,9 +285,10 @@ class _FilterEngineState extends State<FilterEngine> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(left: 10.0),
-                                  child: Text(CategoryItem['name'],style: TextStyle(
-
-                                  ),),
+                                  child: Text(
+                                    CategoryItem['name'],
+                                    style: TextStyle(),
+                                  ),
                                 )
                               ],
                             ));
@@ -311,8 +323,6 @@ class _FilterEngineState extends State<FilterEngine> {
         SizedBox(
           height: height * 2 / 100,
         ),
-
-
         Center(
           child: Container(
             decoration: BoxDecoration(
@@ -323,46 +333,47 @@ class _FilterEngineState extends State<FilterEngine> {
               children: [
                 Expanded(
                     child: DropdownButtonHideUnderline(
-                      child: ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButton(
-                          hint: Text('Sélectionner un type'),
-                          value: _currentType,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _currentType = newValue;
-                            });
-                          },
-                          items: _myTypes.map((ProductTypeItem) {
-                            return DropdownMenuItem(
-                                value: ProductTypeItem['id'].toString(),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          ProductTypeItem['image'],
-                                          width: 25,
-                                          height: 25,
-                                        ),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          color: AppTheme.primaryAccentColor,
-                                          borderRadius: BorderRadius.circular(20)),
+                  child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: DropdownButton(
+                      hint: Text('Sélectionner un type'),
+                      value: _currentType,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _currentType = newValue;
+                        });
+                      },
+                      items: _myTypes.map((ProductTypeItem) {
+                        return DropdownMenuItem(
+                            value: ProductTypeItem['id'].toString(),
+                            child: Row(
+                              children: [
+                                Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      ProductTypeItem['image'],
+                                      width: 25,
+                                      height: 25,
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 10.0),
-                                      child: Text(ProductTypeItem['name'],style: TextStyle(
-
-                                      ),),
-                                    )
-                                  ],
-                                ));
-                          }).toList(),
-                        ),
-                      ),
-                    ))
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: AppTheme.primaryAccentColor,
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    ProductTypeItem['name'],
+                                    style: TextStyle(),
+                                  ),
+                                )
+                              ],
+                            ));
+                      }).toList(),
+                    ),
+                  ),
+                ))
               ],
             ),
           ),
@@ -372,6 +383,89 @@ class _FilterEngineState extends State<FilterEngine> {
         ),
         Divider(),
       ],
+    );
+  }
+
+  Widget _buildNatureSelector(double height) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Nature',
+          style: TextStyle(
+            color: AppTheme.primaryAccentColor,
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: height * 2 / 100,
+        ),
+        ChipsChoice<String>.multiple(
+          wrapped: true,
+          value: tags,
+          choiceStyle: C2ChoiceStyle(
+              color: Colors.grey,
+              elevation: 2.0,
+              labelStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              )
+          ),
+          choiceActiveStyle: C2ChoiceStyle(
+              color: AppTheme.primaryAccentColor,
+              labelStyle: TextStyle(
+                color: AppTheme.primaryAccentColor,
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              )
+          ),
+          onChanged: (val) => setState(() => tags = val),
+          choiceItems: C2Choice.listFrom<String, String>(
+            source: options,
+            value: (i, v) => v,
+            label: (i, v) => v,
+          ),
+        ),
+        SizedBox(
+          height: height * 2 / 100,
+        ),
+        Divider(),
+      ],
+    );
+  }
+
+  Widget _buildConfirmBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          Navigator.pop(context);
+          print(_currentRangeValues.start);
+          print(_currentRangeValues.end);
+          print(isSelected);
+          print(_currentCat);
+          print(_currentType);
+          print(tags);
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: AppTheme.primaryAccentColor,
+        child: Text(
+          'SOUMETTRE',
+          style: TextStyle(
+            color: AppTheme.whiteColor,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 }
