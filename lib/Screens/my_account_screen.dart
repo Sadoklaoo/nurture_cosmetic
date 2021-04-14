@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
@@ -116,53 +117,56 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   Widget buildAccountButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ListTile(
-          leading: Container(
+    return GestureDetector(
+      onTap: (){AppNavigation.goToEdit(context);},
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ListTile(
+            leading: Container(
 
-            decoration: BoxDecoration(
-                color: AppTheme.primaryAccentColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 2.0,
-                    offset: Offset(0, 3),
-                  ),
-                ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.person_pin,
-                size: 30,
-                color: AppTheme.whiteColor,
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryAccentColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 2.0,
+                      offset: Offset(0, 3),
+                    ),
+                  ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.person_pin,
+                  size: 30,
+                  color: AppTheme.whiteColor,
+                ),
               ),
             ),
-          ),
-          title: Text(
-            "Modifier profile",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primaryColor),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: AppTheme.primaryAccentColor,
+            title: Text(
+              "Modifier profile",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.primaryColor),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: AppTheme.primaryAccentColor,
+            ),
           ),
         ),
       ),
@@ -170,54 +174,57 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   Widget buildPasswordButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ListTile(
-          leading: Container(
+    return GestureDetector(
+      onTap: (){AppNavigation.goToEditPassword(context);},
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ListTile(
+            leading: Container(
 
-            decoration: BoxDecoration(
-                color: AppTheme.primaryAccentColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 2.0,
-                    offset: Offset(0, 3),
-                  ),
-                ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.lock,
-                size: 30,
-                color: AppTheme.whiteColor,
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryAccentColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 2.0,
+                      offset: Offset(0, 3),
+                    ),
+                  ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.lock,
+                  size: 30,
+                  color: AppTheme.whiteColor,
 
+                ),
               ),
             ),
-          ),
-          title: Text(
-            "Changer mot de passe",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primaryColor),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: AppTheme.primaryAccentColor,
+            title: Text(
+              "Changer mot de passe",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.primaryColor),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: AppTheme.primaryAccentColor,
+            ),
           ),
         ),
       ),
