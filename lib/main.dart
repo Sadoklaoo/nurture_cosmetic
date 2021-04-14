@@ -11,6 +11,9 @@ import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
 import 'Screens/test_screen.dart';
 import 'Screens/skip_or_take_screen.dart';
+import 'Screens/settings_screen.dart';
+import 'Screens/my_account_screen.dart';
+
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
@@ -22,6 +25,8 @@ var routes = <String, WidgetBuilder>{
   "/test" : (BuildContext context) => TestScreen(),
   "/home": (BuildContext context) => HomeScreen(),
   "/filter": (BuildContext context) => FilterEngine(),
+  "/settings": (BuildContext context) => SettingsScreen(),
+  "/myaccount": (BuildContext context) => MyAccountScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
@@ -32,7 +37,7 @@ var routes = <String, WidgetBuilder>{
 
   "/pending": (BuildContext context) => PendingScreen(),
   "/history": (BuildContext context) => HistoryScreen(),
-  "/settings": (BuildContext context) => SettingsScreen(),
+
   "/notifications": (BuildContext context) => NotificationsScreen(),
 
   "/intro": (BuildContext context) => IntroScreen(),

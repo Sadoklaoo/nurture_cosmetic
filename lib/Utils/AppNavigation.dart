@@ -62,4 +62,7 @@ class AppNavigation {
   static void goToFilter(BuildContext context) {
     Navigator.pushNamed(context, "/filter");
   }
+  static void goToMyAccount(BuildContext context) {
+    Navigator.pushNamed(context, "/myaccount");
+  }
 }
