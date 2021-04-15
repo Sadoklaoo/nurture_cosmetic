@@ -15,6 +15,8 @@ import 'Screens/settings_screen.dart';
 import 'Screens/my_account_screen.dart';
 import 'Screens/edit_profile_screen.dart';
 import 'Screens/edit_password_screen.dart';
+import 'Screens/my_allergy_screen.dart';
+
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
@@ -30,6 +32,7 @@ var routes = <String, WidgetBuilder>{
   "/myAccount": (BuildContext context) => MyAccountScreen(),
   "/edit": (BuildContext context) => EditProfileScreen(),
   "/editPassword": (BuildContext context) => EditPasswordScreen(),
+  "/myAllergy": (BuildContext context) => MyAllergyScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 

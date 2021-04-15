@@ -68,4 +68,7 @@ class AppNavigation {
   static void goToEditPassword(BuildContext context) {
     Navigator.pushNamed(context, "/editPassword");
   }
+  static void goToMyAllergy(BuildContext context) {
+    Navigator.pushNamed(context, "/myAllergy");
+  }
 }
