@@ -22,14 +22,74 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
 
   List<Map> allergies = [
-    {'id': '1', 'image': AppStrings.fragance_icon, 'name': "Fragences",'description':'Odeur du parfum','selected':true},
-    {'id': '2', 'image': AppStrings.biocides_icon, 'name': "Biocides",'description':'Détruire les organismes nuisibles.','selected':true},
-    {'id': '3', 'image': AppStrings.antioxydants_icon, 'name': "Antioxydants",'description':'Protègent les produits contre la dégradation des acides gras insaturés.','selected':true},
-    {'id': '4', 'image': AppStrings.uv_icon, 'name': "Absorbants d'UV",'description':'Responsables d\'allergies de contact et de dermatites photosensibles.','selected':true},
-    {'id': '5', 'image': AppStrings.glycerine_icon, 'name': "Glycérine et glycols",'description':'Fréquemment responsables de phénomènes irritatifs.','selected':true},
-    {'id': '6', 'image': AppStrings.sheep_icon, 'name': "Lanoline",'description':'Lorsqu\'elle entre dans la composition des médicaments d’application locale, la lanoline est fréquemment sensibilisante.','selected':true},
-    {'id': '7', 'image': AppStrings.honey_icon, 'name': "Propolis",'description':'Il s’agit d’une résine végétale, recueillie par les abeilles à partir de certains végétaux.','selected':true},
+    {
+      'id': '1',
+      'image': AppStrings.fragance_icon,
+      'name': "Fragences",
+      'description': 'Odeur du parfum',
+      'selected': true
+    },
+    {
+      'id': '2',
+      'image': AppStrings.biocides_icon,
+      'name': "Biocides",
+      'description': 'Détruire les organismes nuisibles.',
+      'selected': true
+    },
+    {
+      'id': '3',
+      'image': AppStrings.antioxydants_icon,
+      'name': "Antioxydants",
+      'description':
+          'Protègent les produits contre la dégradation des acides gras insaturés.',
+      'selected': true
+    },
+    {
+      'id': '4',
+      'image': AppStrings.uv_icon,
+      'name': "Absorbants d'UV",
+      'description':
+          'Responsables d\'allergies de contact et de dermatites photosensibles.',
+      'selected': true
+    },
+    {
+      'id': '5',
+      'image': AppStrings.glycerine_icon,
+      'name': "Glycérine et glycols",
+      'description': 'Fréquemment responsables de phénomènes irritatifs.',
+      'selected': true
+    },
+    {
+      'id': '6',
+      'image': AppStrings.sheep_icon,
+      'name': "Lanoline",
+      'description':
+          'Lorsqu\'elle entre dans la composition des médicaments d’application locale, la lanoline est fréquemment sensibilisante.',
+      'selected': true
+    },
+    {
+      'id': '7',
+      'image': AppStrings.honey_icon,
+      'name': "Propolis",
+      'description':
+          'Il s’agit d’une résine végétale, recueillie par les abeilles à partir de certains végétaux.',
+      'selected': true
+    },
   ];
+
+  int selectedSize = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    this.allergies.forEach((element) {
+      if (element['selected']==true){
+        selectedSize++;
+      }
+      });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,12 +186,15 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                     padding: EdgeInsets.only(right: 6, left: 6),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: this.allergies.length,
+                    itemCount: selectedSize,
                     itemBuilder: (BuildContext context, int index) {
-                      this.allergies.map((e) => {
+                     Map p = this.allergies.elementAt(index);
+                     if(p['selected']==true){
+                       return _buildListItem(p['name'],p['description'],p['image']);
+                     }else{
+                       index++;
+                     }
 
-                      });
-                   //   return _buildListItem();
                     },
                   ),
                 )),
@@ -170,7 +233,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
     );
   }
 
-  Widget _buildListItem(String title, String description,String image) {
+  Widget _buildListItem(String title, String description, String image) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
@@ -197,7 +260,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                 ),
               ],
             ),
-            leading: Image.asset(image),
+            leading: Container(child: Image.asset(image)),
             subtitle: Row(
               children: [
                 Flexible(
