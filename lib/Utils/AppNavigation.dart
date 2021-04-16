@@ -71,4 +71,10 @@ class AppNavigation {
   static void goToMyAllergy(BuildContext context) {
     Navigator.pushNamed(context, "/myAllergy");
   }
+  static void goToSettingsNotifications(BuildContext context) {
+    Navigator.pushNamed(context, "/settingsNotifications");
+  }
+  static void goToHelp(BuildContext context) {
+    Navigator.pushNamed(context, "/help");
+  }
 }

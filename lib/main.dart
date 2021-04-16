@@ -16,6 +16,8 @@ import 'Screens/my_account_screen.dart';
 import 'Screens/edit_profile_screen.dart';
 import 'Screens/edit_password_screen.dart';
 import 'Screens/my_allergy_screen.dart';
+import 'Screens/setting_notifications_screen.dart';
+import 'package:nurture_cosmetic/Screens/help_screen.dart';
 
 
 var routes = <String, WidgetBuilder>{
@@ -33,6 +35,8 @@ var routes = <String, WidgetBuilder>{
   "/edit": (BuildContext context) => EditProfileScreen(),
   "/editPassword": (BuildContext context) => EditPasswordScreen(),
   "/myAllergy": (BuildContext context) => MyAllergyScreen(),
+  "/settingsNotifications": (BuildContext context) => SettingNotificationsScreen(),
+  "/help": (BuildContext context) => HelpScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 

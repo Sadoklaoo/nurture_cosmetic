@@ -165,54 +165,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget buildNotificationsButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ListTile(
-          leading: Container(
+    return GestureDetector(
+      onTap: () => AppNavigation.goToSettingsNotifications(context),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ListTile(
+            leading: Container(
 
-            decoration: BoxDecoration(
-                color: AppTheme.primaryAccentColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 2.0,
-                    offset: Offset(0, 3),
-                  ),
-                ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.notifications_active_sharp,
-                size: 30,
-                color: AppTheme.whiteColor,
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryAccentColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 2.0,
+                      offset: Offset(0, 3),
+                    ),
+                  ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.notifications_active_sharp,
+                  size: 30,
+                  color: AppTheme.whiteColor,
 
+                ),
               ),
             ),
-          ),
-          title: Text(
-            "Notifications",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primaryColor),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: AppTheme.primaryAccentColor,
+            title: Text(
+              "Notifications",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.primaryColor),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: AppTheme.primaryAccentColor,
+            ),
           ),
         ),
       ),
@@ -220,54 +223,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget buildHelpButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ListTile(
-          leading: Container(
+    return GestureDetector(
+      onTap: () => AppNavigation.goToHelp(context),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ListTile(
+            leading: Container(
 
-            decoration: BoxDecoration(
-                color: AppTheme.primaryAccentColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 2.0,
-                    offset: Offset(0, 3),
-                  ),
-                ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.support,
-                size: 30,
-                color: AppTheme.whiteColor,
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryAccentColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 2.0,
+                      offset: Offset(0, 3),
+                    ),
+                  ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.support,
+                  size: 30,
+                  color: AppTheme.whiteColor,
 
+                ),
               ),
             ),
-          ),
-          title: Text(
-            "Réclamations",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primaryColor),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: AppTheme.primaryAccentColor,
+            title: Text(
+              "Réclamations",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.primaryColor),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: AppTheme.primaryAccentColor,
+            ),
           ),
         ),
       ),
