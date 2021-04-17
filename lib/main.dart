@@ -11,17 +11,32 @@ import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
 import 'Screens/test_screen.dart';
 import 'Screens/skip_or_take_screen.dart';
+import 'Screens/settings_screen.dart';
+import 'Screens/my_account_screen.dart';
+import 'Screens/edit_profile_screen.dart';
+import 'Screens/edit_password_screen.dart';
+import 'Screens/my_allergy_screen.dart';
+import 'Screens/setting_notifications_screen.dart';
+import 'package:nurture_cosmetic/Screens/help_screen.dart';
+
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
-  "/signup": (BuildContext context) => SignUpScreen(),
-  "/newaccount": (BuildContext context) => NewAccountScreen(),
-  "/pinaccount" : (BuildContext context) => AccountPinScreen(),
-  "/numberaccount" : (BuildContext context) => AccountNumberScreen(),
-  "/skiportake" : (BuildContext context) => SkipOrTakeScreen(),
+  "/signUp": (BuildContext context) => SignUpScreen(),
+  "/newAccount": (BuildContext context) => NewAccountScreen(),
+  "/pinAccount" : (BuildContext context) => AccountPinScreen(),
+  "/numberAccount" : (BuildContext context) => AccountNumberScreen(),
+  "/skipOrTake" : (BuildContext context) => SkipOrTakeScreen(),
   "/test" : (BuildContext context) => TestScreen(),
   "/home": (BuildContext context) => HomeScreen(),
   "/filter": (BuildContext context) => FilterEngine(),
+  "/settings": (BuildContext context) => SettingsScreen(),
+  "/myAccount": (BuildContext context) => MyAccountScreen(),
+  "/edit": (BuildContext context) => EditProfileScreen(),
+  "/editPassword": (BuildContext context) => EditPasswordScreen(),
+  "/myAllergy": (BuildContext context) => MyAllergyScreen(),
+  "/settingsNotifications": (BuildContext context) => SettingNotificationsScreen(),
+  "/help": (BuildContext context) => HelpScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
@@ -32,13 +47,13 @@ var routes = <String, WidgetBuilder>{
 
   "/pending": (BuildContext context) => PendingScreen(),
   "/history": (BuildContext context) => HistoryScreen(),
-  "/settings": (BuildContext context) => SettingsScreen(),
+
   "/notifications": (BuildContext context) => NotificationsScreen(),
 
   "/intro": (BuildContext context) => IntroScreen(),
   "/login": (BuildContext context) => LoginScreen(),
 
-  "/edit": (BuildContext context) => EditProfilePage(),*/
+  */
 };
 void main() => runApp(LiquidApp(
       materialApp: new MaterialApp(

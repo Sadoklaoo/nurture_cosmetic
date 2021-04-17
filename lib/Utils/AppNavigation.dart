@@ -9,7 +9,7 @@ class AppNavigation {
     Navigator.pushReplacementNamed(context, "/home");
   }
   static void goToNewAccount(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/newaccount");
+    Navigator.pushReplacementNamed(context, "/newAccount");
   }
 
   static void goToIntro(BuildContext context) {
@@ -20,7 +20,7 @@ class AppNavigation {
     Navigator.pushReplacementNamed(context, "/login");
   }
   static void goToSignUp(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/signup");
+    Navigator.pushReplacementNamed(context, "/signUp");
   }
 
   static void goToEdit(BuildContext context) {
@@ -30,16 +30,16 @@ class AppNavigation {
     Navigator.pushReplacementNamed(context, "/4got");
   }
   static void goToPinPassword(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/pinpassword");
+    Navigator.pushReplacementNamed(context, "/pinPassword");
   }
   static void goToNewPassword(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/newpassword");
+    Navigator.pushReplacementNamed(context, "/newPassword");
   }
   static void goToPin(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/pinaccount");
+    Navigator.pushReplacementNamed(context, "/pinAccount");
   }
   static void goToNumber(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/numberaccount");
+    Navigator.pushReplacementNamed(context, "/numberAccount");
   }
   static void goToPending(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/pending");
@@ -54,12 +54,27 @@ class AppNavigation {
     Navigator.pushReplacementNamed(context, "/notifications");
   }
   static void goToSkipOrTake(BuildContext context) {
-    Navigator.pushReplacementNamed(context, "/skiportake");
+    Navigator.pushReplacementNamed(context, "/skipOrTake");
   }
   static void goToTest(BuildContext context) {
     Navigator.pushReplacementNamed(context, "/test");
   }
   static void goToFilter(BuildContext context) {
     Navigator.pushNamed(context, "/filter");
+  }
+  static void goToMyAccount(BuildContext context) {
+    Navigator.pushNamed(context, "/myAccount");
+  }
+  static void goToEditPassword(BuildContext context) {
+    Navigator.pushNamed(context, "/editPassword");
+  }
+  static void goToMyAllergy(BuildContext context) {
+    Navigator.pushNamed(context, "/myAllergy");
+  }
+  static void goToSettingsNotifications(BuildContext context) {
+    Navigator.pushNamed(context, "/settingsNotifications");
+  }
+  static void goToHelp(BuildContext context) {
+    Navigator.pushNamed(context, "/help");
   }
 }

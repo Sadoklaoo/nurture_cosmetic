@@ -16,10 +16,7 @@ Widget buildMenu(context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 22.0,
-              ),
+
               SizedBox(height: 16.0),
               LText(
                 "\l.lead{Bonjour},\n\l.lead.bold{Foulen}",
@@ -77,7 +74,7 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-               //   AppNavigation.goToSettings(context);
+                  AppNavigation.goToSettings(context);
                 },
                 leading: Icon(Icons.settings, size: 20.0, color: Colors.white),
                 title: Text("Paramétres"),

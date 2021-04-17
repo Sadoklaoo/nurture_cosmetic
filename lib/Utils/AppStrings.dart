@@ -20,6 +20,17 @@ class AppStrings {
 
   static const String product = "assets/images/product_icon.png";
 
+  static const String fragance_icon = "assets/images/fragences.png";
+  static const String antioxydants_icon = "assets/images/antioxydants.png";
+  static const String biocides_icon = "assets/images/biocides.png";
+  static const String glycerine_icon = "assets/images/glycerine.png";
+  static const String honey_icon = "assets/images/honey.png";
+  static const String sheep_icon = "assets/images/sheep.png";
+  static const String uv_icon = "assets/images/uv.png";
+
+
+
   static const String name = "Nurture Cosmetic";
+
 
 }
