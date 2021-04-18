@@ -41,43 +41,51 @@ class OtpScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     this.context = context;
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
+    return Material(
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              buildExitButton(),
-              SizedBox(
-                width: width * 20 / 100,
-              ),
-              Text('Code PIN')
-            ],
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment(0, 0.5),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  buildSecurityText(),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  buildPinRow(),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  buildResendText()
-                ],
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                buildExitButton(),
+                SizedBox(
+                  width: width * 20 / 100,
+                ),
+                Center(
+                  child: Text('Code PIN',style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primaryColor)),
+                )
+              ],
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment(0, 0.5),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    buildSecurityText(),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    buildPinRow(),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    buildResendText()
+                  ],
+                ),
               ),
             ),
-          ),
-          buildNumberPad(),
-        ],
+            buildNumberPad(),
+          ],
+        ),
       ),
     );
   }

@@ -24,35 +24,43 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return SideMenu(
-      background: AppTheme.primaryColor,
-      key: _sideMenuKey,
-      menu: buildMenu(context),
-      type: SideMenuType.slideNRotate,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            color: AppTheme.whiteColor,
-            height: height,
-            width: width,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildHomeHeader(),
-                    _buildSearchBar(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _buildSugguestions(),
-                    categorySelector(),
-                    productTypeSelector(),
-                    natureSelector()
-                  ],
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: SideMenu(
+        background: AppTheme.primaryColor,
+        key: _sideMenuKey,
+        menu: buildMenu(context),
+        type: SideMenuType.slideNRotate,
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Container(
+              color: AppTheme.whiteColor,
+              height: height,
+              width: width,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _buildHomeHeader(),
+                      _buildSearchBar(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildSugguestions(),
+                      categorySelector(),
+                      productTypeSelector(),
+                      natureSelector()
+                    ],
+                  ),
                 ),
               ),
             ),

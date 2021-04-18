@@ -44,60 +44,68 @@ class OtpScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     this.context = context;
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              buildExitButton(),
-              SizedBox(
-                width: width * 12 / 100,
-              ),
-              Text('Confirmation numéro')
-            ],
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment(0, 0.5),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  buildSecurityText(),
+    return Material(
+
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  buildExitButton(),
                   SizedBox(
-                    height: 40.0,
+                    width: width * 12 / 100,
                   ),
-                  InternationalPhoneNumberInput(
-                    onInputChanged: (PhoneNumber value) {},
-                    isEnabled: false,
-                    textFieldController: numberController,
-                    maxLength: 8,
-                    hintText: 'Numéro de téléphone',
-                    countries: ['TN'],
-                    textStyle: TextStyle(
-                      color: AppTheme.primaryColor,
-                    ),
-                    inputDecoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: AppTheme.primaryAccentColor),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppTheme.greyWhiteColor),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
+                  Text('Confirmation numéro',style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400,
+                      color: AppTheme.primaryColor))
                 ],
               ),
-            ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment(0, 0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      buildSecurityText(),
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      InternationalPhoneNumberInput(
+                        onInputChanged: (PhoneNumber value) {},
+                        isEnabled: false,
+                        textFieldController: numberController,
+                        maxLength: 8,
+                        hintText: 'Numéro de téléphone',
+                        countries: ['TN'],
+                        textStyle: TextStyle(
+                          color: AppTheme.primaryColor,
+                        ),
+                        inputDecoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryAccentColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: AppTheme.greyWhiteColor),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              buildNumberPad(),
+            ],
           ),
-          buildNumberPad(),
-        ],
+        ),
       ),
     );
   }

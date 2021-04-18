@@ -25,111 +25,119 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.cover)),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: height * 10 / 100,
-              ),
-              Image.asset(
-                AppStrings.app_icon,
-                width: 250,
-                height: 250,
-              ),
-              SizedBox(
-                height: height * 10 / 100,
-              ),
-              Container(
-                width: width,
-                decoration: BoxDecoration(
-                  color: AppTheme.whiteColor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      topLeft: Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black87.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.cover)),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: height * 10 / 100,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    SizedBox(
-                      height: height * 2 / 100,
-                    ),
-                    IntrinsicHeight(
-                        child: new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
+                Image.asset(
+                  AppStrings.app_icon,
+                  width: 250,
+                  height: 250,
+                ),
+                SizedBox(
+                  height: height * 10 / 100,
+                ),
+                Container(
+                  width: width,
+                  decoration: BoxDecoration(
+                    color: AppTheme.whiteColor,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black87.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        height: height * 2 / 100,
+                      ),
+                      IntrinsicHeight(
+                          child: new Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Se connecter',
+                                style: kTitleStyle,
+                              ),
+                            ],
+                          ),
+                          VerticalDivider(
+                            thickness: 2,
+                          ),
+                          GestureDetector(
+                            onTap: () => AppNavigation.goToSignUp(context),
+                            child: Text(
+                              'S\'inscrire',
+                              style: kTextStyle,
+                            ),
+                          ),
+                        ],
+                      )),
+                      SizedBox(
+                        height: height * 2 / 100,
+                      ),
+                      Container(
+                        width: width - (width * 10 / 100),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Se connecter',
-                              style: kTitleStyle,
+                              "Pseudo/email",
+                              style: kLabelStyle,
                             ),
+                            _buildEmail(),
+                            SizedBox(
+                              height: height * 2 / 100,
+                            ),
+                            Text(
+                              "Mot de passe",
+                              style: kLabelStyle,
+                            ),
+                            _buildPassword(),
+                            _buildLoginBtn(),
+                            _buildForgotPasswordBtn()
                           ],
                         ),
-                        VerticalDivider(
-                          thickness: 2,
-                        ),
-                        GestureDetector(
-                          onTap: () => AppNavigation.goToSignUp(context),
-                          child: Text(
-                            'S\'inscrire',
-                            style: kTextStyle,
-                          ),
-                        ),
-                      ],
-                    )),
-                    SizedBox(
-                      height: height * 2 / 100,
-                    ),
-                    Container(
-                      width: width - (width * 10 / 100),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            "Pseudo/email",
-                            style: kLabelStyle,
-                          ),
-                          _buildEmail(),
-                          SizedBox(
-                            height: height * 2 / 100,
-                          ),
-                          Text(
-                            "Mot de passe",
-                            style: kLabelStyle,
-                          ),
-                          _buildPassword(),
-                          _buildLoginBtn(),
-                          _buildForgotPasswordBtn()
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

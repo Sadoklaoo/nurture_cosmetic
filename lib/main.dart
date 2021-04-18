@@ -19,15 +19,14 @@ import 'Screens/my_allergy_screen.dart';
 import 'Screens/setting_notifications_screen.dart';
 import 'package:nurture_cosmetic/Screens/help_screen.dart';
 
-
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
   "/signUp": (BuildContext context) => SignUpScreen(),
   "/newAccount": (BuildContext context) => NewAccountScreen(),
-  "/pinAccount" : (BuildContext context) => AccountPinScreen(),
-  "/numberAccount" : (BuildContext context) => AccountNumberScreen(),
-  "/skipOrTake" : (BuildContext context) => SkipOrTakeScreen(),
-  "/test" : (BuildContext context) => TestScreen(),
+  "/pinAccount": (BuildContext context) => AccountPinScreen(),
+  "/numberAccount": (BuildContext context) => AccountNumberScreen(),
+  "/skipOrTake": (BuildContext context) => SkipOrTakeScreen(),
+  "/test": (BuildContext context) => TestScreen(),
   "/home": (BuildContext context) => HomeScreen(),
   "/filter": (BuildContext context) => FilterEngine(),
   "/settings": (BuildContext context) => SettingsScreen(),
@@ -35,7 +34,8 @@ var routes = <String, WidgetBuilder>{
   "/edit": (BuildContext context) => EditProfileScreen(),
   "/editPassword": (BuildContext context) => EditPasswordScreen(),
   "/myAllergy": (BuildContext context) => MyAllergyScreen(),
-  "/settingsNotifications": (BuildContext context) => SettingNotificationsScreen(),
+  "/settingsNotifications": (BuildContext context) =>
+      SettingNotificationsScreen(),
   "/help": (BuildContext context) => HelpScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
@@ -55,21 +55,24 @@ var routes = <String, WidgetBuilder>{
 
   */
 };
-void main() => runApp(LiquidApp(
-      materialApp: new MaterialApp(
-          theme: ThemeData(
-              primaryColor: AppTheme.primaryColor,
-              accentColor: AppTheme.primaryAccentColor,
-              fontFamily: 'Nunito'),
-          supportedLocales: const <Locale>[
-            Locale('en', ''),
-            Locale('ar', ''),
-            Locale('fr', ''),
-          ],
 
-          //theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.yellowAccent),
+void main() => runApp(
+      LiquidApp(
+        materialApp: new MaterialApp(
+            theme: ThemeData(
+                primaryColor: AppTheme.primaryColor,
+                accentColor: AppTheme.primaryAccentColor,
+                fontFamily: 'Nunito'),
+            supportedLocales: const <Locale>[
+              Locale('en', ''),
+              Locale('ar', ''),
+              Locale('fr', ''),
+            ],
 
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
-          routes: routes),
-    ));
+            //theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.yellowAccent),
+
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+            routes: routes),
+      ),
+    );

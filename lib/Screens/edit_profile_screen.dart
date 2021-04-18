@@ -51,97 +51,105 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return SideMenu(
-      background: AppTheme.primaryColor,
-      key: _sideMenuKey,
-      menu: buildMenu(context),
-      type: SideMenuType.slideNRotate,
-      child: Scaffold(
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 40.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Icon(
-                            Icons.chevron_left,
-                            size: 40,
-                            color: AppTheme.primaryColor,
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Center(
-                        child: Text("Modifier Profile",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
-                                color: AppTheme.primaryColor)),
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: SideMenu(
+        background: AppTheme.primaryColor,
+        key: _sideMenuKey,
+        menu: buildMenu(context),
+        type: SideMenuType.slideNRotate,
+        child: Scaffold(
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 40.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Icon(
+                              Icons.chevron_left,
+                              size: 40,
+                              color: AppTheme.primaryColor,
+                            )),
                       ),
-                    ),
-                    buildDrawerButton(),
-                  ],
-                ),
-                Divider(),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Center(
-                    child: Text(
-                        "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Center(
+                          child: Text("Modifier Profile",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppTheme.primaryColor)),
+                        ),
+                      ),
+                      buildDrawerButton(),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Divider(),
-                Text(
-                  "Nom*",
-                  style: kHintTextStyle,
-                ),
-                _buildEditText(),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Text(
-                  "Prénom*",
-                  style: kHintTextStyle,
-                ),
-                _buildEditText(),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Text(
-                  "Adresse e-mail*",
-                  style: kHintTextStyle,
-                ),
-                _buildEditText(),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Text(
-                  "Date de naissance*",
-                  style: kHintTextStyle,
-                ),
-                _buildEditTextDate(),
-                SizedBox(
-                  height: height * 1 / 100,
-                ),
-                _buildSignUpBtn()
-              ],
+                  Divider(),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Center(
+                      child: Text(
+                          "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Divider(),
+                  Text(
+                    "Nom*",
+                    style: kHintTextStyle,
+                  ),
+                  _buildEditText(),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Text(
+                    "Prénom*",
+                    style: kHintTextStyle,
+                  ),
+                  _buildEditText(),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Text(
+                    "Adresse e-mail*",
+                    style: kHintTextStyle,
+                  ),
+                  _buildEditText(),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Text(
+                    "Date de naissance*",
+                    style: kHintTextStyle,
+                  ),
+                  _buildEditTextDate(),
+                  SizedBox(
+                    height: height * 1 / 100,
+                  ),
+                  _buildSignUpBtn()
+                ],
+              ),
             ),
           ),
         ),

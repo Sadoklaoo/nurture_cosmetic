@@ -29,66 +29,74 @@ class _HelpScreenState extends State<HelpScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return SideMenu(
-      background: AppTheme.primaryColor,
-      key: _sideMenuKey,
-      menu: buildMenu(context),
-      type: SideMenuType.slideNRotate,
-      child: Scaffold(
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 40.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Icon(
-                            Icons.chevron_left,
-                            size: 40,
-                            color: AppTheme.primaryColor,
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Center(
-                        child: Text("Réclamation",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
-                                color: AppTheme.primaryColor)),
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: SideMenu(
+        background: AppTheme.primaryColor,
+        key: _sideMenuKey,
+        menu: buildMenu(context),
+        type: SideMenuType.slideNRotate,
+        child: Scaffold(
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 40.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Icon(
+                              Icons.chevron_left,
+                              size: 40,
+                              color: AppTheme.primaryColor,
+                            )),
                       ),
-                    ),
-                    buildDrawerButton(),
-                  ],
-                ),
-                Divider(),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Center(
-                    child: Text(
-                        "Avez-vous une suggestion ou avez-vous trouvé un bug? Faites-nous savoir dans le champ ci-dessous."),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Center(
+                          child: Text("Réclamation",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppTheme.primaryColor)),
+                        ),
+                      ),
+                      buildDrawerButton(),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Divider(),
-                buildRateCenter(),
-                buildReviewCenter()
-              ],
+                  Divider(),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Center(
+                      child: Text(
+                          "Avez-vous une suggestion ou avez-vous trouvé un bug? Faites-nous savoir dans le champ ci-dessous."),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Divider(),
+                  buildRateCenter(),
+                  buildReviewCenter()
+                ],
+              ),
             ),
           ),
         ),

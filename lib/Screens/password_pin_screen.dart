@@ -39,32 +39,40 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          buildExitButton(),
-          Expanded(
-            child: Container(
-              alignment: Alignment(0, 0.5),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  buildSecurityText(),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  buildPinRow(),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  buildResendText()
-                ],
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(
+        child: Column(
+          children: <Widget>[
+            buildExitButton(),
+            Expanded(
+              child: Container(
+                alignment: Alignment(0, 0.5),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    buildSecurityText(),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    buildPinRow(),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    buildResendText()
+                  ],
+                ),
               ),
             ),
-          ),
-          buildNumberPad(),
-        ],
+            buildNumberPad(),
+          ],
+        ),
       ),
     );
   }

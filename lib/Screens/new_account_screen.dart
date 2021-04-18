@@ -65,200 +65,208 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 40.0,
-          ),
-          child: Container(
-            width: width - (width * 10 / 100),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    GestureDetector(
-                        onTap: () => AppNavigation.goToSignUp(context),
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 30,
-                          color: AppTheme.primaryAccentColor,
-                        )),
-                    SizedBox(
-                      width: width * 35 / 100,
-                    ),
-                    Image.asset(
-                      AppStrings.logo_icon,
-                      width: 50,
-                      height: 50,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: 'Créer ',
-                      style: TextStyle(
-                        color: AppTheme.primaryAccentColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                      )),
-                  TextSpan(
-                      text: 'Compte',
-                      style: TextStyle(
-                        color: AppTheme.primaryColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                      )),
-                ])),
-                SizedBox(
-                  height: height * 2 / 100,
-                ),
-                Container(
-                  width: width - (width * 10 / 100),
-                  child: Column(
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: AppTheme.primaryColor,
+          accentColor: AppTheme.primaryAccentColor,
+          fontFamily: 'Nunito'),
+
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+          height: height,
+          width: width,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 40.0,
+            ),
+            child: Container(
+              width: width - (width * 10 / 100),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        "Nom*",
-                        style: kHintTextStyle,
-                      ),
-                      _buildEditText(),
+                      GestureDetector(
+                          onTap: () => AppNavigation.goToSignUp(context),
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 30,
+                            color: AppTheme.primaryAccentColor,
+                          )),
                       SizedBox(
-                        height: height * 2 / 100,
+                        width: width * 35 / 100,
                       ),
-                      Text(
-                        "Prénom*",
-                        style: kHintTextStyle,
+                      Image.asset(
+                        AppStrings.logo_icon,
+                        width: 50,
+                        height: 50,
                       ),
-                      _buildEditText(),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      Text(
-                        "Adresse e-mail*",
-                        style: kHintTextStyle,
-                      ),
-                      _buildEditText(),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      Text(
-                        "Date de naissance*",
-                        style: kHintTextStyle,
-                      ),
-                      _buildEditTextDate(),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      // Smart Select Gender
-                      SmartSelect<String>.single(
-                        title: 'Genre*',
-                        modalHeaderStyle: S2ModalHeaderStyle(
-                          textStyle: TextStyle(
-                            color: AppTheme.primaryColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-
-                          ),
-                        ),
-                        placeholder: 'Choisir',
-                        choiceStyle: S2ChoiceStyle(
-                          titleStyle: TextStyle(
-                            color: AppTheme.primaryColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-
-                          ),
-                          activeColor: AppTheme.primaryAccentColor,
-                          highlightColor: AppTheme.primaryAccentColor
-
-                        ),
-                        modalStyle: S2ModalStyle(
-                          elevation: 10,
-
-                        ),
-                        choiceItems: gender,
-                        onChange: (selected) =>
-                            setState(() => _gender = selected.value),
-                        modalType: S2ModalType.popupDialog,
-                        tileBuilder: (context, state) {
-                          return S2Tile.fromState(
-                            state,
-                          );
-                        },
-                        value: '',
-                      ),
-
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      Text(
-                        "Mot de passe*",
-                        style: kHintTextStyle,
-                      ),
-                      _buildEditText(),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      Text(
-                        "Confirmer mot de passe*",
-                        style: kHintTextStyle,
-                      ),
-                      _buildEditText(),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text:
-                                'En appuyant sur s\'inscrire, vous reconnaissez que vous avez accepté ',
-                            style: TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontWeight: FontWeight.normal,
-                            )),
-                        TextSpan(
-                            text: 'les conditions générales ',
-                            style: TextStyle(
-                              color: AppTheme.greenColor,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        TextSpan(
-                            text: 'et lu ',
-                            style: TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontWeight: FontWeight.normal,
-                            )),
-                        TextSpan(
-                            text: 'la politique de confidentialité.',
-                            style: TextStyle(
-                              color: AppTheme.greenColor,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ])),
-                      SizedBox(
-                        height: height * 2 / 100,
-                      ),
-                      _buildSignUpBtn()
                     ],
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: 'Créer ',
+                        style: TextStyle(
+                          color: AppTheme.primaryAccentColor,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                        )),
+                    TextSpan(
+                        text: 'Compte',
+                        style: TextStyle(
+                          color: AppTheme.primaryColor,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  ])),
+                  SizedBox(
+                    height: height * 2 / 100,
+                  ),
+                  Container(
+                    width: width - (width * 10 / 100),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Nom*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditText(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        Text(
+                          "Prénom*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditText(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        Text(
+                          "Adresse e-mail*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditText(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        Text(
+                          "Date de naissance*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditTextDate(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        // Smart Select Gender
+                        SmartSelect<String>.single(
+                          title: 'Genre*',
+                          modalHeaderStyle: S2ModalHeaderStyle(
+                            textStyle: TextStyle(
+                              color: AppTheme.primaryColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+
+                            ),
+                          ),
+                          placeholder: 'Choisir',
+                          choiceStyle: S2ChoiceStyle(
+                            titleStyle: TextStyle(
+                              color: AppTheme.primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+
+                            ),
+                            activeColor: AppTheme.primaryAccentColor,
+                            highlightColor: AppTheme.primaryAccentColor
+
+                          ),
+                          modalStyle: S2ModalStyle(
+                            elevation: 10,
+
+                          ),
+                          choiceItems: gender,
+                          onChange: (selected) =>
+                              setState(() => _gender = selected.value),
+                          modalType: S2ModalType.popupDialog,
+                          tileBuilder: (context, state) {
+                            return S2Tile.fromState(
+                              state,
+                            );
+                          },
+                          value: '',
+                        ),
+
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        Text(
+                          "Mot de passe*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditText(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        Text(
+                          "Confirmer mot de passe*",
+                          style: kHintTextStyle,
+                        ),
+                        _buildEditText(),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text:
+                                  'En appuyant sur s\'inscrire, vous reconnaissez que vous avez accepté ',
+                              style: TextStyle(
+                                color: AppTheme.primaryColor,
+                                fontWeight: FontWeight.normal,
+                              )),
+                          TextSpan(
+                              text: 'les conditions générales ',
+                              style: TextStyle(
+                                color: AppTheme.greenColor,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          TextSpan(
+                              text: 'et lu ',
+                              style: TextStyle(
+                                color: AppTheme.primaryColor,
+                                fontWeight: FontWeight.normal,
+                              )),
+                          TextSpan(
+                              text: 'la politique de confidentialité.',
+                              style: TextStyle(
+                                color: AppTheme.greenColor,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ])),
+                        SizedBox(
+                          height: height * 2 / 100,
+                        ),
+                        _buildSignUpBtn()
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
