@@ -9,21 +9,16 @@ import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
-class HelpScreen extends StatefulWidget {
+class TermsScreen extends StatefulWidget {
   @override
-  _HelpScreenState createState() {
-    return _HelpScreenState();
+  _TermsScreenState createState() {
+    return _TermsScreenState();
   }
 }
 
-class _HelpScreenState extends State<HelpScreen> {
+class _TermsScreenState extends State<TermsScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
-  bool switchOffer = true;
-  bool switchAnnounce = false;
-  bool switchRec = false;
-  bool switchDisp = true;
-  bool switchUpdate = true;
-  double _value = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +61,11 @@ class _HelpScreenState extends State<HelpScreen> {
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: Center(
-                          child: Text("Réclamation",
+                          child: Text("Termes & conditions",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.w400,
                                   color: AppTheme.primaryColor)),
                         ),
@@ -93,30 +88,8 @@ class _HelpScreenState extends State<HelpScreen> {
                     height: height * 2 / 100,
                   ),
                   Divider(),
-                  buildRateCenter(),
-                  buildReviewCenter(),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 15.0),
-                    width: double.infinity,
-                    child: RaisedButton(
-                      elevation: 5.0,
-                      onPressed: () => AppNavigation.goToHome(context),
-                      padding: EdgeInsets.all(15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: AppTheme.primaryAccentColor,
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: AppTheme.whiteColor,
-                          letterSpacing: 1.5,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  )
+                  buildPoliticCenter(),
+                  buildServiceCenter()
                 ],
               ),
             ),
@@ -153,7 +126,7 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 
-  Widget buildRateCenter() {
+  Widget buildPoliticCenter() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -174,54 +147,23 @@ class _HelpScreenState extends State<HelpScreen> {
               vertical: 20.0,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Comment était votre expérience?',
+                  '1. Politique de confidentialité',
                   style: TextStyle(
-                      color: AppTheme.primaryColor,
+                      color: AppTheme.primaryAccentColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.frown,
+                Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis neque sed nibh pretium, vitae finibus magna tempus. Praesent gravida maximus justo id vehicula. Duis sed dapibus sem. Donec nulla est, volutpat eu eros id, auctor mattis ante. Vestibulum efficitur, mi ac ultrices venenatis, nunc justo luctus leo, in accumsan magna augue id leo. Sed at vehicula magna, ac volutpat nisi. In ut tellus eros. Sed eget arcu eu nulla malesuada laoreet.',
+                  style: TextStyle(
                       color: AppTheme.primaryColor,
-                    ),
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        activeTrackColor: AppTheme.primaryAccentColor,
-                        inactiveTrackColor: AppTheme.greyColor,
-                        trackHeight: 15.0,
-                        thumbColor: AppTheme.whiteColor,
-                        thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                        overlayColor: AppTheme.primaryAccentColor.withAlpha(32),
-                        overlayShape:
-                            RoundSliderOverlayShape(overlayRadius: 28.0),
                       ),
-                      child: Slider(
-                        min: 0,
-                        max: 100,
-                        divisions: 10,
-                        value: _value,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value;
-                          });
-                        },
-                      ),
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.grin,
-                      color: AppTheme.primaryColor,
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -229,7 +171,7 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 
-  Widget buildReviewCenter() {
+  Widget buildServiceCenter() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -250,49 +192,24 @@ class _HelpScreenState extends State<HelpScreen> {
               vertical: 20.0,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                    color: AppTheme.greyWhiteColor,
-                    child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 6,
-                        style: TextStyle(color: AppTheme.primaryColor),
-                        decoration: InputDecoration.collapsed(
-                            hintText: "Décrivez votre expérience ici...",
-                            hintStyle: TextStyle(color: AppTheme.primaryColor)),
-                      ),
-                    )),
-                SizedBox(height: 10,),
-                CustomRadioButton(
-                  elevation: 1,
-                  absoluteZeroSpacing: false,
-                  enableShape: true,
-                  unSelectedColor: Theme.of(context).canvasColor,
-                  selectedBorderColor: AppTheme.primaryAccentColor,
-                  unSelectedBorderColor: AppTheme.primaryAccentColor,
-                  buttonLables: [
-                    'Sugguestion',
-                    'Bug',
-                    'Autre',
-                  ],
-                  buttonValues: [
-                    'Sugguestion',
-                    'Bug',
-                    'Autre',
-                  ],
-                  buttonTextStyle: ButtonTextStyle(
-                      selectedColor: Colors.white,
-                      unSelectedColor: AppTheme.primaryAccentColor,
-                      textStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-                  radioButtonValue: (value) {
-                    print(value);
-                  },
-                  selectedColor: AppTheme.primaryAccentColor,
+                Text(
+                  '2. Qui peut utiliser notre service ?',
+                  style: TextStyle(
+                      color: AppTheme.primaryAccentColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
                 ),
-
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis neque sed nibh pretium, vitae finibus magna tempus. Praesent gravida maximus justo id vehicula. Duis sed dapibus sem. Donec nulla est, volutpat eu eros id, auctor mattis ante. Vestibulum efficitur, mi ac ultrices venenatis, nunc justo luctus leo, in accumsan magna augue id leo. Sed at vehicula magna, ac volutpat nisi. In ut tellus eros. Sed eget arcu eu nulla malesuada laoreet.',
+                  style: TextStyle(
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
               ],
             ),
           )),

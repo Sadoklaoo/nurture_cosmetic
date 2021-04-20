@@ -18,6 +18,8 @@ import 'Screens/edit_password_screen.dart';
 import 'Screens/my_allergy_screen.dart';
 import 'Screens/setting_notifications_screen.dart';
 import 'package:nurture_cosmetic/Screens/help_screen.dart';
+import 'package:nurture_cosmetic/Screens/terms_screen.dart';
+import 'package:nurture_cosmetic/Screens/translate_screen.dart';
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
@@ -37,6 +39,8 @@ var routes = <String, WidgetBuilder>{
   "/settingsNotifications": (BuildContext context) =>
       SettingNotificationsScreen(),
   "/help": (BuildContext context) => HelpScreen(),
+  "/terms": (BuildContext context) => TermsScreen(),
+  "/translate": (BuildContext context) => TranslateScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
