@@ -84,4 +84,7 @@ class AppNavigation {
   static void goToLanguage(BuildContext context) {
     Navigator.pushNamed(context, "/translate");
   }
+  static void goToFavorite(BuildContext context) {
+    Navigator.pushNamed(context, "/favorite");
+  }
 }

@@ -36,7 +36,7 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-               //   AppNavigation.goToPending(context);
+                  AppNavigation.goToFavorite(context);
                 },
                 leading: Icon(Icons.star, size: 20.0, color: Colors.white),
                 title: Text("Favoris"),
