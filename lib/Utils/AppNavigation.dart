@@ -87,4 +87,5 @@ class AppNavigation {
   static void goToFavorite(BuildContext context) {
     Navigator.pushNamed(context, "/favorite");
   }
+
 }

@@ -4,17 +4,17 @@ import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
-import 'package:nurture_cosmetic/Widgets/ProductListItem.dart';
+import 'package:nurture_cosmetic/Widgets/NotificationListItem.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
-class FavoriteScreen extends StatefulWidget {
+class NotificationScreen extends StatefulWidget {
   @override
-  _FavoriteScreenState createState() {
-    return _FavoriteScreenState();
+  _NotificationScreenState createState() {
+    return _NotificationScreenState();
   }
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _NotificationScreenState extends State<NotificationScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Center(
-                        child: Text("Favoris",
+                        child: Text("Notifications",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w400,
@@ -72,7 +72,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Mes Favoris",
+                      "Notifications",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
@@ -82,7 +82,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              AppNavigation.goToFilter(context);
+                           //   AppNavigation.goToFilter(context);
                             },
                             child: Icon(
                               Icons.delete_forever,
@@ -91,10 +91,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         SizedBox(width: 10,),
                         GestureDetector(
                             onTap: () {
-                              AppNavigation.goToFilter(context);
+                            //  AppNavigation.goToFilter(context);
                             },
                             child: Icon(
-                              Icons.filter_list_outlined,
+                              Icons.check,
                               color: AppTheme.primaryColor,
                             )),
                       ],
@@ -104,14 +104,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top:10.0),
                   child: SizedBox(
-                    height: height *60 /100 ,
+                      height: height *65 /100 ,
                       child: ListView.builder(
                         padding: EdgeInsets.only(right: 6, left: 6),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: 20,
                         itemBuilder: (BuildContext context, int index) {
-                          return ProductListItem();
+                          return NotificationListItem();
                         },
                       )),
                 ),
