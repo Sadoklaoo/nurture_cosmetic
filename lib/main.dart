@@ -20,7 +20,8 @@ import 'Screens/setting_notifications_screen.dart';
 import 'package:nurture_cosmetic/Screens/help_screen.dart';
 import 'package:nurture_cosmetic/Screens/terms_screen.dart';
 import 'package:nurture_cosmetic/Screens/translate_screen.dart';
-
+import 'package:nurture_cosmetic/Screens/favorit_screen.dart';
+import 'Screens/notifications_screen.dart';
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
   "/signUp": (BuildContext context) => SignUpScreen(),
@@ -41,6 +42,8 @@ var routes = <String, WidgetBuilder>{
   "/help": (BuildContext context) => HelpScreen(),
   "/terms": (BuildContext context) => TermsScreen(),
   "/translate": (BuildContext context) => TranslateScreen(),
+  "/favorite": (BuildContext context) => FavoriteScreen(),
+  "/notifications": (BuildContext context) => NotificationScreen(),
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
 
@@ -52,7 +55,7 @@ var routes = <String, WidgetBuilder>{
   "/pending": (BuildContext context) => PendingScreen(),
   "/history": (BuildContext context) => HistoryScreen(),
 
-  "/notifications": (BuildContext context) => NotificationsScreen(),
+
 
   "/intro": (BuildContext context) => IntroScreen(),
   "/login": (BuildContext context) => LoginScreen(),
