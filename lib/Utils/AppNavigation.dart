@@ -87,5 +87,19 @@ class AppNavigation {
   static void goToFavorite(BuildContext context) {
     Navigator.pushNamed(context, "/favorite");
   }
+  static void goToUnderstand(BuildContext context) {
+    Navigator.pushNamed(context, "/understand");
+  }
+  static void goToKnow(BuildContext context) {
+    Navigator.pushNamed(context, "/know");
+  }
+
+  static void goToInfo(BuildContext context,String id) {
+    print(id);
+   // Navigator.pushNamed(context, "/know");
+    switch(int.parse(id)){
+      case 3 : Navigator.pushNamed(context, "/skinRole");
+    }
+  }
 
 }

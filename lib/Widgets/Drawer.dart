@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_ui/liquid_ui.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 
@@ -36,6 +37,18 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
+                  AppNavigation.goToNotifications(context);
+                },
+                leading: Icon(Icons.notifications, size: 20.0, color: Colors.white),
+                title: Text("Notifications"),
+                textColor: Colors.white,
+                dense: true,
+
+                // padding: EdgeInsets.zero,
+              ),
+              LListItem(
+                backgroundColor: Colors.transparent,
+                onTap: () {
                   AppNavigation.goToFavorite(context);
                 },
                 leading: Icon(Icons.star, size: 20.0, color: Colors.white),
@@ -59,13 +72,39 @@ Widget buildMenu(context) {
                 // padding: EdgeInsets.zero,
               ),
 
+
+
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-                 AppNavigation.goToNotifications(context);
+                  AppNavigation.goToLogin(context);
                 },
-                leading: Icon(Icons.notifications, size: 20.0, color: Colors.white),
-                title: Text("Notifications"),
+                leading: Icon(Icons.filter_frames_sharp, size: 20.0, color: Colors.white),
+                title: Text("Résultats"),
+                textColor: Colors.white,
+                dense: true,
+
+                // padding: EdgeInsets.zero,
+              ),
+              LListItem(
+                backgroundColor: Colors.transparent,
+                onTap: () {
+                  AppNavigation.goToUnderstand(context);
+                },
+                leading: FaIcon(FontAwesomeIcons.newspaper,size: 20.0, color: Colors.white),
+                title: Text("Comprendre"),
+                textColor: Colors.white,
+                dense: true,
+
+                // padding: EdgeInsets.zero,
+              ),
+              LListItem(
+                backgroundColor: Colors.transparent,
+                onTap: () {
+                  AppNavigation.goToKnow(context);
+                },
+                leading: FaIcon(FontAwesomeIcons.infoCircle,size: 20.0, color: Colors.white),
+                title: Text("(Re)Connaître"),
                 textColor: Colors.white,
                 dense: true,
 
@@ -78,18 +117,6 @@ Widget buildMenu(context) {
                 },
                 leading: Icon(Icons.settings, size: 20.0, color: Colors.white),
                 title: Text("Paramétres"),
-                textColor: Colors.white,
-                dense: true,
-
-                // padding: EdgeInsets.zero,
-              ),
-              LListItem(
-                backgroundColor: Colors.transparent,
-                onTap: () {
-                  AppNavigation.goToLogin(context);
-                },
-                leading: Icon(Icons.filter_frames_sharp, size: 20.0, color: Colors.white),
-                title: Text("Résultats"),
                 textColor: Colors.white,
                 dense: true,
 
