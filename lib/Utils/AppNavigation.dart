@@ -99,6 +99,11 @@ class AppNavigation {
    // Navigator.pushNamed(context, "/know");
     switch(int.parse(id)){
       case 3 : Navigator.pushNamed(context, "/skinRole");
+      break;
+      case 4 : Navigator.pushNamed(context, "/skinType");
+      break;
+      case 5 : Navigator.pushNamed(context, "/mySkinType");
+      break;
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_ui/liquid_ui.dart';
-import 'package:nurture_cosmetic/Screens/Info%20Pages/skin_role_screen.dart';
+import 'package:nurture_cosmetic/Screens/infoPages/skin_role_screen.dart';
 import 'package:nurture_cosmetic/Screens/account_pin_screen.dart';
 import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
@@ -25,11 +25,15 @@ import 'package:nurture_cosmetic/Screens/favorit_screen.dart';
 import 'Screens/notifications_screen.dart';
 import 'Screens/understand_screen.dart';
 import 'Screens/know_screen.dart';
+import 'Screens/infoPages/skin_type_screen.dart';
+import 'Screens/infoPages/my_skin_type_screen.dart';
+
 
 var routes = <String, WidgetBuilder>{
-
   /* Skin Pages */
   "/skinRole": (BuildContext context) => SkinRoleScreen(),
+  "/skinType": (BuildContext context) => SkinTypeScreen(),
+  "/mySkinType": (BuildContext context) => MySkinTypeScreen(),
   // All Pages
   "/login": (BuildContext context) => LoginScreen(),
   "/signUp": (BuildContext context) => SignUpScreen(),
@@ -55,13 +59,6 @@ var routes = <String, WidgetBuilder>{
   "/understand": (BuildContext context) => UnderstandScreen(),
   "/know": (BuildContext context) => KnowScreen(),
   // All
-
-
-
-
-
-
-
 
   /* "/welcome": (BuildContext context) => WelcomeScreen(),
 
