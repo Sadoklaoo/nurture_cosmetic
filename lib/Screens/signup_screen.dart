@@ -36,10 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Container(
           height: height,
           width: width,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/background.png"),
-                  fit: BoxFit.cover)),
+          
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

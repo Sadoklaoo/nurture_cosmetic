@@ -31,12 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height:  height,
         width: width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.cover
-          )
-        ),
+        color: AppTheme.whiteColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
