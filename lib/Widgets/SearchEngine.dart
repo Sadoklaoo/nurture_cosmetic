@@ -153,7 +153,9 @@ class DataSeach extends SearchDelegate<String> {
             scrollDirection: Axis.vertical,
             itemCount: 20,
             itemBuilder: (BuildContext context, int index) {
-              return ProductListItem();
+              return GestureDetector(
+                onTap: ()=> AppNavigation.goToDetails(context),
+                  child: ProductListItem());
             },
           ),
         )),
