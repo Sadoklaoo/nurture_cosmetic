@@ -219,7 +219,7 @@ class _MySkinTypeScreenState extends State<MySkinTypeScreen>
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
-                              "3 méthodes pour déterminer son type de peau",
+                              "Déterminer son type de peau",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20,
@@ -230,27 +230,13 @@ class _MySkinTypeScreenState extends State<MySkinTypeScreen>
                           RichText(
                             text: TextSpan(
                               text:
-                                  'Connaître son type de peau est essentiel pour savoir comment prendre soin de sa peau et au final avoir une belle peau. Le sébum régit l’hydratation de la peau et influe son aspect. Voici 3 méthodes pour évaluer la capacité de votre peau à produire du sébum et vous aider à déterminer vous-même votre type de peau à un moment t donné.',
+                                  'Connaître son type de peau est essentiel pour savoir comment prendre soin de sa peau et au final avoir une belle peau. Le sébum régit l’hydratation de la peau et influe son aspect. Voici une méthode pour évaluer la capacité de votre peau à produire du sébum et vous aider à déterminer vous-même votre type de peau à un moment t donné.',
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: AppTheme.primaryColor,
                               ),
                             ),
                           ),
-                        ),
-                        AppDesign.buildBlockTitle2List(
-                          "Déterminer son type de peau par l’observation",
-                          "La peau grasse s’explique par un excès de sébum, appelé séborrhée. Elle se manifeste surtout sur le visage et le haut du dos et se caractérise par :",
-                          notices,
-                          "La peau peut devenir grasse pour différentes raisons :",
-                          questions,
-                        ),
-                        AppDesign.buildBlockTitle2List(
-                          "Déterminer son type de peau grâce au test du mouchoir",
-                          "Réaliser le test du mouchoir permet de donner une indication sur le type de peau.\nProcéder de la façon suivante :",
-                          steps,
-                          "Résultat du test :",
-                          result,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
@@ -299,7 +285,7 @@ class _MySkinTypeScreenState extends State<MySkinTypeScreen>
                                 ),
                               )),
                         ),
-                        _buildTable()
+                    //    _buildTable()
                       ],
                     ),
                   ),
@@ -340,113 +326,115 @@ class _MySkinTypeScreenState extends State<MySkinTypeScreen>
   Widget _buildTable() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: Container(
-          decoration: BoxDecoration(
-            color: AppTheme.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 2.0,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 20.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Tableau récapitulatif des caractéristiques des types de peau",
-                  style: TextStyle(
-                      color: AppTheme.primaryAccentColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+      child: Expanded(
+        child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 2.0,
+                  offset: Offset(0, 3),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "En observant attentivement sa peau et en se reportant au tableau ci-dessous, il est aussi possible de déterminer son type de peau.",
-                  style: TextStyle(
-                    color: AppTheme.primaryColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Expanded(
-                    child: SfDataGrid(
-                      frozenColumnsCount: 1,
-                      defaultColumnWidth: 130,
-
-                      source: optionDataSource, columns: <GridColumn>[
-                      GridTextColumn(
-                          columnName: 'name',
-                          label: Container(
-                              width: 120,
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '',
-                              ))),
-                      GridTextColumn(
-                          columnName: 'normal',
-                          width: 120,
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text('NORMALE',style: TextStyle(
-                                  color: AppTheme.primaryAccentColor,
-                                  fontWeight: FontWeight.bold,)))),
-                      GridTextColumn(
-                          columnName: 'grasse',
-                          width: 120,
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text('GRASSE',style: TextStyle(
-                                color: AppTheme.primaryAccentColor,
-                                fontWeight: FontWeight.bold,)))),
-                      GridTextColumn(
-                          columnName: 'seche',
-                          width: 120,
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text('SÈCHE',style: TextStyle(
-                                color: AppTheme.primaryAccentColor,
-                                fontWeight: FontWeight.bold,)))),
-                      GridTextColumn(
-                          columnName: 'mixte',
-                          width: 120,
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text('MIXTE',style: TextStyle(
-                                color: AppTheme.primaryAccentColor,
-                                fontWeight: FontWeight.bold,)))),
-                      GridTextColumn(
-                          columnName: 'senescente',
-                          width: 120,
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text('SÉNESCENTE',style: TextStyle(
-                                color: AppTheme.primaryAccentColor,
-                                fontWeight: FontWeight.bold,)))),
-                    ],
-                    ),
-                  ),
-                )
               ],
             ),
-          )),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 20.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Tableau récapitulatif des caractéristiques des types de peau",
+                    style: TextStyle(
+                        color: AppTheme.primaryAccentColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "En observant attentivement sa peau et en se reportant au tableau ci-dessous, il est aussi possible de déterminer son type de peau.",
+                    style: TextStyle(
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Expanded(
+                      child: SfDataGrid(
+                        frozenColumnsCount: 1,
+                        defaultColumnWidth: 130,
+
+                        source: optionDataSource, columns: <GridColumn>[
+                        GridTextColumn(
+                            columnName: 'name',
+                            label: Container(
+                                width: 120,
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '',
+                                ))),
+                        GridTextColumn(
+                            columnName: 'normal',
+                            width: 120,
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text('NORMALE',style: TextStyle(
+                                    color: AppTheme.primaryAccentColor,
+                                    fontWeight: FontWeight.bold,)))),
+                        GridTextColumn(
+                            columnName: 'grasse',
+                            width: 120,
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text('GRASSE',style: TextStyle(
+                                  color: AppTheme.primaryAccentColor,
+                                  fontWeight: FontWeight.bold,)))),
+                        GridTextColumn(
+                            columnName: 'seche',
+                            width: 120,
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text('SÈCHE',style: TextStyle(
+                                  color: AppTheme.primaryAccentColor,
+                                  fontWeight: FontWeight.bold,)))),
+                        GridTextColumn(
+                            columnName: 'mixte',
+                            width: 120,
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text('MIXTE',style: TextStyle(
+                                  color: AppTheme.primaryAccentColor,
+                                  fontWeight: FontWeight.bold,)))),
+                        GridTextColumn(
+                            columnName: 'senescente',
+                            width: 120,
+                            label: Container(
+                                padding: EdgeInsets.all(16.0),
+                                alignment: Alignment.centerLeft,
+                                child: Text('SÉNESCENTE',style: TextStyle(
+                                  color: AppTheme.primaryAccentColor,
+                                  fontWeight: FontWeight.bold,)))),
+                      ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
+      ),
     );
   }
 

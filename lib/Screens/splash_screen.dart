@@ -38,7 +38,27 @@ class _SplashScreenState extends State<SplashScreen> {
           children: <Widget>[
             SizedBox(height: height*10/100,),
             Image.asset(AppStrings.app_icon,width: 250,height: 250,),
-
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(AppTheme.primaryAccentColor)),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0),
+                  ),
+                  Text(
+                    AppStrings.slogon,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        color: AppTheme.primaryAccentColor),
+                  )
+                ],
+              ),
+            )
 
 
           ],

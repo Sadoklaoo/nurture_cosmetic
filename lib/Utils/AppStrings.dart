@@ -19,6 +19,7 @@ class AppStrings {
   static const String organic = "assets/images/organic.png";
 
   static const String product = "assets/images/product_icon.png";
+  static const String slogon = "Access Anytime & Anywhere\n For Everyone";
 
   static const String fragance_icon = "assets/images/fragences.png";
   static const String antioxydants_icon = "assets/images/antioxydants.png";

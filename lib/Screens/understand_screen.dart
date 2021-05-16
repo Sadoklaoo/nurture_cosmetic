@@ -141,49 +141,7 @@ class _UnderstandScreenState extends State<UnderstandScreen> {
         extras: {'key': 'extradata6'},
       ),
 
-      DataModel(
-        id: 7,
-        name: 'La cosmétique',
-        parentId: 1,
-        extras: {'key': 'extradata7'},
-      ),
-      DataModel(
-        id: 8,
-        name: 'Définition',
-        parentId: 7,
-        extras: {'key': 'extradata8'},
-      ),
-      DataModel(
-        id: 9,
-        name: 'Composition',
-        parentId:7,
-        extras: {'key': 'extradata9'},
-      ),
-      DataModel(
-        id: 10,
-        name: 'Les corps gras',
-        parentId: 7,
-        extras: {'key': 'extradata10'},
-      ),
 
-      DataModel(
-        id: 11,
-        name: 'Les additifs',
-        parentId: 7,
-        extras: {'key': 'extradata11'},
-      ),
-      DataModel(
-        id: 12,
-        name: 'Fonctions cosmétiques',
-        parentId: 7,
-        extras: {'key': 'extradata12'},
-      ),
-      DataModel(
-        id: 13,
-        name: 'Durée de conservation',
-        parentId: 7,
-        extras: {'key': 'extradata13'},
-      ),
 
     ];
   }
