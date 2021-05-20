@@ -210,7 +210,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     SizedBox(
                       width: 10,
                     ),
-                    Image.asset("assets/images/left_info_btn.png"),
+                    GestureDetector(onTap: ()=>{
+                      AppNavigation.goToIngredients(context)
+                    },
+                        child: Image.asset("assets/images/left_info_btn.png")),
 
 
                   ],

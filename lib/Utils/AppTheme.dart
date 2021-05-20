@@ -23,6 +23,10 @@ class AppTheme {
   static const Color whiteColor = Colors.white;
   static const Color backgroundColor = Color(0xffe8f2fc);
 
+  static const Color lowColor = Color(0xffFF9F1C);
+  static const Color mediumColor = Color(0xffD36135);
+  static const Color highColor = Color(0xff570000);
+
   static const Color shadowColor = Colors.black26;
   static const Color blackColor = Colors.black;
   static const Color cardBlackColor = Color(0xff202426);

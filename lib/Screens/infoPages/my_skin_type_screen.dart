@@ -311,7 +311,7 @@ class _MySkinTypeScreenState extends State<MySkinTypeScreen>
         ),
         color: AppTheme.primaryColor,
         child: Text(
-          'Prendre le test',
+          'Faire le test',
           style: TextStyle(
             color: AppTheme.whiteColor,
             letterSpacing: 1.5,
