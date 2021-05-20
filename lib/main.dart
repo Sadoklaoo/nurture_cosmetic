@@ -29,6 +29,7 @@ import 'Screens/details_screen.dart';
 import 'Screens/infoPages/skin_type_screen.dart';
 import 'Screens/infoPages/my_skin_type_screen.dart';
 import 'Screens/ingredients_screen.dart';
+import 'Screens/take_screen.dart';
 
 
 var routes = <String, WidgetBuilder>{
@@ -62,6 +63,7 @@ var routes = <String, WidgetBuilder>{
   "/know": (BuildContext context) => KnowScreen(),
   "/details": (BuildContext context) => DetailsScreen(),
   "/ingredients": (BuildContext context) => IngredientsScreen(),
+  "/take": (BuildContext context) => TakeScreen(),
   // All
 
   /* "/welcome": (BuildContext context) => WelcomeScreen(),

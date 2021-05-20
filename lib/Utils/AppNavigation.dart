@@ -99,6 +99,10 @@ class AppNavigation {
   static void goToIngredients(BuildContext context) {
     Navigator.pushNamed(context, "/ingredients");
   }
+  static void goToTake(BuildContext context) {
+    Navigator.pushNamed(context, "/take");
+  }
+
 
   static void goToInfo(BuildContext context,String id) {
     print(id);

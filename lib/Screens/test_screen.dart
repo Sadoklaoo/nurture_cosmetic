@@ -25,10 +25,7 @@ class _TestScreenState extends State<TestScreen> {
       body: Container(
         height: height,
         width: width,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/blurry_bg.png"),
-                fit: BoxFit.cover)),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,11 +35,11 @@ class _TestScreenState extends State<TestScreen> {
             ),
             Image.asset(
               "assets/images/test_icon.png",
-              width: 250,
-              height: 250,
+              width: 200,
+              height: 200,
             ),
             SizedBox(
-              height: height * 2 / 100,
+              height: height * 5 / 100,
             ),
             Text(
               'Découvrez votre peau',
@@ -53,7 +50,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
             ),
             SizedBox(
-              height: height * 2 / 100,
+              height: height * 5 / 100,
             ),
             Text(
               'Grâce a ce diagnostic vous pourrez enfin comprendre votre peau et trouvez les soins adaptés à ses besoins.',
@@ -111,7 +108,7 @@ class _TestScreenState extends State<TestScreen> {
 
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => AppNavigation.goToIntro(context),
+        onPressed: () => AppNavigation.goToTake(context),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),

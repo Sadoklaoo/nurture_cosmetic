@@ -77,7 +77,7 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-                  AppNavigation.goToLogin(context);
+                  AppNavigation.goToTest(context);
                 },
                 leading: Icon(Icons.filter_frames_sharp, size: 20.0, color: Colors.white),
                 title: Text("Résultats"),
