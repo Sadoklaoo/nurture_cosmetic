@@ -1,10 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:nurture_cosmetic/Models/Product.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Utils/AppUtils.dart';
 
 class ProductListItem extends StatelessWidget {
+  Product product;
+  ProductListItem(this.product);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,12 +18,12 @@ class ProductListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppUtils.capitalizeSentence('Guerlain Shalimar'),
+                AppUtils.capitalizeSentence(product.ProductName),
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: AppTheme.primaryColor),
               ),
               Text(
-                AppUtils.capitalizeSentence('138.0 DT'),
+                AppUtils.capitalizeSentence(product.Price.toString()+' DT'),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: AppTheme.primaryAccentColor),
@@ -28,7 +32,7 @@ class ProductListItem extends StatelessWidget {
           ),
           leading: Container(
             color: AppTheme.primaryAccentColor,
-              child: Image.asset(AppStrings.product, width: 80, height: 80)),
+              child: Image.network(AppConfig.URL_GET_IMAGE+product.Image, width: 80, height: 80)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,7 +45,7 @@ class ProductListItem extends StatelessWidget {
                 children: [
                   Flexible(
                     child: AutoSizeText(
-                      'Shalimar est le premier oriental de l\'histoire de la parfumerie.',
+                      product.ProductDescription,
                       maxLines: 3,
                       overflow: TextOverflow.visible,
                       softWrap: true,

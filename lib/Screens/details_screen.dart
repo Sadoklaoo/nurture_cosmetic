@@ -1,15 +1,24 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nurture_cosmetic/Models/Product.dart';
+import 'package:nurture_cosmetic/Models/Session.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/NotificationListItem.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DetailsScreen extends StatefulWidget {
+  final int id;
+  DetailsScreen({ @required this.id}) ;
   @override
   _DetailsScreenState createState() {
     return _DetailsScreenState();
@@ -18,6 +27,66 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
+  Session session;
+  int id;
+  Connectivity connectivity;
+  Product product;
+  User _currentUser;
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    session = new Session();
+    connectivity = new Connectivity();
+    _currentUser = new User();
+
+  }
+  Future getCurrentUser() async {
+    String tt;
+    String url = AppConfig.URL_GET_CURRENT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _currentUser = User.fromMap(data);
+    return (Future(() => _currentUser));
+    //updateNotification(_currentUser.phoneNumber);
+  }
+
+  Future getProductDetail(int id) async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_DETAILS+id.toString();
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    product = Product.fromMap(data);
+    return (Future(() => product));
+    //updateNotification(_currentUser.phoneNumber);
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -25,7 +94,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+      menu: buildMenu(context,getCurrentUser()),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Padding(

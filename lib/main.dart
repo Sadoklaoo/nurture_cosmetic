@@ -61,7 +61,6 @@ var routes = <String, WidgetBuilder>{
   "/notifications": (BuildContext context) => NotificationScreen(),
   "/understand": (BuildContext context) => UnderstandScreen(),
   "/know": (BuildContext context) => KnowScreen(),
-  "/details": (BuildContext context) => DetailsScreen(),
   "/ingredients": (BuildContext context) => IngredientsScreen(),
   "/take": (BuildContext context) => TakeScreen(),
   // All

@@ -1,11 +1,24 @@
+import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nurture_cosmetic/Models/Category.dart' ;
+import 'package:nurture_cosmetic/Models/Session.dart';
+import 'package:nurture_cosmetic/Models/ProductType.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Models/Product.dart' ;
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
+import 'package:nurture_cosmetic/Utils/AppUtils.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/SearchEngine.dart';
+import 'package:http/http.dart' as http;
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,12 +26,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
-
+  User _currentUser;
+  Session session;
+  Connectivity connectivity;
+  Future<List<Categorie>> categories;
+  List<Categorie> _categories;
+  List<ProductType> _productType;
+  List<Product> _products;
+  Future<List<Product>> _futureProducts;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    session = new Session();
+    connectivity = new Connectivity();
+    _currentUser = new User();
+    setState(() {
+      getCurrentUser();
+      getCategories();
+    });
+    setState(() {
+      //
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
           primaryColor: AppTheme.primaryColor,
           accentColor: AppTheme.primaryAccentColor,
           fontFamily: 'Nunito'),
-
       debugShowCheckedModeBanner: false,
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-        menu: buildMenu(context),
+        menu: buildMenu(context, getCurrentUser()),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           body: Padding(
@@ -56,9 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 20,
                       ),
                       _buildSugguestions(),
+                      SizedBox(
+                        height: 20,
+                      ),
                       categorySelector(),
+                      SizedBox(
+                        height: 20,
+                      ),
                       productTypeSelector(),
-                      natureSelector()
+                      /* natureSelector()*/
                     ],
                   ),
                 ),
@@ -81,14 +119,25 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Bonjour, Foulen',
-                style: TextStyle(
-                  color: AppTheme.primaryColor,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              FutureBuilder(
+                  future: getCurrentUser(),
+                  builder: (context, projectSnap) {
+                    if(projectSnap.hasData ){
+                      return Text(
+                        'Bonjour, ' + projectSnap.data.firstName,
+                        style: TextStyle(
+                          color: AppTheme.primaryColor,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                    }
+                    else  {
+                      //print('project snapshot data is: ${projectSnap.data}');
+                      return CircularProgressIndicator();
+                    }
+
+                  }),
               Text(
                 'Bienvenue à Nurture Cosmetic.',
                 style: TextStyle(
@@ -123,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 20.0),
         child: GestureDetector(
           onTap: () {
-            showSearch(context: context, delegate: DataSeach());
+            showSearch(context: context, delegate: DataSeach(null,null,null));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -137,7 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             child: TextField(
-
               enabled: false,
               cursorColor: AppTheme.greyColor,
               decoration: InputDecoration(
@@ -219,50 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ]));
   }
 
-  //Nature
-  Widget natureSelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
-          child: labelContainer('Nature',
-              "Selectionner une nature pour visualiser ses produits."),
-        ),
-        natureList(),
-      ],
-    );
-  }
 
-  Widget natureList() {
-    return Container(
-        height: 110.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            imageSection(
-                AppStrings.naturel, "Naturel", AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.eco, "Eco", AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.organic, "Organique", AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.bio, "Bio", AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.vegan, "Vegan", AppTheme.primaryAccentColor),
-          ],
-        ));
-  }
 
   //Produit
   Widget productTypeSelector() {
@@ -271,8 +276,8 @@ class _HomeScreenState extends State<HomeScreen> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
-          child: labelContainer('Type de produit',
-              "Selectionner un type pour visualiser ses produits."),
+          child: labelContainer('Nature',
+              "Selectionner une nature pour visualiser ses produits."),
         ),
         productTypeList(),
       ],
@@ -281,28 +286,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget productTypeList() {
     return Container(
-        height: 110.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            imageSection(
-                AppStrings.creme, "Crème de beauté", AppTheme.primaryColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.cosmetics, "Cosmétiques", AppTheme.primaryColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.parfum, "Parfums", AppTheme.primaryColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(
-                AppStrings.kit, "Kits cosmétiques", AppTheme.primaryColor),
-          ],
-        ));
+      height: 110.0,
+      child: FutureBuilder(
+          future: getProductTypes(),
+          builder: (context, projectSnap) {
+            if(projectSnap.hasData ){
+              return ListView.builder(
+                itemCount: projectSnap.data.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  ProductType productType = projectSnap.data[index];
+                  return Row(
+                    children: <Widget>[
+
+                      GestureDetector(
+                        onTap: () => {
+                          showSearch(context: context, delegate: DataSeach(null,null,productType))
+                        },
+                        child: imageSection(productType.image, productType.TypeName,
+                            AppTheme.primaryColor),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+            else  {
+              //print('project snapshot data is: ${projectSnap.data}');
+              return CircularProgressIndicator();
+            }
+
+          }),
+    );
   }
 
   //Category
@@ -322,29 +340,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget categoryList() {
     return Container(
-        height: 110.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            imageSection(AppStrings.skin_icon, "Soins de la peau",
-                AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.face_icon, "Soins de visage",
-                AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.hair_icon, "Soins de cheveaux",
-                AppTheme.primaryAccentColor),
-            SizedBox(
-              width: 8.0,
-            ),
-            imageSection(AppStrings.pers_icon, "Soins personelles",
-                AppTheme.primaryAccentColor),
-          ],
-        ));
+      height: 110.0,
+      child: FutureBuilder(
+          future: getCategories(),
+          builder: (context, projectSnap) {
+            if(projectSnap.hasData ){
+              return ListView.builder(
+                itemCount: projectSnap.data.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  Categorie categorie = projectSnap.data[index];
+                  return Row(
+                    children: <Widget>[
+
+                      GestureDetector(
+                        onTap: () async => {
+                          this._futureProducts = (Future(() async => (await this.getProductByCategory(categorie)) )) ,
+                        showSearch(context: context, delegate: DataSeach(this._futureProducts,categorie,null))
+                        },
+                        child: imageSection(categorie.image, categorie.categoryName,
+                            AppTheme.primaryAccentColor),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+            else  {
+
+              return CircularProgressIndicator();
+            }
+
+          }),
+    );
+
   }
 
   //Design
@@ -365,8 +397,8 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 60.0,
               decoration: new BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                    imageVal,
+                  image: NetworkImage(
+                    AppConfig.URL_GET_IMAGE+imageVal,
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -419,7 +451,91 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   //End Design
+  Future getCurrentUser() async {
+    String tt;
+    String url = AppConfig.URL_GET_CURRENT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
 
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _currentUser = User.fromMap(data);
+    return (Future(() => _currentUser));
+    //updateNotification(_currentUser.phoneNumber);
+  }
+
+
+  Future getCategories() async {
+    String tt;
+    String url = AppConfig.URL_GET_CATEGORY;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    List<dynamic>data = jsonDecode(response.body);
+    _categories = data.map((json) => Categorie.fromMap(json)).toList();
+    return  (Future(() => _categories));
+  }
+
+  Future getProductTypes() async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_TYPE;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+    List<dynamic>data = jsonDecode(response.body);
+    _productType = data.map((json) => ProductType.fromMap(json)).toList();
+    return  (Future(() => _productType));
+  }
+
+  Future<List<Product>> getProductByCategory(Categorie categorie) async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_BY_CATEGORY;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    int id = categorie.id;
+    String body = '{"id":"$id"}';
+    final response = await http.post(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    },
+    body: body);
+    int statusCode = response.statusCode;
+    List<dynamic>data = jsonDecode(response.body);
+    _products = data.map((json) => Product.fromMap(json)).toList();
+
+    return  (Future(() => _products));
+  }
 }
-
-

@@ -23,7 +23,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+    //  menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(
@@ -111,7 +111,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         scrollDirection: Axis.vertical,
                         itemCount: 20,
                         itemBuilder: (BuildContext context, int index) {
-                          return ProductListItem();
+                          return ProductListItem(null);
                         },
                       )),
                 ),

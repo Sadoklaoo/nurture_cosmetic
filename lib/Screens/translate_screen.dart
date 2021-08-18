@@ -37,7 +37,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-        menu: buildMenu(context),
+    //    menu: buildMenu(context),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           body: Container(

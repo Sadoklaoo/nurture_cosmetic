@@ -39,7 +39,7 @@ class _HelpScreenState extends State<HelpScreen> {
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-        menu: buildMenu(context),
+     //   menu: buildMenu(context),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           body: Container(

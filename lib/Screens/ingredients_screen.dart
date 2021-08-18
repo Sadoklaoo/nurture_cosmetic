@@ -51,7 +51,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+     // menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         backgroundColor: AppTheme.primaryColor,
