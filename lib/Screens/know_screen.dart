@@ -24,7 +24,7 @@ class _KnowScreenState extends State<KnowScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+     // menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(

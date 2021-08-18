@@ -7,6 +7,11 @@ class AppUtils {
     var formatter = new DateFormat(formatString);
     return formatter.format(convertedDate);
   }
+
+  static DateTime convertStringToDateTime(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return dateTime;
+  }
   static String capitalizeSentence(String string) {
     List<String> phrase = string.split(" ");
     List<String> newPhrase = [];

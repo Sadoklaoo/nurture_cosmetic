@@ -93,9 +93,7 @@ class AppNavigation {
   static void goToKnow(BuildContext context) {
     Navigator.pushNamed(context, "/know");
   }
-  static void goToDetails(BuildContext context) {
-    Navigator.pushNamed(context, "/details");
-  }
+
   static void goToIngredients(BuildContext context) {
     Navigator.pushNamed(context, "/ingredients");
   }

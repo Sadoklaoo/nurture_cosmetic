@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 
-Widget buildMenu(context) {
+Widget buildMenu(context, Future user) {
   return SingleChildScrollView(
     padding: const EdgeInsets.symmetric(vertical: 50.0),
     child: Column(
@@ -19,10 +20,22 @@ Widget buildMenu(context) {
             children: [
 
               SizedBox(height: 16.0),
-              LText(
-                "\l.lead{Bonjour},\n\l.lead.bold{Foulen}",
-                baseStyle: TextStyle(color: Colors.white),
-              ),
+              FutureBuilder(
+                  future: user,
+                  builder: (context, projectSnap) {
+                    if(projectSnap.hasData ){
+                      return LText(
+                        "\l.lead{Bonjour},\n\l.lead.bold{"+projectSnap.data.firstName+"}",
+                        baseStyle: TextStyle(color: Colors.white),
+                      );
+                    }
+                    else  {
+                      //print('project snapshot data is: ${projectSnap.data}');
+                      return CircularProgressIndicator();
+                    }
+
+                  }),
+
               SizedBox(height: 20.0),
               LListItem(
                 backgroundColor: Colors.transparent,
@@ -141,4 +154,6 @@ Widget buildMenu(context) {
       ],
     ),
   );
+
+
 }

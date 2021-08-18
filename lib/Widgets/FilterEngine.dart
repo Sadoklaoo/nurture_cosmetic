@@ -20,12 +20,7 @@ class _FilterEngineState extends State<FilterEngine> {
     {'id': '3', 'image': AppStrings.hair_icon, 'name': "Soins de cheveaux"},
     {'id': '4', 'image': AppStrings.pers_icon, 'name': "Soins personelles"}
   ];
-  List<Map> _myTypes = [
-    {'id': '1', 'image': AppStrings.creme, 'name': "Crème de beauté"},
-    {'id': '2', 'image': AppStrings.cosmetics, 'name': "Cosmétiques"},
-    {'id': '3', 'image': AppStrings.parfum, 'name': "Parfums"},
-    {'id': '4', 'image': AppStrings.kit, 'name': "Kits cosmétiques"}
-  ];
+
   List<String> tags = [];
   List<String> options = [
     'Bio',
@@ -103,7 +98,7 @@ class _FilterEngineState extends State<FilterEngine> {
                 _buildPriceRange(height),
                 _buildOrder(height),
                 _buildCategorySelector(height),
-                _buildProductTypeSelector(height),
+
                 _buildNatureSelector(height),
                 _buildConfirmBtn()
               ],
@@ -308,83 +303,7 @@ class _FilterEngineState extends State<FilterEngine> {
     );
   }
 
-  Widget _buildProductTypeSelector(double height) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Type de produit',
-          style: TextStyle(
-            color: AppTheme.primaryAccentColor,
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          height: height * 2 / 100,
-        ),
-        Center(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                    child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButton(
-                      hint: Text('Sélectionner un type'),
-                      value: _currentType,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _currentType = newValue;
-                        });
-                      },
-                      items: _myTypes.map((ProductTypeItem) {
-                        return DropdownMenuItem(
-                            value: ProductTypeItem['id'].toString(),
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      ProductTypeItem['image'],
-                                      width: 25,
-                                      height: 25,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: AppTheme.primaryAccentColor,
-                                      borderRadius: BorderRadius.circular(20)),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  child: Text(
-                                    ProductTypeItem['name'],
-                                    style: TextStyle(),
-                                  ),
-                                )
-                              ],
-                            ));
-                      }).toList(),
-                    ),
-                  ),
-                ))
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: height * 2 / 100,
-        ),
-        Divider(),
-      ],
-    );
-  }
+
 
   Widget _buildNatureSelector(double height) {
     return Column(

@@ -26,6 +26,9 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   intl: 0.16.1
 
+  shared_preferences : ^0.5.10
+  connectivity:
+  http: ^0.12.1
   # Drawer Dependencies
   liquid_ui:
   shrink_sidemenu:

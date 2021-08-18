@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:nurture_cosmetic/Models/Category.dart';
+import 'package:nurture_cosmetic/Models/Product.dart';
+import 'package:nurture_cosmetic/Models/ProductType.dart';
+import 'package:nurture_cosmetic/Screens/details_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
 import 'ProductListItem.dart';
 
 class DataSeach extends SearchDelegate<String> {
+  Categorie categorie;
+  ProductType type;
+  Future<List<Product>> products;
+  DataSeach(this.products, this.categorie, this.type);
   final cities = [
     "Nabeul",
     "Tunis",
@@ -110,6 +118,10 @@ class DataSeach extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // show sugguestions
+    if (this.categorie != null) {
+      // print(categorie);
+    }
+
     final suggestionList = query.isEmpty
         ? recentCities
         : cities.where((element) => element.startsWith(query)).toList();
@@ -147,7 +159,40 @@ class DataSeach extends SearchDelegate<String> {
 
           // ignore: missing_return
           onRefresh: () {},
-          child: ListView.builder(
+          child: FutureBuilder(
+              future: this.products,
+              builder: (context, projectSnap) {
+                if (projectSnap.hasData) {
+                  //print(projectSnap.data[1]);
+                  return ListView.builder(
+                    padding: EdgeInsets.only(right: 6, left: 6),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: projectSnap.data.length,
+                    itemBuilder: (context, index) {
+                      Product product = projectSnap.data[index];
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailsScreen(
+                                        id:
+                                        product.id,
+                                      )
+                                // MyApp(),
+                              ));
+                        },
+                         // onTap: () => AppNavigation.goToDetails(context,product.id),
+                          child: ProductListItem(product));
+                    },
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
+
+          /*child: ListView.builder(
             padding: EdgeInsets.only(right: 6, left: 6),
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
@@ -157,7 +202,7 @@ class DataSeach extends SearchDelegate<String> {
                 onTap: ()=> AppNavigation.goToDetails(context),
                   child: ProductListItem());
             },
-          ),
+          ),*/
         )),
       ],
     );

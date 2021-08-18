@@ -23,7 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+    //  menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(

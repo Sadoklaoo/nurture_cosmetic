@@ -98,7 +98,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-      menu: buildMenu(context),
+      //menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(
