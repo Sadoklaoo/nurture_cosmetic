@@ -16,15 +16,18 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
+  double height_list;
+  bool isListVisible = true;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    height_list = height * 55 / 100;
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-    //  menu: buildMenu(context),
-      type: SideMenuType.slideNRotate,
+      menu: buildMenu(context),
+      type: SideMenuType.slide,
       child: Scaffold(
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -37,11 +40,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
                         child: Text("Notifications",
                             style: TextStyle(
@@ -50,7 +52,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 color: AppTheme.primaryColor)),
                       ),
                     ),
-                    buildDrawerButton(),
+                    buildDrawerButton(height),
                   ],
                 ),
                 Divider(),
@@ -82,16 +84,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                           //   AppNavigation.goToFilter(context);
+                              //   AppNavigation.goToFilter(context);
                             },
                             child: Icon(
                               Icons.delete_forever,
                               color: AppTheme.primaryColor,
                             )),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         GestureDetector(
                             onTap: () {
-                            //  AppNavigation.goToFilter(context);
+                              //  AppNavigation.goToFilter(context);
                             },
                             child: Icon(
                               Icons.check,
@@ -101,19 +105,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10.0),
-                  child: SizedBox(
-                      height: height *65 /100 ,
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(right: 6, left: 6),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: 20,
-                        itemBuilder: (BuildContext context, int index) {
-                          return NotificationListItem();
-                        },
-                      )),
+                Visibility(
+                  visible: isListVisible == true ? true : false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Container(
+                        height: this.height_list,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(right: 6, left: 6),
+                          shrinkWrap: false,
+                          scrollDirection: Axis.vertical,
+                          itemCount: 20,
+                          itemBuilder: (BuildContext context, int index) {
+                            return NotificationListItem();
+                          },
+                        )),
+                  ),
                 ),
               ],
             ),
@@ -123,17 +130,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  buildDrawerButton() {
+  buildDrawerButton(double height) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         MaterialButton(
           onPressed: () {
             final _state = _sideMenuKey.currentState;
-            if (_state.isOpened)
+            if (_state.isOpened) {
               _state.closeSideMenu();
-            else
+            } else {
               _state.openSideMenu();
+            }
           },
           height: 50.0,
           minWidth: 50.0,
@@ -149,9 +157,4 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ],
     );
   }
-
-
-
-
-
 }

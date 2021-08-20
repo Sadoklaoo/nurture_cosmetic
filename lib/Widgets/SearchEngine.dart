@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:nurture_cosmetic/Models/Category.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
 import 'package:nurture_cosmetic/Models/Product.dart';
 import 'package:nurture_cosmetic/Models/ProductType.dart';
 import 'package:nurture_cosmetic/Screens/details_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
+import 'package:nurture_cosmetic/Widgets/FilterEngine.dart';
 
 import 'ProductListItem.dart';
 
 class DataSeach extends SearchDelegate<String> {
-  Categorie categorie;
+  Cat categorie;
   ProductType type;
   Future<List<Product>> products;
   DataSeach(this.products, this.categorie, this.type);
@@ -143,7 +144,10 @@ class DataSeach extends SearchDelegate<String> {
               ),
               GestureDetector(
                   onTap: () {
-                    AppNavigation.goToFilter(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FilterEngine()
+                            // MyApp(),
+                            ));
                   },
                   child: Icon(
                     Icons.filter_list_outlined,
@@ -172,59 +176,24 @@ class DataSeach extends SearchDelegate<String> {
                     itemBuilder: (context, index) {
                       Product product = projectSnap.data[index];
                       return GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailsScreen(
-                                        id:
-                                        product.id,
-                                      )
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DetailsScreen(
+                                      id: product.id,
+                                    )
                                 // MyApp(),
-                              ));
-                        },
-                         // onTap: () => AppNavigation.goToDetails(context,product.id),
+                                ));
+                          },
+                          // onTap: () => AppNavigation.goToDetails(context,product.id),
                           child: ProductListItem(product));
                     },
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               }),
-
-          /*child: ListView.builder(
-            padding: EdgeInsets.only(right: 6, left: 6),
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: ()=> AppNavigation.goToDetails(context),
-                  child: ProductListItem());
-            },
-          ),*/
         )),
       ],
-    );
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-          onTap: () {
-            showResults(context);
-          },
-          leading: Icon(Icons.location_city),
-          title: RichText(
-              text: TextSpan(
-                  text: suggestionList[index].substring(0, query.length),
-                  style: TextStyle(
-                      color: AppTheme.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                  children: [
-                TextSpan(
-                    text: suggestionList[index].substring(query.length),
-                    style: TextStyle(color: Colors.grey, fontSize: 15))
-              ]))),
-      itemCount: suggestionList.length,
     );
   }
 }

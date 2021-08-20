@@ -97,7 +97,7 @@ class _SkinRoleScreenState extends State<SkinRoleScreen> with TickerProviderStat
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-       // menu: buildMenu(context),
+        menu: buildMenu(context),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           floatingActionButton: _showBackToTopButton == false

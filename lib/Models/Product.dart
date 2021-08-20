@@ -1,7 +1,8 @@
-import 'package:nurture_cosmetic/Models/Category.dart';
-import 'package:nurture_cosmetic/Models/Category.dart';
 
-import 'Category.dart';
+
+import 'package:nurture_cosmetic/Models/Ingredient.dart';
+import 'package:nurture_cosmetic/Models/ProductType.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
 
 
 class Product {
@@ -15,22 +16,23 @@ class Product {
   String ProductSecondDescription;
   String ProductDimensions;
   String PreferedSkinType;
-  dynamic Categorie;
-
+  Cat Categorie;
+  List<ProductType> types;
+  List<Ingredient> ingredients;
 
   Product(
       {this.id,
-        this.ProductName,
-        this.Reference,
-        this.Price,
-        this.Rank,
-        this.Image,
-        this.ProductDescription,
-        this.ProductSecondDescription,
-        this.ProductDimensions,
-        this.PreferedSkinType,
-        this.Categorie
-
+      this.ProductName,
+      this.Reference,
+      this.Price,
+      this.Rank,
+      this.Image,
+      this.ProductDescription,
+      this.ProductSecondDescription,
+      this.ProductDimensions,
+      this.PreferedSkinType,
+      this.Categorie,
+      this.ingredients
       });
 
   Map<String, dynamic> toMap() {
@@ -45,7 +47,11 @@ class Product {
       'ProductSecondDescription': ProductSecondDescription,
       'ProductDimensions': ProductDimensions,
       'PreferedSkinType': PreferedSkinType,
-      'Category':Categorie.toMap()
+      'Category': Categorie.toMap(),
+      'ProductIngredients': [ingredients.forEach((element) {
+        return element.toMap();
+      })],
+
     };
     return map;
   }
@@ -61,9 +67,18 @@ class Product {
     ProductSecondDescription = map['ProductSecondDescription'];
     ProductDimensions = map['ProductDimensions'];
     PreferedSkinType = map['PreferedSkinType'];
-    //Categorie = Categorie.fromMap[map['Category']];
-  }
+    Categorie = Cat.fromMap(map['Category']);
+    if (map["Type"]!=null){
+      types = List<ProductType>.from(map["Type"]
+          .map((x) => ProductType.fromMap(x)));
+    }
 
+    if (map["ProductIngredients"]!=null){
+      ingredients = List<Ingredient>.from(map["ProductIngredients"]
+          .map((x) => Ingredient.fromMap(x)));
+    }
+   /* */
+  }
 
   @override
   String toString() {
@@ -76,6 +91,8 @@ class Product {
         Image.toString() +
         "\n Categorie : " +
         Categorie.toString() +
+        "\n ProductIngredients : " +
+        ingredients.toString() +
         "}";
   }
 }

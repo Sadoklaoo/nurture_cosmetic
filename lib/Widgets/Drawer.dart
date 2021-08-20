@@ -6,7 +6,7 @@ import 'package:liquid_ui/liquid_ui.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 
-Widget buildMenu(context, Future user) {
+Widget buildMenu(context) {
   return SingleChildScrollView(
     padding: const EdgeInsets.symmetric(vertical: 50.0),
     child: Column(
@@ -19,7 +19,7 @@ Widget buildMenu(context, Future user) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              SizedBox(height: 16.0),
+             /* SizedBox(height: 16.0),
               FutureBuilder(
                   future: user,
                   builder: (context, projectSnap) {
@@ -34,7 +34,7 @@ Widget buildMenu(context, Future user) {
                       return CircularProgressIndicator();
                     }
 
-                  }),
+                  }),*/
 
               SizedBox(height: 20.0),
               LListItem(

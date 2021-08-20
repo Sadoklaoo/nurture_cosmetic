@@ -61,7 +61,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-      //  menu: buildMenu(context),
+        menu: buildMenu(context),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           body: Container(

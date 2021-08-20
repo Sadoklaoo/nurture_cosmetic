@@ -22,7 +22,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-   //   menu: buildMenu(context),
+      menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(

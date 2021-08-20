@@ -5,7 +5,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nurture_cosmetic/Models/Category.dart' ;
+import 'package:nurture_cosmetic/Models/Cat.dart';
 import 'package:nurture_cosmetic/Models/Session.dart';
 import 'package:nurture_cosmetic/Models/ProductType.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   User _currentUser;
   Session session;
   Connectivity connectivity;
-  Future<List<Categorie>> categories;
-  List<Categorie> _categories;
+  Future<List<Cat>> categories;
+  List<Cat> _categories;
   List<ProductType> _productType;
   List<Product> _products;
   Future<List<Product>> _futureProducts;
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       home: SideMenu(
         background: AppTheme.primaryColor,
         key: _sideMenuKey,
-        menu: buildMenu(context, getCurrentUser()),
+        menu: buildMenu(context),
         type: SideMenuType.slideNRotate,
         child: Scaffold(
           body: Padding(
@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: projectSnap.data.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  Categorie categorie = projectSnap.data[index];
+                  Cat categorie = projectSnap.data[index];
                   return Row(
                     children: <Widget>[
 
@@ -491,7 +491,7 @@ class _HomeScreenState extends State<HomeScreen> {
     int statusCode = response.statusCode;
 
     List<dynamic>data = jsonDecode(response.body);
-    _categories = data.map((json) => Categorie.fromMap(json)).toList();
+    _categories = data.map((json) => Cat.fromMap(json)).toList();
     return  (Future(() => _categories));
   }
 
@@ -515,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  (Future(() => _productType));
   }
 
-  Future<List<Product>> getProductByCategory(Categorie categorie) async {
+  Future<List<Product>> getProductByCategory(Cat categorie) async {
     String tt;
     String url = AppConfig.URL_GET_ALL_PRODUCT_BY_CATEGORY;
     await session.getToken().then((value) async {
@@ -525,6 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print(error);
     });
     int id = categorie.id;
+    print(id);
     String body = '{"id":"$id"}';
     final response = await http.post(url, headers: {
       'Content-Type': 'application/json',

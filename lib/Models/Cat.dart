@@ -1,15 +1,15 @@
-class Categorie {
+class Cat {
   int id;
   String categoryName;
   String image;
 
 
-  Categorie(
+  Cat(
       {this.id,
         this.categoryName,
         this.image,
 
-        });
+      });
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -20,7 +20,7 @@ class Categorie {
     return map;
   }
 
-  Categorie.fromMap(Map<String, dynamic> map) {
+  Cat.fromMap(Map<String, dynamic> map) {
     id = map['id'] as int;
     categoryName = map['CategoryName'];
     image = map['Image'];
@@ -30,7 +30,7 @@ class Categorie {
   @override
   String toString() {
     // TODO: implement toString
-    return "Category {id : " +
+    return "Cat {id : " +
         id.toString() +
         "\n CategoryName : " +
         categoryName.toString() +

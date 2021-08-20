@@ -23,7 +23,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return SideMenu(
       background: AppTheme.primaryColor,
       key: _sideMenuKey,
-    //  menu: buildMenu(context),
+      menu: buildMenu(context),
       type: SideMenuType.slideNRotate,
       child: Scaffold(
         body: Container(

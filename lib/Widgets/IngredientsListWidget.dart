@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nurture_cosmetic/Models/Ingredient.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 
 class IngredientsList extends StatelessWidget {
-  IngredientsList(this.texts);
-  final Map<String,String> texts;
+  IngredientsList(this.ingredients);
+  final List<Ingredient> ingredients;
 
   @override
   Widget build(BuildContext context) {
     var widgetList = <Widget>[];
-    for (var text in texts.entries) {
+    for (var ingredient in ingredients) {
       // Add list item
-      widgetList.add(UnorderedListItem(text.key,text.value));
+      widgetList.add(UnorderedListItem(ingredient.IngredientName,ingredient.IngredientType));
       // Add space between items
       widgetList.add(SizedBox(height: 5.0));
     }
