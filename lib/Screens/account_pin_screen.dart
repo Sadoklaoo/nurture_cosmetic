@@ -1,13 +1,15 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
+import 'package:nurture_cosmetic/Screens/login_screen.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
+import 'package:http/http.dart' as http;
+
+import 'PopUp/PopUp.dart';
 
 class AccountPinScreen extends StatefulWidget {
+  final String email;
+  AccountPinScreen({@required this.email});
   @override
   State<StatefulWidget> createState() => AccountPinScreenState();
 }
@@ -17,13 +19,17 @@ class AccountPinScreenState extends State<AccountPinScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: OtpScreen(),
+      body: OtpScreen(
+        email: widget.email,
+      ),
     );
   }
 }
 
 class OtpScreen extends StatelessWidget {
+  final String email;
   BuildContext context;
+  OtpScreen({@required this.email});
   List<String> currentPin = ["", "", "", ""];
   TextEditingController pinOneController = TextEditingController();
   TextEditingController pinTwoController = TextEditingController();
@@ -42,11 +48,9 @@ class OtpScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     this.context = context;
     return Material(
-
       child: SafeArea(
         child: Column(
           children: <Widget>[
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
@@ -56,10 +60,11 @@ class OtpScreen extends StatelessWidget {
                   width: width * 20 / 100,
                 ),
                 Center(
-                  child: Text('Code PIN',style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryColor)),
+                  child: Text('Code PIN',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.primaryColor)),
                 )
               ],
             ),
@@ -98,7 +103,7 @@ class OtpScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: MaterialButton(
             onPressed: () {
-              AppNavigation.goToSignUp(context);
+              Navigator.pop(context);
             },
             height: 50.0,
             minWidth: 50.0,
@@ -120,16 +125,76 @@ class OtpScreen extends StatelessWidget {
     return Text(
       "Vérification Code",
       style: TextStyle(
-          color: AppTheme.primaryColor, fontSize: 21.0, fontWeight: FontWeight.bold),
+          color: AppTheme.primaryColor,
+          fontSize: 21.0,
+          fontWeight: FontWeight.bold),
     );
   }
+
+  void resendRequest(var email) async {
+    String url = AppConfig.URL_RESEND_REQUEST_CODE;
+
+    String json = '{"email": "$email"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json);
+    int statusCode = response.statusCode;
+    if (statusCode == 404) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Account Error', 'User Not Found', DialogType.error);
+    } else if (statusCode == 400) {
+      final action = await Dialogs.yesAbortDialog(context, 'Server Error',
+          'Error updating data in server.', DialogType.error);
+    } else if (statusCode == 201) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Success', 'Code Sent', DialogType.success);
+    }
+  }
+
+  void checkRequest(var email, var requestCode) async {
+    String url = AppConfig.URL_CHECK_REQUEST_CODE;
+
+    String json = '{"email": "$email","requestCode": "$requestCode"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json);
+    int statusCode = response.statusCode;
+    if (statusCode == 400) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Account Error', 'User Not Found', DialogType.error);
+    } else if (statusCode == 403) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Code Incorrect', 'Try again.', DialogType.error);
+    } else if (statusCode == 405) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Code Expired', 'Resend another request.', DialogType.error);
+    } else if (statusCode == 200) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Success', 'Account Verified', DialogType.success);
+    }
+  }
+
   buildResendText() {
-    return Text(
-      "Envoyer à nouveau.",
-      style: TextStyle(
-          color: AppTheme.primaryAccentColor, fontSize: 15.0, fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {
+        resendRequest(this.email);
+      },
+      child: Text(
+        "Envoyer à nouveau.",
+        style: TextStyle(
+            color: AppTheme.primaryColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold),
+      ),
     );
   }
+
   buildPinRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -241,15 +306,17 @@ class OtpScreen extends StatelessWidget {
                   Container(
                     width: 60.0,
                     child: MaterialButton(
-                      height: 60.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(60.0),
-                      ),
-                      onPressed: () {
-                        clearPin();
-                      },
-                      child: Icon(Icons.backspace_outlined, color: AppTheme.primaryAccentColor,)
-                    ),
+                        height: 60.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(60.0),
+                        ),
+                        onPressed: () {
+                          clearPin();
+                        },
+                        child: Icon(
+                          Icons.backspace_outlined,
+                          color: AppTheme.primaryAccentColor,
+                        )),
                   ),
                 ],
               ),
@@ -273,7 +340,13 @@ class OtpScreen extends StatelessWidget {
 
     if (pinIndex == 4) {
       print(strPin);
-      AppNavigation.goToHome(context);
+      checkRequest(email, strPin);
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      // AppNavigation.goToHome(context);
     }
   }
 
@@ -320,9 +393,7 @@ class KeyboardNumber extends StatelessWidget {
       width: 60.0,
       height: 60.0,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppTheme.primaryAccentColor
-      ),
+          shape: BoxShape.circle, color: AppTheme.primaryAccentColor),
       alignment: Alignment.center,
       child: MaterialButton(
         padding: EdgeInsets.all(8.0),

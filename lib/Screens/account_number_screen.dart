@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
+import 'package:http/http.dart' as http;
+import 'package:page_transition/page_transition.dart';
+
+import 'PopUp/PopUp.dart';
+import 'account_pin_screen.dart';
 
 class AccountNumberScreen extends StatefulWidget {
+  final String email;
+  AccountNumberScreen({@required this.email});
   @override
   State<StatefulWidget> createState() => AccountNumberScreenState();
 }
@@ -23,14 +31,16 @@ class AccountNumberScreenState extends State<AccountNumberScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: OtpScreen(),
+      body: OtpScreen(email: widget.email),
     );
   }
 }
 
 // ignore: must_be_immutable
 class OtpScreen extends StatelessWidget {
+  final String email;
   BuildContext context;
+  OtpScreen({@required this.email});
   TextEditingController numberController = TextEditingController();
 
   var outlineInputBorder = OutlineInputBorder(
@@ -39,13 +49,44 @@ class OtpScreen extends StatelessWidget {
 
   int pinIndex = 0;
 
+  void sendRequest(var email, var phoneNumber) async {
+    String url = AppConfig.URL_SEND_REQUEST_CODE;
+
+    String json =
+        '{"email": "$email" , "phoneNumber": "$phoneNumber"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json);
+    int statusCode = response.statusCode;
+    if (statusCode == 404) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Account Error', 'User Not Found', DialogType.error);
+    } else if (statusCode == 400) {
+      final action = await Dialogs.yesAbortDialog(context, 'Server Error',
+          'Error updating data in server.', DialogType.error);
+    } else if (statusCode == 201) {
+      final action = await Dialogs.yesAbortDialog(context, 'Success',
+          'Code Sent', DialogType.success);
+      Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: AccountPinScreen(email: this.email,
+
+              )));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     this.context = context;
-    return Material(
 
+    return Material(
       child: SafeArea(
         child: Scaffold(
           body: Column(
@@ -56,10 +97,10 @@ class OtpScreen extends StatelessWidget {
                 children: [
                   buildExitButton(),
                   SizedBox(
-                    width: width * 12 / 100,
+                    width: width * 9 / 100,
                   ),
                   Text('Confirmation numéro',style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                       color: AppTheme.primaryColor))
                 ],
@@ -118,7 +159,7 @@ class OtpScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: MaterialButton(
             onPressed: () {
-              AppNavigation.goToSignUp(context);
+              Navigator.pop(context);
             },
             height: 50.0,
             minWidth: 50.0,
@@ -229,7 +270,8 @@ class OtpScreen extends StatelessWidget {
 
                         onPressed: () {
                           if (numberController.text.length==8){
-                            AppNavigation.goToPin(context);
+
+                            sendRequest(this.email, numberController.text);
                           }
 
                         },

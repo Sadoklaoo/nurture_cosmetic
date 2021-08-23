@@ -145,7 +145,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Center(
                     child: Text(
-                        "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                        "Modifier vos allergies pour avoir une meilleure resultat."),
                   ),
                 ),
                 SizedBox(

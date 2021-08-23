@@ -1,11 +1,21 @@
+import 'dart:convert';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:nurture_cosmetic/Models/Product.dart';
+import 'package:nurture_cosmetic/Models/Session.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/ProductListItem.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
+import 'package:nurture_cosmetic/Screens/details_screen.dart';
+import 'package:http/http.dart' as http;
 
 class FavoriteScreen extends StatefulWidget {
   @override
@@ -16,6 +26,23 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
+  User _currentUser;
+  Session session;
+  Connectivity connectivity;
+  List<Product> _products;
+  Future<List<Product>> _futureProducts;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    session = new Session();
+    connectivity = new Connectivity();
+    _currentUser = new User();
+    setState(() {
+      getCurrentUser();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -37,11 +64,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
                         child: Text("Favoris",
                             style: TextStyle(
@@ -88,7 +114,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               Icons.delete_forever,
                               color: AppTheme.primaryColor,
                             )),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         GestureDetector(
                             onTap: () {
                               AppNavigation.goToFilter(context);
@@ -102,18 +130,43 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:10.0),
-                  child: SizedBox(
-                    height: height *60 /100 ,
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(right: 6, left: 6),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: 20,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductListItem(null);
-                        },
-                      )),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: FutureBuilder(
+                      future: getFavorisProduct(),
+                      builder: (context, projectSnap) {
+                        if (projectSnap.hasData) {
+                          //print(projectSnap.data[1]);
+                          return ListView.builder(
+                            padding: EdgeInsets.only(right: 6, left: 6),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: projectSnap.data.length,
+                            itemBuilder: (context, index) {
+                              Product product = projectSnap.data[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => DetailsScreen(
+                                                  id: product.id,
+                                                )
+                                            // MyApp(),
+                                            ));
+                                  },
+                                  // onTap: () => AppNavigation.goToDetails(context,product.id),
+                                  child: ProductListItem(product));
+                            },
+                          );
+                        } else {
+                          if(projectSnap.connectionState == ConnectionState.waiting){
+                            return Center(child: CircularProgressIndicator());
+                          }else{
+                            return Text('No Favorite Found');
+                          }
+
+
+                        }
+                      }),
                 ),
               ],
             ),
@@ -150,8 +203,54 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 
+  Future getCurrentUser() async {
+    String tt;
+    String url = AppConfig.URL_GET_CURRENT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
 
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _currentUser = User.fromMap(data);
+    return (Future(() => _currentUser));
+    //updateNotification(_currentUser.phoneNumber);
+  }
 
+  Future<List<Product>> getFavorisProduct() async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_FAVORIS;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    int id;
+    getCurrentUser().then((value) => {
+          id = value.id,
+        });
+    print(id);
+    String body = '{"id":"$id"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    List<dynamic> data = jsonDecode(response.body);
+    _products = data.map((json) => Product.fromMap(json)).toList();
 
-
+    return (Future(() => _products));
+  }
 }

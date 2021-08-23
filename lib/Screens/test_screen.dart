@@ -84,7 +84,7 @@ class _TestScreenState extends State<TestScreen> {
       padding: EdgeInsets.symmetric(vertical: 15.0),
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => AppNavigation.goToIntro(context),
+        onPressed: () => AppNavigation.goToHome(context),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),

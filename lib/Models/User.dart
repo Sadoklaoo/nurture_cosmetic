@@ -1,3 +1,5 @@
+import 'package:nurture_cosmetic/Utils/AppUtils.dart';
+
 class User {
   int id;
   String firstName;
@@ -41,15 +43,11 @@ class User {
     email = map['email'];
     sexe = map['sexe'];
     phoneNumber = map['phoneNumber'] as int;
-  /*  updatedAt = fromTimestampToDateTime(map['updatedAt']);
-    birthDate = fromTimestampToDateTime(map['birthDate']);
-    createdAt = fromTimestampToDateTime(map['createdAt']);*/
+    updatedAt = AppUtils.convertStringToDateTime(map['updatedAt']);
+    birthDate = AppUtils.convertStringToDateTime(map['birthDate']);
+    createdAt = AppUtils.convertStringToDateTime(map['createdAt']);
   }
 
-  DateTime fromTimestampToDateTime(int date) {
-    DateTime dateTime = new DateTime.fromMillisecondsSinceEpoch(date);
-    return dateTime;
-  }
 
   @override
   String toString() {

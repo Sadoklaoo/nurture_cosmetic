@@ -29,6 +29,7 @@ dependencies:
   shared_preferences : ^0.5.10
   connectivity:
   http: ^0.12.1
+  page_transition: ^2.0.2
   # Drawer Dependencies
   liquid_ui:
   shrink_sidemenu:

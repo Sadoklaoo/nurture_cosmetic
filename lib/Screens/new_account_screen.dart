@@ -3,30 +3,39 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Screens/PopUp/PopUp.dart';
+import 'package:nurture_cosmetic/Screens/account_number_screen.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:smart_select/smart_select.dart';
 import '../Utils/AppTheme.dart';
 import '../Widgets/TextFieldWidget.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 
 class NewAccountScreen extends StatefulWidget {
   @override
   _NewAccountScreenState createState() => _NewAccountScreenState();
-
-
 }
 
 class _NewAccountScreenState extends State<NewAccountScreen> {
   List<S2Choice<String>> gender = [
-    S2Choice<String>(value: 'male', title: 'Homme'),
-    S2Choice<String>(value: 'female', title: 'Femme'),
+    S2Choice<String>(value: 'HOMME', title: 'Homme'),
+    S2Choice<String>(value: 'FEMME', title: 'Femme'),
   ];
 
   String _gender = '';
   final dateController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController lastController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -38,10 +47,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
             data: ThemeData.light().copyWith(
               primaryColor: AppTheme.primaryColor,
               accentColor: AppTheme.primaryAccentColor,
-              colorScheme: ColorScheme.light(primary: AppTheme.primaryAccentColor),
-              buttonTheme: ButtonThemeData(
-                  textTheme: ButtonTextTheme.primary
-              ),
+              colorScheme:
+                  ColorScheme.light(primary: AppTheme.primaryAccentColor),
+              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: child,
           );
@@ -55,6 +63,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
         dateController.text = DateFormat.yMMMMd().format(picked);
       });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -70,7 +79,6 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
           primaryColor: AppTheme.primaryColor,
           accentColor: AppTheme.primaryAccentColor,
           fontFamily: 'Nunito'),
-
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
@@ -142,7 +150,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           "Nom*",
                           style: kHintTextStyle,
                         ),
-                        _buildEditText(),
+                        _buildEditText(nameController, false),
                         SizedBox(
                           height: height * 2 / 100,
                         ),
@@ -150,7 +158,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           "Prénom*",
                           style: kHintTextStyle,
                         ),
-                        _buildEditText(),
+                        _buildEditText(lastController, false),
                         SizedBox(
                           height: height * 2 / 100,
                         ),
@@ -158,7 +166,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           "Adresse e-mail*",
                           style: kHintTextStyle,
                         ),
-                        _buildEditText(),
+                        _buildEditText(emailController, false),
                         SizedBox(
                           height: height * 2 / 100,
                         ),
@@ -178,24 +186,19 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                               color: AppTheme.primaryColor,
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
-
                             ),
                           ),
                           placeholder: 'Choisir',
                           choiceStyle: S2ChoiceStyle(
-                            titleStyle: TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-
-                            ),
-                            activeColor: AppTheme.primaryAccentColor,
-                            highlightColor: AppTheme.primaryAccentColor
-
-                          ),
+                              titleStyle: TextStyle(
+                                color: AppTheme.primaryColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              activeColor: AppTheme.primaryAccentColor,
+                              highlightColor: AppTheme.primaryAccentColor),
                           modalStyle: S2ModalStyle(
                             elevation: 10,
-
                           ),
                           choiceItems: gender,
                           onChange: (selected) =>
@@ -216,7 +219,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           "Mot de passe*",
                           style: kHintTextStyle,
                         ),
-                        _buildEditText(),
+                        _buildEditText(passwordController, true),
                         SizedBox(
                           height: height * 2 / 100,
                         ),
@@ -224,7 +227,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           "Confirmer mot de passe*",
                           style: kHintTextStyle,
                         ),
-                        _buildEditText(),
+                        _buildEditText(confirmController, true),
                         SizedBox(
                           height: height * 2 / 100,
                         ),
@@ -274,12 +277,14 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
     );
   }
 
-  Widget _buildEditText() {
+  Widget _buildEditText(TextEditingController controller, bool isPassword) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: Container(
         decoration: kBoxDecorationStyle,
         child: TextField(
+          obscureText: isPassword,
+          controller: controller,
           cursorColor: AppTheme.primaryAccentColor,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -297,7 +302,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 
   Widget _buildEditTextDate() {
     return GestureDetector(
-      onTap: ()=>_selectDate(context),
+      onTap: () => _selectDate(context),
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: Container(
@@ -320,13 +325,11 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                 color: AppTheme.primaryAccentColor,
               ),
               hintText: 'Entrez votre date de naissance',
-              hintStyle:  TextStyle(
+              hintStyle: TextStyle(
                   color: AppTheme.greyColor,
                   fontSize: 15,
-                  fontWeight: FontWeight.normal
-              ),
+                  fontWeight: FontWeight.normal),
             ),
-
             style: kHintTextStyle,
           ),
         ),
@@ -340,7 +343,91 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => AppNavigation.goToNumber(context),
+        onPressed: () async {
+          var open = false;
+          User u = new User();
+
+          if (nameController.text.isEmpty) {
+            open = true;
+            final action = await Dialogs.yesAbortDialog(context, 'Field Error',
+                'First Name Field Required', DialogType.error);
+          } else {
+            u.lastName = nameController.text.trim();
+          }
+          if (lastController.text.isEmpty) {
+            if (!open) {
+              final action = await Dialogs.yesAbortDialog(context,
+                  'Field Error', 'Last Name Field Required', DialogType.error);
+              open = true;
+            }
+          } else {
+            u.firstName = lastController.text.trim();
+          }
+          if (emailController.text.isEmpty) {
+            if (!open) {
+              final action = await Dialogs.yesAbortDialog(context,
+                  'Field Error', 'Email Field Required', DialogType.error);
+              open = true;
+            }
+          } else {
+            u.email = emailController.text.trim();
+          }
+
+          if (dateController.text.isEmpty) {
+            if (!open) {
+              final action = await Dialogs.yesAbortDialog(context,
+                  'Field Error', 'Birthdate Field Required', DialogType.error);
+              open = true;
+            }
+          } else {
+            if (!selectedDate.isBefore(DateTime.now())) {
+              if (!open) {
+                final action = await Dialogs.yesAbortDialog(context,
+                    'Date Error', 'Date Selected Error', DialogType.error);
+                open = true;
+              }
+            } else {
+              u.birthDate = selectedDate;
+            }
+          }
+
+          if (_gender.isEmpty) {
+            if (!open) {
+              final action = await Dialogs.yesAbortDialog(context,
+                  'Field Error', 'Gender Field Required', DialogType.error);
+              open = true;
+            }
+          } else {
+            u.sexe = _gender;
+          }
+
+          if (passwordController.text.isEmpty ||
+              confirmController.text.isEmpty) {
+            if (!open) {
+              final action = await Dialogs.yesAbortDialog(context,
+                  'Field Error', 'Password Field Required', DialogType.error);
+              open = true;
+            }
+          } else {
+            if (passwordController.text.compareTo(confirmController.text) ==
+                0) {
+              u.password = passwordController.text.trim();
+              print(passwordController.text.trim());
+            } else {
+              if (!open) {
+                final action = await Dialogs.yesAbortDialog(
+                    context,
+                    'Password Error',
+                    'Passwords Doesn\'t Match',
+                    DialogType.error);
+                open = true;
+              }
+            }
+          }
+
+          createUser(u.firstName, u.lastName, u.email, u.birthDate, u.sexe,
+              u.password);
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -357,5 +444,42 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
         ),
       ),
     );
+  }
+
+  void createUser(var firstName, var lastName, var email, var birthDate,
+      var gender, var password) async {
+    String url = AppConfig.URL_NEW_ACCOUNT;
+
+    String json = '{"firstName": "$firstName" , "lastName": "$lastName",' +
+        ' "email": "$email","birthDate": "$birthDate"' +
+        ',"sexe": "$gender","password": "$password"}';
+
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json);
+    int statusCode = response.statusCode;
+    if (statusCode == 400) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Data Error', 'Wrong Data Format', DialogType.error);
+    } else if (statusCode == 403) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Email Error', 'Email Already in Use', DialogType.error);
+    } else if (statusCode == 409) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Insert Error', 'Server Insert Error', DialogType.error);
+    } else if (statusCode == 201) {
+      final action = await Dialogs.yesAbortDialog(context, 'Account Created',
+          'Profile Successfully Created', DialogType.success);
+      Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: AccountNumberScreen(email: this.emailController.text.trim(),
+
+              )));
+    }
   }
 }

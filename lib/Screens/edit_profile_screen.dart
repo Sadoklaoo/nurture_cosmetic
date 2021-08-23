@@ -1,12 +1,21 @@
+import 'dart:convert';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nurture_cosmetic/Models/Session.dart';
+import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/TextFieldWidget.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
+import 'package:http/http.dart' as http;
+
+import 'PopUp/PopUp.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -18,7 +27,15 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
 
+  User _currentUser;
+  Session session;
+  Connectivity connectivity;
+
   final dateController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final addressController = TextEditingController();
+
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -48,6 +65,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    session = new Session();
+    connectivity = new Connectivity();
+    _currentUser = new User();
+    setState(() {
+      getCurrentUser().then((value) {
+        _currentUser = value;
+        //print(_currentUser);
+        this.firstNameController.text = _currentUser.firstName;
+        this.lastNameController.text = _currentUser.lastName;
+        this.addressController.text = _currentUser.email;
+        this.selectedDate = _currentUser.birthDate;
+        this.dateController.text =
+            DateFormat.yMMMMd().format(_currentUser.birthDate);
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -56,7 +94,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           primaryColor: AppTheme.primaryColor,
           accentColor: AppTheme.primaryAccentColor,
           fontFamily: 'Nunito'),
-
       debugShowCheckedModeBanner: false,
       home: SideMenu(
         background: AppTheme.primaryColor,
@@ -108,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Center(
                       child: Text(
-                          "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                          "Modifier vos informations personnelles tel que nom, prénom et date de naissance."),
                     ),
                   ),
                   SizedBox(
@@ -119,7 +156,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     "Nom*",
                     style: kHintTextStyle,
                   ),
-                  _buildEditText(),
+                  _buildEditText(this.lastNameController,false),
                   SizedBox(
                     height: height * 2 / 100,
                   ),
@@ -127,7 +164,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     "Prénom*",
                     style: kHintTextStyle,
                   ),
-                  _buildEditText(),
+                  _buildEditText(this.firstNameController,false),
                   SizedBox(
                     height: height * 2 / 100,
                   ),
@@ -135,7 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     "Adresse e-mail*",
                     style: kHintTextStyle,
                   ),
-                  _buildEditText(),
+                  _buildEditText(this.addressController,true),
                   SizedBox(
                     height: height * 2 / 100,
                   ),
@@ -184,12 +221,70 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildEditText() {
+  void updateUser(var firstName, var lastName, var email, var birthDate) async {
+    String tt;
+    String url = AppConfig.URL_EDIT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    String json =
+        '{"firstName": "$firstName" , "lastName": "$lastName", "email": "$email","birthDate": "$birthDate"}';
+    final response = await http.put(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: json);
+    int statusCode = response.statusCode;
+    if (statusCode == 402) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Data Error', 'Wrong Data Format', DialogType.error);
+    } else if (statusCode == 400) {
+      final action = await Dialogs.yesAbortDialog(context, 'Server Error',
+          'Error updating data in server.', DialogType.error);
+    } else if (statusCode == 404) {
+      final action = await Dialogs.yesAbortDialog(
+          context, 'Login Error', 'Connect Again', DialogType.error);
+    } else if (statusCode == 204) {
+      final action = await Dialogs.yesAbortDialog(context, 'Success',
+          'Profile Successfully Edited', DialogType.success);
+    }
+  }
+
+  Future getCurrentUser() async {
+    String tt;
+    String url = AppConfig.URL_GET_CURRENT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _currentUser = User.fromMap(data);
+    return (Future(() => _currentUser));
+    //updateNotification(_currentUser.phoneNumber);
+  }
+
+  Widget _buildEditText(TextEditingController controller, bool readonly) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: Container(
         decoration: kBoxDecorationStyle,
         child: TextField(
+          readOnly: readonly,
+          controller: controller,
           cursorColor: AppTheme.primaryAccentColor,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -248,7 +343,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => Navigator.pop(context),
+        onPressed: () async {
+          if (firstNameController.text.isEmpty ||
+              lastNameController.text.isEmpty ||
+              addressController.text.isEmpty ||
+              dateController.text.isEmpty) {
+            final action = await Dialogs.yesAbortDialog(context, 'Fields Error',
+                'Complete all fields', DialogType.error);
+          } else if (!selectedDate.isBefore(DateTime.now())) {
+            final action = await Dialogs.yesAbortDialog(
+                context, 'Date Error', 'Date Selected Error', DialogType.error);
+          } else {
+            connectivity.checkConnectivity().then((onValue) async {
+              if (onValue == ConnectivityResult.wifi ||
+                  onValue == ConnectivityResult.mobile) {
+                updateUser(
+                    firstNameController.text.trim(),
+                  lastNameController.text.trim(),
+                  addressController.text.trim(),
+                  selectedDate,
+
+                );
+              } else {
+                final action = await Dialogs.yesAbortDialog(context, 'Connection Error',
+                    'Connection Unavailable', DialogType.error);
+              }
+            });
+          }
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

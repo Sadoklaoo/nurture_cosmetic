@@ -12,6 +12,7 @@ import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/NotificationListItem.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -32,6 +33,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
   int id;
   Connectivity connectivity;
   Product product;
+  User _currentUser;
+  var icon = FontAwesomeIcons.heart;
+  bool isFavorit = false;
 
   @override
   void initState() {
@@ -40,6 +44,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     session = new Session();
     connectivity = new Connectivity();
+    _currentUser = new User();
+    setState(() {
+      getCurrentUser();
+    });
   }
 
   Future getProductDetail(int id) async {
@@ -61,7 +69,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     Map<String, dynamic> data = jsonDecode(response.body);
     product = Product.fromMap(data);
-  //  print(product);
+    //  print(product);
     return (Future(() => product));
     //updateNotification(_currentUser.phoneNumber);
   }
@@ -70,7 +78,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    //print(widget.id);
+    //print(this.product);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -103,7 +111,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               color: AppTheme.primaryColor)),
                     ),
                   ),
-                  buildDrawerButton(),
+                  buildDrawerButton(product),
                 ],
               ),
               Padding(
@@ -286,10 +294,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     onHorizontalDragUpdate: (details) {
                       int s = 0;
                       if (details.delta.dx < -s) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => IngredientsScreen(product: product,)
-                            // MyApp(),
-                            ));
+
+
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: IngredientsScreen(
+                                  product: product,
+                                )));
                       }
                     },
                     child: Row(
@@ -356,18 +369,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   Widget _buildTypes(List list) {
     return Padding(
-      padding:
-      const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
       child: SizedBox(
         height: 22.0,
         child: ListView.builder(
-          scrollDirection:  Axis.horizontal,
-
+          scrollDirection: Axis.horizontal,
           itemCount: list.length,
           itemBuilder: (context, i) {
-            if (i==0){
+            if (i == 0) {
               return Padding(
-                padding: const EdgeInsets.only( right: 5),
+                padding: const EdgeInsets.only(right: 5),
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppTheme.primaryColor,
@@ -386,7 +397,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
               );
-            }else{
+            } else {
               return Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Container(
@@ -408,7 +419,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               );
             }
-
           },
         ),
       ),
@@ -494,23 +504,169 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ]));
   }
 
-  buildDrawerButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          MaterialButton(
-            onPressed: () {},
-            height: 50.0,
-            minWidth: 50.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            child: FaIcon(FontAwesomeIcons.heart),
-          )
-        ],
-      ),
-    );
+  Future getCurrentUser() async {
+    String tt;
+    String url = AppConfig.URL_GET_CURRENT_CLIENT;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _currentUser = User.fromMap(data);
+    return (Future(() => _currentUser));
+    //updateNotification(_currentUser.phoneNumber);
+  }
+
+  Future<bool> isProductFavorite(int productid) async {
+    String tt;
+    int id;
+    String url = AppConfig.URL_IS_PRODUCT_FAVORIS;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    await getCurrentUser().then((value) => {
+          id = value.id,
+        });
+    print(id);
+    String body = '{"id":"$id","idProduct":"$productid"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    bool isFavoris = false;
+    if (statusCode == 200) {
+      isFavoris = true;
+    }
+
+    return isFavoris;
+  }
+
+  Future<bool> addProductFavorite(int productid) async {
+    String tt;
+    int id;
+    String url = AppConfig.URL_IS_PRODUCT_ADD_FAVORIS;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    await getCurrentUser().then((value) => {
+          id = value.id,
+        });
+    print(id);
+    String body = '{"id":"$id","idProduct":"$productid"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    bool added = false;
+    if (statusCode == 200) {
+      added = true;
+      setState(() {
+        icon = FontAwesomeIcons.solidHeart;
+        isFavorit = true;
+        print("added");
+      });
+    }
+
+    return added;
+  }
+
+  Future<bool> removeProductFavorite(int productid) async {
+    String tt;
+    int id;
+    String url = AppConfig.URL_IS_PRODUCT_REMOVE_FAVORIS;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    await getCurrentUser().then((value) => {
+          id = value.id,
+        });
+    print(id);
+    String body = '{"id":"$id","idProduct":"$productid"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    bool rem = false;
+    if (statusCode == 200) {
+      rem = true;
+      setState(() {
+        icon = FontAwesomeIcons.heart;
+        isFavorit = false;
+        print("removed");
+      });
+    }
+
+    return rem;
+  }
+
+  buildDrawerButton(Product product) {
+    return FutureBuilder(
+        future: isProductFavorite(widget.id),
+        builder: (context, projectSnap) {
+          if (projectSnap.hasData) {
+            isFavorit = projectSnap.data;
+            if (isFavorit) {
+              icon = FontAwesomeIcons.solidHeart;
+            }
+            return Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  MaterialButton(
+                    onPressed: () async {
+                      if (isFavorit) {
+                        await removeProductFavorite(widget.id);
+                      } else {
+                        await addProductFavorite(widget.id);
+                      }
+                    },
+                    height: 50.0,
+                    minWidth: 50.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    child: FaIcon(
+                      icon,
+                      color: AppTheme.primaryColor,
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }
