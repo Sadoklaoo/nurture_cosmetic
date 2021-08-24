@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_ui/liquid_ui.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
+import 'package:nurture_cosmetic/Screens/history_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 
 Widget buildMenu(context) {
@@ -47,7 +48,7 @@ Widget buildMenu(context) {
                 textColor: Colors.white,
                 dense: true,
               ),
-              LListItem(
+              /*LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
                   AppNavigation.goToNotifications(context);
@@ -58,7 +59,7 @@ Widget buildMenu(context) {
                 dense: true,
 
                 // padding: EdgeInsets.zero,
-              ),
+              ),*/
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
@@ -74,7 +75,7 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-              //    AppNavigation.goToHistory(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryScreen()));
                 },
                 leading:
                 Icon(Icons.history, size: 20.0, color: Colors.white),

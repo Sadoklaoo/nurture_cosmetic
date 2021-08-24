@@ -41,8 +41,6 @@ var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => LoginScreen(),
   "/signUp": (BuildContext context) => SignUpScreen(),
   "/newAccount": (BuildContext context) => NewAccountScreen(),
-  "/pinAccount": (BuildContext context) => AccountPinScreen(),
-  "/numberAccount": (BuildContext context) => AccountNumberScreen(),
   "/skipOrTake": (BuildContext context) => SkipOrTakeScreen(),
   "/test": (BuildContext context) => TestScreen(),
   "/home": (BuildContext context) => HomeScreen(),
@@ -61,7 +59,6 @@ var routes = <String, WidgetBuilder>{
   "/notifications": (BuildContext context) => NotificationScreen(),
   "/understand": (BuildContext context) => UnderstandScreen(),
   "/know": (BuildContext context) => KnowScreen(),
-  "/ingredients": (BuildContext context) => IngredientsScreen(),
   "/take": (BuildContext context) => TakeScreen(),
   // All
 

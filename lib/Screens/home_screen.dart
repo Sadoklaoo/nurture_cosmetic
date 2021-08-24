@@ -240,13 +240,33 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                   height: 200, //height of TabBarView
-                  color: AppTheme.darkBlueColor,
+                  color: AppTheme.whiteColor,
                   child: TabBarView(children: <Widget>[
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 1',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                    Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppTheme.primaryAccentColor,
+                          borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/product_icon.png",
+                                width: 150, height: 150),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top:10.0),
+                                  child: Text('SHALIMAR',
+                                      style: TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.primaryColor)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(

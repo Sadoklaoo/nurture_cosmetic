@@ -235,10 +235,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       print(error);
     });
     int id;
-    getCurrentUser().then((value) => {
+    await getCurrentUser().then((value) => {
           id = value.id,
         });
-    print(id);
+
     String body = '{"id":"$id"}';
     final response = await http.post(url,
         headers: {

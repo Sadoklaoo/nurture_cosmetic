@@ -16,6 +16,8 @@ class AppConfig {
       "http://" + ip + "/products/getAllTypes";
   static String URL_GET_ALL_PRODUCT_FAVORIS =
       "http://" + ip + "/products/getAllFavoris";
+  static String URL_GET_HISTORY =
+      "http://" + ip + "/history/getAll";
   static String URL_IS_PRODUCT_FAVORIS =
       "http://" + ip + "/products/isFavoris";
   static String URL_IS_PRODUCT_ADD_FAVORIS =

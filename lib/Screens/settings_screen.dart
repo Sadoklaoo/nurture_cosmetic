@@ -68,7 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Divider(),
                 buildAccountButton(),
-                buildNotificationsButton(),
+               // buildNotificationsButton(),
                 buildHelpButton(),
                 buildTermsButton(),
                 buildTranslationsButton()

@@ -67,7 +67,9 @@ class Product {
     ProductSecondDescription = map['ProductSecondDescription'];
     ProductDimensions = map['ProductDimensions'];
     PreferedSkinType = map['PreferedSkinType'];
+    if (map["Category"]!=null){
     Categorie = Cat.fromMap(map['Category']);
+    }
     if (map["Type"]!=null){
       types = List<ProductType>.from(map["Type"]
           .map((x) => ProductType.fromMap(x)));
