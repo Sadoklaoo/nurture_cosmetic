@@ -583,7 +583,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       GestureDetector(
                         onTap: () => {
-                          showSearch(context: context, delegate: DataSeach(null,null,productType))
+                          this._futureProducts = (Future(() async => (await this.getProductByType(productType)) )) ,
+                          showSearch(context: context, delegate: DataSeach(this._futureProducts,null,productType))
                         },
                         child: imageSection(productType.image, productType.TypeName,
                             AppTheme.primaryColor),
@@ -815,6 +816,32 @@ class _HomeScreenState extends State<HomeScreen> {
       'auth': '$tt',
     },
     body: body);
+    int statusCode = response.statusCode;
+    List<dynamic>data = jsonDecode(response.body);
+    _products = data.map((json) => Product.fromMap(json)).toList();
+
+    return  (Future(() => _products));
+  }
+
+
+  Future<List<Product>> getProductByType(ProductType type) async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_BY_TYPE;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    String typename = type.TypeName;
+    print(typename);
+    String body = '{"typeName":"$typename"}';
+    final response = await http.post(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    },
+        body: body);
     int statusCode = response.statusCode;
     List<dynamic>data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();

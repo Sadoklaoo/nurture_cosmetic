@@ -31,7 +31,8 @@ class AppConfig {
   static String URL_GET_ALL_PRODUCT_BY_CATEGORY =
       "http://" + ip + "/category/getAllProductsByCategory";
 
-
+  static String URL_GET_ALL_PRODUCT_BY_TYPE =
+      "http://" + ip + "/products/getAllProductsByType";
 
 
 
