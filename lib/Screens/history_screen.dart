@@ -196,23 +196,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            color: AppTheme.primaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Text(
-              "Keyword : "+history.searchString,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16.0,
-                  color: AppTheme.whiteColor),
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.only(top:8.0),
           child: Container(
@@ -233,30 +216,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ),
         ),
-        ListView.builder(
-          itemCount: history.ConsultedProducts.length,
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index){
-            if(history.ConsultedProducts.length!=0){
-              return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                        builder: (context) => DetailsScreen(
-                          id: history.ConsultedProducts[index].id,
-                        )
-                    ));
-                  },
-                  child: ProductListItem(history.ConsultedProducts[index]));
-            }else{
-              return Text('No Product Found');
-            }
-           // return Text(history.ConsultedProducts[index].ProductName);
 
-          },
-        )
+        GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => DetailsScreen(
+                    id: history.ConsultedProduct.id,
+                  )
+              ));
+            },
+            child: ProductListItem(history.ConsultedProduct)),
       ],
     );
   }

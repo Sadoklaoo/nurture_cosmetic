@@ -47,6 +47,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _currentUser = new User();
     setState(() {
       getCurrentUser();
+      insertHistory(widget.id);
     });
   }
 
@@ -499,6 +500,38 @@ class _DetailsScreenState extends State<DetailsScreen> {
     //updateNotification(_currentUser.phoneNumber);
   }
 
+  insertHistory(int productid) async {
+    String tt;
+    int id;
+    String url = AppConfig.URL_ADD_TO_HISTORY;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    await getCurrentUser().then((value) => {
+      id = value.id,
+    });
+    print(id);
+    String body = '{"clientId":"$id","ProductId":"$productid"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    bool isFavoris = false;
+    if (statusCode == 201) {
+      isFavoris = true;
+      print('inserted');
+    }
+
+    return isFavoris;
+  }
+
   Future<bool> isProductFavorite(int productid) async {
     String tt;
     int id;
@@ -621,6 +654,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         body: body);
     int statusCode = response.statusCode;
     bool rem = false;
+
     if (statusCode == 200) {
       rem = true;
       setState(() {
@@ -692,6 +726,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   buildDrawerButton(Product product) {
+
     return FutureBuilder(
         future: isProductFavorite(widget.id),
         builder: (context, projectSnap) {
@@ -707,6 +742,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 children: <Widget>[
                   MaterialButton(
                     onPressed: () async {
+                      print('clicked');
                       if (isFavorit) {
                         await removeProductFavorite(widget.id);
                       } else {

@@ -24,6 +24,9 @@ class AppConfig {
   static String URL_IS_PRODUCT_COMPATIBLE =
       "http://" + ip + "/products/isProductCompatible";
 
+  static String URL_ADD_TO_HISTORY =
+      "http://" + ip + "/history/add";
+
   static String URL_IS_PRODUCT_FAVORIS =
       "http://" + ip + "/products/isFavoris";
   static String URL_IS_PRODUCT_ADD_FAVORIS =

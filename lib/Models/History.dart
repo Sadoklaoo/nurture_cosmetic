@@ -7,39 +7,30 @@ import 'Product.dart';
 
 class History {
   int id;
-  String searchString;
   DateTime consultedAt;
-  List<Product> ConsultedProducts;
+  Product ConsultedProduct;
 
   History({
     this.id,
-    this.searchString,
     this.consultedAt,
-    this.ConsultedProducts,
+    this.ConsultedProduct,
   });
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
-      'SearchString': searchString,
       'consultedAt': consultedAt,
-      'ConsultedProducts': [
-        ConsultedProducts.forEach((element) {
-          return element.toMap();
-        })
-      ],
+      'ConsultedProduct': ConsultedProduct.toMap(),
     };
     return map;
   }
 
   History.fromMap(Map<String, dynamic> map) {
     id = map['id'] as int;
-    searchString = map['SearchString'];
     consultedAt = AppUtils.convertStringToDateTime(map['consultedAt']);
 
-    if (map["ConsultedProducts"] != null) {
-      ConsultedProducts = List<Product>.from(
-          map["ConsultedProducts"].map((x) => Product.fromMap(x)));
+    if (map["ConsultedProduct"] != null) {
+      ConsultedProduct = Product.fromMap(map['ConsultedProduct']);
     }
     /* */
   }
