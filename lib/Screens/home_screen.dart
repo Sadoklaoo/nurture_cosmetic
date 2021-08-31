@@ -242,45 +242,307 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 200, //height of TabBarView
                   color: AppTheme.whiteColor,
                   child: TabBarView(children: <Widget>[
-                    Material(
-                      elevation: 2,
-                      borderRadius: BorderRadius.circular(30),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.primaryAccentColor,
-                          borderRadius: BorderRadius.circular(30)
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset("assets/images/product_icon.png",
-                                width: 150, height: 150),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top:10.0),
-                                  child: Text('SHALIMAR',
+                    Padding(
+                      padding: const EdgeInsets.only(left:5.0),
+                      child: Material(
+                        elevation: 2,
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryAccentColor,
+                            borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset("assets/images/product_icon.png",
+                                  width: 180, height: 180),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:15.0),
+                                    child: Text('SHALIMAR',
+                                        style: TextStyle(
+                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
+                                  ),
+                                  Text('18/20',
                                       style: TextStyle(
-                                          fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.primaryColor)),
-                                ),
-                              ],
-                            ),
-                          ],
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Text('120 TND',
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:5.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.primaryColor,
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                            child: Text(
+                                              "Bio",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 16.0,
+                                                  color: AppTheme.whiteColor),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Eco",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Vegan",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 2',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                    Padding(
+                      padding: const EdgeInsets.only(left:5.0),
+                      child: Material(
+                        elevation: 2,
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppTheme.primaryColor,
+                              borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset("assets/images/product_icon.png",
+                                  width: 180, height: 180),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:15.0),
+                                    child: Text('SHALIMAR',
+                                        style: TextStyle(
+                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
+                                  ),
+                                  Text('18/20',
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Text('120 TND',
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:5.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.primaryAccentColor,
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                            child: Text(
+                                              "Bio",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 16.0,
+                                                  color: AppTheme.whiteColor),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryAccentColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Eco",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryAccentColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Vegan",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 3',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                    Padding(
+                      padding: const EdgeInsets.only(left:5.0),
+                      child: Material(
+                        elevation: 2,
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppTheme.primaryAccentColor,
+                              borderRadius: BorderRadius.circular(30)
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset("assets/images/product_icon.png",
+                                  width: 180, height: 180),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:15.0),
+                                    child: Text('SHALIMAR',
+                                        style: TextStyle(
+                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
+                                  ),
+                                  Text('18/20',
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Text('120 TND',
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:5.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.primaryColor,
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                            child: Text(
+                                              "Bio",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 16.0,
+                                                  color: AppTheme.whiteColor),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Eco",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top:5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                              child: Text(
+                                                "Vegan",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 16.0,
+                                                    color: AppTheme.whiteColor),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ]))
@@ -321,7 +583,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       GestureDetector(
                         onTap: () => {
-                          showSearch(context: context, delegate: DataSeach(null,null,productType))
+                          this._futureProducts = (Future(() async => (await this.getProductByType(productType)) )) ,
+                          showSearch(context: context, delegate: DataSeach(this._futureProducts,null,productType))
                         },
                         child: imageSection(productType.image, productType.TypeName,
                             AppTheme.primaryColor),
@@ -557,6 +820,32 @@ class _HomeScreenState extends State<HomeScreen> {
       'auth': '$tt',
     },
     body: body);
+    int statusCode = response.statusCode;
+    List<dynamic>data = jsonDecode(response.body);
+    _products = data.map((json) => Product.fromMap(json)).toList();
+
+    return  (Future(() => _products));
+  }
+
+
+  Future<List<Product>> getProductByType(ProductType type) async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_BY_TYPE;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    String typename = type.TypeName;
+    print(typename);
+    String body = '{"typeName":"$typename"}';
+    final response = await http.post(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    },
+        body: body);
     int statusCode = response.statusCode;
     List<dynamic>data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();

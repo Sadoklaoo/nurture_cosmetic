@@ -176,28 +176,22 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                   height: height * 2 / 100,
                 ),
                 Expanded(
-                    child: LiquidPullToRefresh(
-                  showChildOpacityTransition: true,
-                  color: AppTheme.primaryAccentColor,
+                    child: ListView.builder(
+                      padding: EdgeInsets.only(right: 6, left: 6),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: ScrollPhysics(),
+                      itemCount: selectedSize,
+                      itemBuilder: (BuildContext context, int index) {
+                       Map p = this.allergies.elementAt(index);
+                       if(p['selected']==true){
+                         return _buildListItem(p['name'],p['description'],p['image']);
+                       }else{
+                         index++;
+                       }
 
-                  // ignore: missing_return
-                  onRefresh: () {},
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(right: 6, left: 6),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: selectedSize,
-                    itemBuilder: (BuildContext context, int index) {
-                     Map p = this.allergies.elementAt(index);
-                     if(p['selected']==true){
-                       return _buildListItem(p['name'],p['description'],p['image']);
-                     }else{
-                       index++;
-                     }
-
-                    },
-                  ),
-                )),
+                      },
+                    )),
               ],
             ),
           ),

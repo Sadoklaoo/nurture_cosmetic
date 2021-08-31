@@ -1,6 +1,7 @@
 class AppConfig {
-  //static String ip = "10.0.2.2:3000";
-  static String ip = "192.168.1.16:3000";
+  static String ip = "10.0.2.2:3000";
+ // static String ip = "192.168.1.16:3000";
+//  static String ip = "192.168.5.115:3000";
   //static String ip = "http://521b8f30acbd.ngrok.io:3000";
   static String URL_GET_IMAGE = "http://" + ip + "/images/";
   static String URL_LOGIN = "http://" + ip + "/auth/login";
@@ -30,7 +31,8 @@ class AppConfig {
   static String URL_GET_ALL_PRODUCT_BY_CATEGORY =
       "http://" + ip + "/category/getAllProductsByCategory";
 
-
+  static String URL_GET_ALL_PRODUCT_BY_TYPE =
+      "http://" + ip + "/products/getAllProductsByType";
 
 
 
