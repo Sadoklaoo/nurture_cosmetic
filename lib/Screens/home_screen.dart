@@ -427,14 +427,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(
               padding: const EdgeInsets.only(top: 5.0),
-              child: AutoSizeText(
-                title,
-                softWrap: true,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0,
-                    color: AppTheme.whiteColor),
-                maxLines: 2,
+              child: Center(
+                child: AutoSizeText(
+                  title,
+                  textAlign:TextAlign.center,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.0,
+
+                      color: AppTheme.whiteColor),
+                  maxLines: 2,
+                ),
               )
               /*Text(
               title,

@@ -30,8 +30,8 @@ class _TakeScreenState extends State<TakeScreen> {
   int _tiraille = 0;
 
   final List<String> reactions = [
-    "Non, jamais",
-    "Oui, de temps à autre voire régulièrement",
+      "Non, jamais",
+      "Oui, de temps à autre voire régulièrement",
   ];
   int _reactions = 0;
 
