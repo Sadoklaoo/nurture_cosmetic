@@ -225,37 +225,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ],
                     ),
                   ),
+                  buildCompatibleField(),
                   SizedBox(
                     height: height * 1 / 100,
                   ),
                   _buildTypes(product.types),
-                  /*Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10.0, left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: Text(
-                              product.types[1].TypeName,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: AppTheme.whiteColor),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),*/
+
                   SizedBox(
                     height: height * 3 / 100,
                   ),
@@ -273,9 +248,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: 15,
-                      ),
+
                       Flexible(
                         fit: FlexFit.tight,
                         child: AutoSizeText(
@@ -557,6 +530,37 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return isFavoris;
   }
 
+  Future<bool> isProductCompatible(int productid) async {
+    String tt;
+    int id;
+    String url = AppConfig.URL_IS_PRODUCT_COMPATIBLE;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    await getCurrentUser().then((value) => {
+      id = value.id,
+    });
+    print(id);
+    String body = '{"idUser":"$id","idProduct":"$productid"}';
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
+    int statusCode = response.statusCode;
+    bool isFavoris = false;
+    if (statusCode == 200) {
+      isFavoris = true;
+    }
+
+    return isFavoris;
+  }
+
   Future<bool> addProductFavorite(int productid) async {
     String tt;
     int id;
@@ -627,6 +631,64 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
 
     return rem;
+  }
+
+  buildCompatibleField() {
+    return FutureBuilder(
+        future: isProductCompatible(widget.id),
+        builder: (context, projectSnap) {
+          if (projectSnap.hasData) {
+            isFavorit = projectSnap.data;
+            if (!isFavorit) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.redColor,
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0,top: 5,bottom: 5),
+                            child: GestureDetector(
+                                onTap: () => {},
+                                child: FaIcon(
+                                  FontAwesomeIcons.exclamationTriangle,
+                                  color: AppTheme.whiteColor,
+                                  size: 18,
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 3.0, right: 8.0),
+                            child: Text(
+                              "Ce produit n'est past compatible avec vous.",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15.0,
+                                  color: AppTheme.whiteColor),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }else{
+
+            }
+            return Container();
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 
   buildDrawerButton(Product product) {

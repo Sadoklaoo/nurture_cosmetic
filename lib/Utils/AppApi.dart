@@ -1,7 +1,7 @@
 class AppConfig {
   static String ip = "10.0.2.2:3000";
  // static String ip = "192.168.1.16:3000";
-//  static String ip = "192.168.5.115:3000";
+// static String ip = "192.168.5.115:3000";
   //static String ip = "http://521b8f30acbd.ngrok.io:3000";
   static String URL_GET_IMAGE = "http://" + ip + "/images/";
   static String URL_LOGIN = "http://" + ip + "/auth/login";
@@ -19,6 +19,11 @@ class AppConfig {
       "http://" + ip + "/products/getAllFavoris";
   static String URL_GET_HISTORY =
       "http://" + ip + "/history/getAll";
+  static String URL_GET_PRODUCTS =
+      "http://" + ip + "/products/getAll";
+  static String URL_IS_PRODUCT_COMPATIBLE =
+      "http://" + ip + "/products/isProductCompatible";
+
   static String URL_IS_PRODUCT_FAVORIS =
       "http://" + ip + "/products/isFavoris";
   static String URL_IS_PRODUCT_ADD_FAVORIS =

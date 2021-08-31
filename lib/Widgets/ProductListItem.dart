@@ -19,17 +19,17 @@ class ProductListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                AppUtils.capitalizeSentence(product.ProductName),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: AppTheme.primaryColor),
+              Flexible(
+                child: AutoSizeText(
+                  product.ProductName,
+                  maxLines: 3,
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: AppTheme.primaryColor),
+                ),
               ),
-              Text(
-                AppUtils.capitalizeSentence(product.Price.toString() + ' DT'),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.primaryAccentColor),
-              ),
+
             ],
           ),
           leading: Container(

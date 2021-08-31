@@ -172,7 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 20.0),
         child: GestureDetector(
           onTap: () {
-            showSearch(context: context, delegate: DataSeach(null,null,null));
+            this._futureProducts = (Future(() async => (await this.getAllProducts()) ));
+            showSearch(context: context, delegate: DataSeach(this._futureProducts,null,null));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -846,6 +847,29 @@ class _HomeScreenState extends State<HomeScreen> {
       'auth': '$tt',
     },
         body: body);
+    int statusCode = response.statusCode;
+    List<dynamic>data = jsonDecode(response.body);
+    _products = data.map((json) => Product.fromMap(json)).toList();
+
+    return  (Future(() => _products));
+  }
+
+  Future<List<Product>> getAllProducts() async {
+    String tt;
+    String url = AppConfig.URL_GET_PRODUCTS;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    },
+     );
     int statusCode = response.statusCode;
     List<dynamic>data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();
