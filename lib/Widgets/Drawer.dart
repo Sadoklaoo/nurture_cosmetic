@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'package:nurture_cosmetic/Models/Session.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
 import 'package:nurture_cosmetic/Screens/history_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
@@ -112,21 +113,22 @@ Widget buildMenu(context) {
 
                 // padding: EdgeInsets.zero,
               ),
+              // LListItem(
+              //   backgroundColor: Colors.transparent,
+              //   onTap: () {
+              //     AppNavigation.goToKnow(context);
+              //   },
+              //   leading: FaIcon(FontAwesomeIcons.infoCircle,size: 20.0, color: Colors.white),
+              //   title: Text("(Re)Connaître"),
+              //   textColor: Colors.white,
+              //   dense: true,
+              //
+              //   // padding: EdgeInsets.zero,
+              // ),
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-                  AppNavigation.goToKnow(context);
-                },
-                leading: FaIcon(FontAwesomeIcons.infoCircle,size: 20.0, color: Colors.white),
-                title: Text("(Re)Connaître"),
-                textColor: Colors.white,
-                dense: true,
 
-                // padding: EdgeInsets.zero,
-              ),
-              LListItem(
-                backgroundColor: Colors.transparent,
-                onTap: () {
                   AppNavigation.goToSettings(context);
                 },
                 leading: Icon(Icons.settings, size: 20.0, color: Colors.white),
@@ -139,6 +141,8 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
+                  Session s = new Session();
+                  s.setLoggedOut();
                   AppNavigation.goToLogin(context);
                 },
                 leading: Icon(Icons.logout, size: 20.0, color: Colors.white),

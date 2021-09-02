@@ -112,20 +112,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            _buildBtn(
-                                () => print('S\'inscrire avec Facebook'),
-                                FontAwesomeIcons.facebookF,
-                                AppTheme.facebookColor,
-                                'S\'inscrire avec Facebook'),
-                            Center(
-                              child: Text(
-                                '- OU -',
-                                style: TextStyle(
-                                  color: AppTheme.primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                            // _buildBtn(
+                            //     () => print('S\'inscrire avec Facebook'),
+                            //     FontAwesomeIcons.facebookF,
+                            //     AppTheme.facebookColor,
+                            //     'S\'inscrire avec Facebook'),
+                            // Center(
+                            //   child: Text(
+                            //     '- OU -',
+                            //     style: TextStyle(
+                            //       color: AppTheme.primaryColor,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            // ),
                             _buildBtn(
                                 () =>  AppNavigation.goToNewAccount(context),
                                 FontAwesomeIcons.solidEnvelope,

@@ -272,7 +272,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               ),
             ),
             title: Text(
-              "Modifier allergies",
+              "Modifier allergènes",
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

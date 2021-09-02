@@ -127,7 +127,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Center(
-                        child: Text("Mes allergies",
+                        child: Text("Mes allergènes",
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w400,
@@ -145,7 +145,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Center(
                     child: Text(
-                        "Modifier vos allergies pour avoir une meilleure resultat."),
+                        "Modifier vos allergènes pour avoir une meilleure resultat."),
                   ),
                 ),
                 SizedBox(
@@ -159,7 +159,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Mes allergies",
+                      "Mes allergènes",
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

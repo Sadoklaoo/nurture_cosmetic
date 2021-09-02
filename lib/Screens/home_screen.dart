@@ -9,11 +9,12 @@ import 'package:nurture_cosmetic/Models/Cat.dart';
 import 'package:nurture_cosmetic/Models/Session.dart';
 import 'package:nurture_cosmetic/Models/ProductType.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
-import 'package:nurture_cosmetic/Models/Product.dart' ;
+import 'package:nurture_cosmetic/Models/Product.dart';
 import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Utils/AppUtils.dart';
+import 'package:nurture_cosmetic/Widgets/SelectorScreen.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/SearchEngine.dart';
@@ -50,8 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
       //
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FutureBuilder(
                   future: getCurrentUser(),
                   builder: (context, projectSnap) {
-                    if(projectSnap.hasData ){
+                    if (projectSnap.hasData) {
                       return Text(
                         'Bonjour, ' + projectSnap.data.firstName,
                         style: TextStyle(
@@ -131,12 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       );
-                    }
-                    else  {
+                    } else {
                       //print('project snapshot data is: ${projectSnap.data}');
                       return CircularProgressIndicator();
                     }
-
                   }),
               Text(
                 'Bienvenue à Nurture Cosmetic.',
@@ -172,8 +169,11 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 20.0),
         child: GestureDetector(
           onTap: () {
-            this._futureProducts = (Future(() async => (await this.getAllProducts()) ));
-            showSearch(context: context, delegate: DataSeach(this._futureProducts,null,null));
+            this._futureProducts =
+                (Future(() async => (await this.getAllProducts())));
+            showSearch(
+                context: context,
+                delegate: DataSeach(this._futureProducts, null, null));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -218,339 +218,241 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
         length: 3, // length of tabs
         initialIndex: 0,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                child: TabBar(
-                  isScrollable: true,
-                  unselectedLabelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                  labelColor: AppTheme.primaryColor,
-                  unselectedLabelColor: AppTheme.greyColor,
-                  indicatorColor: Colors.transparent,
-                  labelPadding: EdgeInsets.only(left: 15),
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  tabs: [
-                    Tab(text: 'Populaire'),
-                    Tab(text: 'Nouveau'),
-                    Tab(text: 'Récommandé'),
-                  ],
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
+                Widget>[
+          Container(
+            child: TabBar(
+              isScrollable: true,
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+              labelColor: AppTheme.primaryColor,
+              unselectedLabelColor: AppTheme.greyColor,
+              indicatorColor: Colors.transparent,
+              labelPadding: EdgeInsets.only(left: 15),
+              labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              tabs: [
+                Tab(text: 'Populaire'),
+                Tab(text: 'Nouveau'),
+                Tab(text: 'Récommandé'),
+              ],
+            ),
+          ),
+          Container(
+              height: 150, //height of TabBarView
+              color: AppTheme.whiteColor,
+              child: TabBarView(children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryAccentColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/product_icon.png",
+                              width: 140, height: 140),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text('SHALIMAR',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.whiteColor)),
+                              ),
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Bio",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              Container(
-                  height: 200, //height of TabBarView
-                  color: AppTheme.whiteColor,
-                  child: TabBarView(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left:5.0),
-                      child: Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryAccentColor,
-                            borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: Row(
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/product_icon.png",
+                              width: 140, height: 140),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset("assets/images/product_icon.png",
-                                  width: 180, height: 180),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:15.0),
-                                    child: Text('SHALIMAR',
-                                        style: TextStyle(
-                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
-                                  ),
-                                  Text('18/20',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Text('120 TND',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.primaryColor,
-                                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Text(
-                                              "Bio",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 16.0,
-                                                  color: AppTheme.whiteColor),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Eco",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Vegan",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text('SHALIMAR',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.whiteColor)),
                               ),
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Bio",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              )
                             ],
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:5.0),
-                      child: Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: AppTheme.primaryColor,
-                              borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: Row(
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryAccentColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/product_icon.png",
+                              width: 140, height: 140),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset("assets/images/product_icon.png",
-                                  width: 180, height: 180),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:15.0),
-                                    child: Text('SHALIMAR',
-                                        style: TextStyle(
-                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
-                                  ),
-                                  Text('18/20',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Text('120 TND',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.primaryAccentColor,
-                                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Text(
-                                              "Bio",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 16.0,
-                                                  color: AppTheme.whiteColor),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryAccentColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Eco",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryAccentColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Vegan",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text('SHALIMAR',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.whiteColor)),
                               ),
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Bio",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              )
                             ],
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:5.0),
-                      child: Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: AppTheme.primaryAccentColor,
-                              borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset("assets/images/product_icon.png",
-                                  width: 180, height: 180),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:15.0),
-                                    child: Text('SHALIMAR',
-                                        style: TextStyle(
-                                            fontSize: 20, fontWeight: FontWeight.bold,color: AppTheme.whiteColor)),
-                                  ),
-                                  Text('18/20',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Text('120 TND',
-                                      style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.normal,color: AppTheme.whiteColor)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.primaryColor,
-                                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                            child: Text(
-                                              "Bio",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 16.0,
-                                                  color: AppTheme.whiteColor),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Eco",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:5.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                              child: Text(
-                                                "Vegan",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color: AppTheme.whiteColor),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]))
-            ]));
+                  ),
+                ),
+
+              ]))
+        ]));
   }
-
-
 
   //Produit
   Widget productTypeSelector() {
@@ -573,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: FutureBuilder(
           future: getProductTypes(),
           builder: (context, projectSnap) {
-            if(projectSnap.hasData ){
+            if (projectSnap.hasData) {
               return ListView.builder(
                 itemCount: projectSnap.data.length,
                 scrollDirection: Axis.horizontal,
@@ -581,14 +483,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ProductType productType = projectSnap.data[index];
                   return Row(
                     children: <Widget>[
-
                       GestureDetector(
                         onTap: () => {
-                          this._futureProducts = (Future(() async => (await this.getProductByType(productType)) )) ,
-                          showSearch(context: context, delegate: DataSeach(this._futureProducts,null,productType))
+                          this._futureProducts = (Future(() async =>
+                              (await this.getProductByType(productType)))),
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SelectorScreen(
+                                  this._futureProducts,
+                                  null, productType
+                              )
+                            // MyApp(),
+                          ))
                         },
-                        child: imageSection(productType.image, productType.TypeName,
-                            AppTheme.primaryColor),
+                        child: imageSection(productType.image,
+                            productType.TypeName, AppTheme.primaryColor),
                       ),
                       SizedBox(
                         width: 8.0,
@@ -597,12 +506,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               );
-            }
-            else  {
+            } else {
               //print('project snapshot data is: ${projectSnap.data}');
               return CircularProgressIndicator();
             }
-
           }),
     );
   }
@@ -628,7 +535,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: FutureBuilder(
           future: getCategories(),
           builder: (context, projectSnap) {
-            if(projectSnap.hasData ){
+            if (projectSnap.hasData) {
               return ListView.builder(
                 itemCount: projectSnap.data.length,
                 scrollDirection: Axis.horizontal,
@@ -636,13 +543,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   Cat categorie = projectSnap.data[index];
                   return Row(
                     children: <Widget>[
-
                       GestureDetector(
                         onTap: () async => {
-                          this._futureProducts = (Future(() async => (await this.getProductByCategory(categorie)) )) ,
-                        showSearch(context: context, delegate: DataSeach(this._futureProducts,categorie,null))
+                          this._futureProducts = (Future(() async =>
+                              (await this.getProductByCategory(categorie)))),
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SelectorScreen(
+                                this._futureProducts,
+                                  categorie, null
+                                  )
+                              // MyApp(),
+                              ))
                         },
-                        child: imageSection(categorie.image, categorie.categoryName,
+                        child: imageSection(
+                            categorie.image,
+                            categorie.categoryName,
                             AppTheme.primaryAccentColor),
                       ),
                       SizedBox(
@@ -652,15 +567,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               );
-            }
-            else  {
-
+            } else {
               return CircularProgressIndicator();
             }
-
           }),
     );
-
   }
 
   //Design
@@ -682,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: new BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                    AppConfig.URL_GET_IMAGE+imageVal,
+                    AppConfig.URL_GET_IMAGE + imageVal,
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -694,12 +605,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: AutoSizeText(
                   title,
-                  textAlign:TextAlign.center,
+                  textAlign: TextAlign.center,
                   softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.0,
-
                       color: AppTheme.whiteColor),
                   maxLines: 2,
                 ),
@@ -738,6 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
   //End Design
   Future getCurrentUser() async {
     String tt;
@@ -761,7 +672,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //updateNotification(_currentUser.phoneNumber);
   }
 
-
   Future getCategories() async {
     String tt;
     String url = AppConfig.URL_GET_CATEGORY;
@@ -778,9 +688,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     int statusCode = response.statusCode;
 
-    List<dynamic>data = jsonDecode(response.body);
+    List<dynamic> data = jsonDecode(response.body);
     _categories = data.map((json) => Cat.fromMap(json)).toList();
-    return  (Future(() => _categories));
+    return (Future(() => _categories));
   }
 
   Future getProductTypes() async {
@@ -798,9 +708,9 @@ class _HomeScreenState extends State<HomeScreen> {
       'auth': '$tt',
     });
     int statusCode = response.statusCode;
-    List<dynamic>data = jsonDecode(response.body);
+    List<dynamic> data = jsonDecode(response.body);
     _productType = data.map((json) => ProductType.fromMap(json)).toList();
-    return  (Future(() => _productType));
+    return (Future(() => _productType));
   }
 
   Future<List<Product>> getProductByCategory(Cat categorie) async {
@@ -815,19 +725,19 @@ class _HomeScreenState extends State<HomeScreen> {
     int id = categorie.id;
     print(id);
     String body = '{"id":"$id"}';
-    final response = await http.post(url, headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'auth': '$tt',
-    },
-    body: body);
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+        body: body);
     int statusCode = response.statusCode;
-    List<dynamic>data = jsonDecode(response.body);
+    List<dynamic> data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();
 
-    return  (Future(() => _products));
+    return (Future(() => _products));
   }
-
 
   Future<List<Product>> getProductByType(ProductType type) async {
     String tt;
@@ -841,17 +751,18 @@ class _HomeScreenState extends State<HomeScreen> {
     String typename = type.TypeName;
     print(typename);
     String body = '{"typeName":"$typename"}';
-    final response = await http.post(url, headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'auth': '$tt',
-    },
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
         body: body);
     int statusCode = response.statusCode;
-    List<dynamic>data = jsonDecode(response.body);
+    List<dynamic> data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();
 
-    return  (Future(() => _products));
+    return (Future(() => _products));
   }
 
   Future<List<Product>> getAllProducts() async {
@@ -864,16 +775,18 @@ class _HomeScreenState extends State<HomeScreen> {
       print(error);
     });
 
-    final response = await http.get(url, headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'auth': '$tt',
-    },
-     );
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'auth': '$tt',
+      },
+    );
     int statusCode = response.statusCode;
-    List<dynamic>data = jsonDecode(response.body);
+    List<dynamic> data = jsonDecode(response.body);
     _products = data.map((json) => Product.fromMap(json)).toList();
 
-    return  (Future(() => _products));
+    return (Future(() => _products));
   }
 }

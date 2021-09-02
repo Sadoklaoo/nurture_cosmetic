@@ -13,7 +13,7 @@ class ProductListItem extends StatelessWidget {
   Widget build(BuildContext context) {
    // return _buildListItem(product);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 5.0),
       child: ListTile(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +54,7 @@ class ProductListItem extends StatelessWidget {
                   Flexible(
                     child: AutoSizeText(
                       product.ProductDescription,
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.visible,
                       softWrap: true,
                       style: TextStyle(
@@ -70,7 +70,14 @@ class ProductListItem extends StatelessWidget {
                 ],
               )
             ],
-          )),
+          ),
+        trailing: Icon(
+          Icons.add_circle,
+          size: 20,
+          color: AppTheme.primaryAccentColor,
+        ),
+      ),
+
     );
   }
 

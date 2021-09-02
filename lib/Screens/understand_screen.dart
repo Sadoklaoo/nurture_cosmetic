@@ -115,7 +115,7 @@ class _UnderstandScreenState extends State<UnderstandScreen> {
         parentId: 1,
         extras: {'key': 'extradata2'},
       ),
-      DataModel(
+      /*DataModel(
         id: 3,
         name: 'Role et composition',
         parentId: 2,
@@ -126,7 +126,7 @@ class _UnderstandScreenState extends State<UnderstandScreen> {
         name: 'Type de peau',
         parentId: 2,
         extras: {'key': 'extradata4'},
-      ),
+      ),*/
       DataModel(
         id: 5,
         name: 'Déterminer son type de peau',
@@ -134,12 +134,12 @@ class _UnderstandScreenState extends State<UnderstandScreen> {
         extras: {'key': 'extradata5'},
       ),
 
-      DataModel(
+    /*  DataModel(
         id: 6,
         name: 'Phototype de peau',
         parentId: 2,
         extras: {'key': 'extradata6'},
-      ),
+      ),*/
 
 
 

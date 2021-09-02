@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                // buildNotificationsButton(),
                 buildHelpButton(),
                 buildTermsButton(),
-                buildTranslationsButton()
+               // buildTranslationsButton()
               ],
             ),
           ),
