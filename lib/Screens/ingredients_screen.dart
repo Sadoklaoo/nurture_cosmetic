@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
 import 'package:nurture_cosmetic/Models/Product.dart';
 import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
@@ -110,15 +112,9 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  widget.product.Categorie.categoryName,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 20.0,
-                      color: AppTheme.whiteColor),
-                ),
+                child: buildCategories(widget.product.Categories)
               ),
+
               SizedBox(
                 height: height * 5 / 100,
               ),
@@ -130,29 +126,9 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Text(
-                          'Dimensions',
-                          style: TextStyle(
-                              color: AppTheme.whiteColor,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Text(
-                          widget.product.ProductDimensions,
-                          style: TextStyle(
-                              color: AppTheme.whiteColor,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ),
+
+
+
                       GestureDetector(
                         onHorizontalDragUpdate: (details) {
                           int s = 0;
@@ -235,6 +211,38 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
         ),
       ),
     );
+  }
+
+  buildCategories(List<Cat> categories) {
+    var categoriesNames = "";
+    if (categories.length != 0) {
+      categoriesNames = categories[0].categoryName;
+      if (categories.length > 1) {
+
+        var i = 0;
+        categories.forEach((element) {
+          if(i > 0){
+            categoriesNames +=", "+element.categoryName;
+          }
+          i++;
+        });
+      }
+      return Row(
+        children: [
+          Flexible(
+            child: AutoSizeText(
+              categoriesNames,
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+              softWrap: true,
+              style: TextStyle(fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.whiteColor),
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   buildDrawerButton() {

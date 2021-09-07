@@ -1,7 +1,10 @@
 
 
+
 import 'package:nurture_cosmetic/Models/Ingredient.dart';
 import 'package:nurture_cosmetic/Models/ProductType.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
+import 'package:nurture_cosmetic/Models/SkinType.dart';
 import 'package:nurture_cosmetic/Models/Cat.dart';
 
 
@@ -12,11 +15,10 @@ class Product {
   int Price;
   int Rank;
   String Image;
-  String ProductDescription;
-  String ProductSecondDescription;
-  String ProductDimensions;
-  String PreferedSkinType;
-  Cat Categorie;
+  String ProductShortDescription;
+  String usingAdvice;
+  List<SkinType> SkinTypes;
+  List<Cat> Categories;
   List<ProductType> types;
   List<Ingredient> ingredients;
 
@@ -27,11 +29,10 @@ class Product {
       this.Price,
       this.Rank,
       this.Image,
-      this.ProductDescription,
-      this.ProductSecondDescription,
-      this.ProductDimensions,
-      this.PreferedSkinType,
-      this.Categorie,
+      this.ProductShortDescription,
+      this.usingAdvice,
+      this.SkinTypes,
+      this.Categories,
       this.ingredients
       });
 
@@ -43,11 +44,14 @@ class Product {
       'Price': Price,
       'Rank': Rank,
       'Image': Image,
-      'ProductDescription': ProductDescription,
-      'ProductSecondDescription': ProductSecondDescription,
-      'ProductDimensions': ProductDimensions,
-      'PreferedSkinType': PreferedSkinType,
-      'Category': Categorie.toMap(),
+      'ProductShortDescription': ProductShortDescription,
+      'usingAdvice': usingAdvice,
+      'SkinTypes': [SkinTypes.forEach((element) {
+    return element.toMap();
+    })],
+      'Categories': [Categories.forEach((element) {
+        return element.toMap();
+      })],
       'ProductIngredients': [ingredients.forEach((element) {
         return element.toMap();
       })],
@@ -63,12 +67,16 @@ class Product {
     Price = map['Price'];
     Rank = map['Rank'] as int;
     Image = map['Image'];
-    ProductDescription = map['ProductDescription'];
-    ProductSecondDescription = map['ProductSecondDescription'];
-    ProductDimensions = map['ProductDimensions'];
-    PreferedSkinType = map['PreferedSkinType'];
-    if (map["Category"]!=null){
-    Categorie = Cat.fromMap(map['Category']);
+    ProductShortDescription = map['ProductShortDescription'];
+    usingAdvice = map['usingAdvice'];
+
+    if (map["Categories"]!=null){
+      Categories = List<Cat>.from(map["Categories"]
+          .map((x) => Cat.fromMap(x)));
+    }
+    if (map["SkinTypes"]!=null){
+      SkinTypes = List<SkinType>.from(map["SkinTypes"]
+          .map((x) => SkinType.fromMap(x)));
     }
     if (map["Type"]!=null){
       types = List<ProductType>.from(map["Type"]
@@ -91,10 +99,6 @@ class Product {
         ProductName.toString() +
         "\n Image : " +
         Image.toString() +
-        "\n Categorie : " +
-        Categorie.toString() +
-        "\n ProductIngredients : " +
-        ingredients.toString() +
         "}";
   }
 }

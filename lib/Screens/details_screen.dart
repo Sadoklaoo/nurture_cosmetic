@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
 import 'package:nurture_cosmetic/Models/Product.dart';
 import 'package:nurture_cosmetic/Models/Session.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
@@ -152,15 +153,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Text(
-                      product.Categorie.categoryName,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20.0,
-                          color: AppTheme.primaryColor),
-                    ),
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: buildCategories(product.Categories)
                   ),
                   Padding(
                     padding:
@@ -253,7 +247,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Flexible(
                         fit: FlexFit.tight,
                         child: AutoSizeText(
-                          product.ProductDescription,
+                          product.ProductShortDescription,
                           maxLines: 20,
                           overflow: TextOverflow.fade,
                           softWrap: true,
@@ -306,7 +300,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      product.ProductSecondDescription,
+                      product.usingAdvice,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
@@ -339,6 +333,38 @@ class _DetailsScreenState extends State<DetailsScreen> {
             }
           }),
     );
+  }
+  buildCategories(List<Cat> categories) {
+    var categoriesNames = "";
+    if (categories.length != 0) {
+      categoriesNames = categories[0].categoryName;
+      if (categories.length > 1) {
+
+        var i = 0;
+        categories.forEach((element) {
+          if(i > 0){
+            categoriesNames +=", "+element.categoryName;
+          }
+          i++;
+        });
+      }
+      return Row(
+        children: [
+          Flexible(
+            child: AutoSizeText(
+              categoriesNames,
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+              softWrap: true,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.primaryColor),
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildTypes(List list) {
