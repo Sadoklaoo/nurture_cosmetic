@@ -242,7 +242,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
             ),
           ],
         ),
-        child: ListTile(
+        child: CheckboxListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -254,7 +254,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                 ),
               ],
             ),
-            leading: Container(child: Image.asset(image)),
+            secondary: Container(child: Image.asset(image)),
             subtitle: Row(
               children: [
                 Flexible(
@@ -269,7 +269,8 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                   ),
                 ),
               ],
-            )),
+
+            ), value: true,selected: true,activeColor: AppTheme.primaryColor,),
       ),
     );
   }
