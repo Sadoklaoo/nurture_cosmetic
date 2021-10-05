@@ -50,6 +50,7 @@ dependencies:
   im_stepper: ^0.1.3
   syncfusion_flutter_datagrid: ^19.1.59-beta
   syncfusion_flutter_sliders: ^19.1.56-beta
+  percent_indicator: ^2.1.7+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

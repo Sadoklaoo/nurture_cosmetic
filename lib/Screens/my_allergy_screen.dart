@@ -34,7 +34,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
       'image': AppStrings.biocides_icon,
       'name': "Biocides",
       'description': 'Détruire les organismes nuisibles.',
-      'selected': true
+      'selected': false
     },
     {
       'id': '3',
@@ -42,7 +42,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
       'name': "Antioxydants",
       'description':
           'Protègent les produits contre la dégradation des acides gras insaturés.',
-      'selected': true
+      'selected': false
     },
     {
       'id': '4',
@@ -50,14 +50,14 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
       'name': "Absorbants d'UV",
       'description':
           'Responsables d\'allergies de contact et de dermatites photosensibles.',
-      'selected': true
+      'selected': false
     },
     {
       'id': '5',
       'image': AppStrings.glycerine_icon,
       'name': "Glycérine et glycols",
       'description': 'Fréquemment responsables de phénomènes irritatifs.',
-      'selected': true
+      'selected': false
     },
     {
       'id': '6',
@@ -65,7 +65,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
       'name': "Lanoline",
       'description':
           'Lorsqu\'elle entre dans la composition des médicaments d’application locale, la lanoline est fréquemment sensibilisante.',
-      'selected': true
+      'selected': false
     },
     {
       'id': '7',
@@ -73,11 +73,12 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
       'name': "Propolis",
       'description':
           'Il s’agit d’une résine végétale, recueillie par les abeilles à partir de certains végétaux.',
-      'selected': true
+      'selected': false
     },
   ];
 
   int selectedSize = 0;
+  List<bool> selected =[];
   @override
   void initState() {
     // TODO: implement initState
@@ -181,14 +182,58 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       physics: ScrollPhysics(),
-                      itemCount: selectedSize,
+                      itemCount: this.allergies.length,
                       itemBuilder: (BuildContext context, int index) {
+
                        Map p = this.allergies.elementAt(index);
-                       if(p['selected']==true){
-                         return _buildListItem(p['name'],p['description'],p['image']);
-                       }else{
-                         index++;
-                       }
+                      return Padding(
+                         padding: const EdgeInsets.only(bottom: 8.0),
+                         child: Container(
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(30.0),
+                             color: AppTheme.whiteColor,
+                             boxShadow: [
+                               BoxShadow(
+                                 color: Colors.black12,
+                                 blurRadius: 2.0,
+                                 offset: Offset(0, 3),
+                               ),
+                             ],
+                           ),
+                           child: CheckboxListTile(
+                             title: Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 Text(
+                                   AppUtils.capitalizeSentence(p['name']),
+                                   style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       color: AppTheme.primaryColor),
+                                 ),
+                               ],
+                             ),
+                             secondary: Container(child: Image.asset(p['image'])),
+                             subtitle: Row(
+                               children: [
+                                 Flexible(
+                                   child: AutoSizeText(
+                                     p['description'],
+                                     maxLines: 3,
+                                     overflow: TextOverflow.visible,
+                                     softWrap: true,
+                                     style: TextStyle(
+                                         fontWeight: FontWeight.normal,
+                                         color: AppTheme.primaryColor),
+                                   ),
+                                 ),
+                               ],
+
+                             ), value: p['selected'],selected: p['selected'],activeColor: AppTheme.primaryColor,
+                             onChanged: (bool value) { p["selected"]=value; },),
+                         ),
+                       );
+                       return _buildListItem(p,p['name'],p['description'],p['image'],p['selected']);
+
 
                       },
                     )),
@@ -227,7 +272,7 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
     );
   }
 
-  Widget _buildListItem(String title, String description, String image) {
+  Widget _buildListItem(Map p ,String title, String description, String image,bool val) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
@@ -243,34 +288,35 @@ class _MyAllergyScreenState extends State<MyAllergyScreen> {
           ],
         ),
         child: CheckboxListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppUtils.capitalizeSentence(title),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppUtils.capitalizeSentence(title),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.primaryColor),
+              ),
+            ],
+          ),
+          secondary: Container(child: Image.asset(image)),
+          subtitle: Row(
+            children: [
+              Flexible(
+                child: AutoSizeText(
+                  description,
+                  maxLines: 3,
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,
                       color: AppTheme.primaryColor),
                 ),
-              ],
-            ),
-            secondary: Container(child: Image.asset(image)),
-            subtitle: Row(
-              children: [
-                Flexible(
-                  child: AutoSizeText(
-                    description,
-                    maxLines: 3,
-                    overflow: TextOverflow.visible,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: AppTheme.primaryColor),
-                  ),
-                ),
-              ],
+              ),
+            ],
 
-            ), value: true,selected: true,activeColor: AppTheme.primaryColor,),
+          ), value: val,selected: true,activeColor: AppTheme.primaryColor,
+          onChanged: (bool value) { p["selected"]=value; },),
       ),
     );
   }

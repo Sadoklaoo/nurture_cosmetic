@@ -6,6 +6,7 @@ import 'package:liquid_ui/liquid_ui.dart';
 import 'package:nurture_cosmetic/Models/Session.dart';
 import 'package:nurture_cosmetic/Models/User.dart';
 import 'package:nurture_cosmetic/Screens/history_screen.dart';
+import 'package:nurture_cosmetic/Screens/skip_result_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 
 Widget buildMenu(context) {
@@ -92,7 +93,11 @@ Widget buildMenu(context) {
               LListItem(
                 backgroundColor: Colors.transparent,
                 onTap: () {
-                  AppNavigation.goToTest(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SkipResultScreen(
+
+                      )
+                  ));
                 },
                 leading: Icon(Icons.filter_frames_sharp, size: 20.0, color: Colors.white),
                 title: Text("Résultats"),

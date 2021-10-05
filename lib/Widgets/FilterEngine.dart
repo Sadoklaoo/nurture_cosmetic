@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:nurture_cosmetic/Models/Cat.dart';
+import 'package:nurture_cosmetic/Models/ProductType.dart';
+import 'package:nurture_cosmetic/Models/Session.dart';
+import 'package:nurture_cosmetic/Utils/AppApi.dart';
 import 'package:nurture_cosmetic/Utils/AppNavigation.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
+import 'package:nurture_cosmetic/Models/FilterSettings.dart';
+import 'package:http/http.dart' as http;
 
 class FilterEngine extends StatefulWidget {
   @override
@@ -32,11 +42,63 @@ class _FilterEngineState extends State<FilterEngine> {
 
   String _currentCat;
   String _currentType;
+  Session session;
+  List<Cat> _categories;
+  List<ProductType> _productType;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    session = new Session();
     isSelected = [true, false];
+    setState(() {
+      //_categories = await getCategories();
+    });
+  }
+
+  Future<List<C2Choice<String>>> getChoices() async {
+    String tt;
+    String url = AppConfig.URL_GET_ALL_PRODUCT_TYPE;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    List<dynamic> data = jsonDecode(response.body);
+    _productType = data.map((json) => ProductType.fromMap(json)).toList();
+    return C2Choice.listFrom<String, dynamic>(
+      source: data,
+      value: (index, item) => item['TypeName'],
+      label: (index, item) => item['TypeName'],
+      meta: (index, item) => item,
+    )..insert(0, C2Choice<String>(value: 'all', label: 'All'));
+  }
+
+  Future<List<Cat>> getCategories() async {
+    String tt;
+    String url = AppConfig.URL_GET_CATEGORY;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+    final response = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'auth': '$tt',
+    });
+    int statusCode = response.statusCode;
+
+    List<dynamic> data = jsonDecode(response.body);
+    _categories = data.map((json) => Cat.fromMap(json)).toList();
+    return (Future(() => _categories));
   }
 
   @override
@@ -73,7 +135,7 @@ class _FilterEngineState extends State<FilterEngine> {
                       width: width * 30 / 100,
                     ),
                     Text(
-                      'Filter',
+                      'Filtre',
                       style: TextStyle(
                         color: AppTheme.primaryColor,
                         fontSize: 25,
@@ -88,8 +150,7 @@ class _FilterEngineState extends State<FilterEngine> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Center(
-                    child: Text(
-                        "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                    child: Text("Choisi vos preferences de filtre"),
                   ),
                 ),
                 SizedBox(
@@ -98,7 +159,6 @@ class _FilterEngineState extends State<FilterEngine> {
                 _buildPriceRange(height),
                 _buildOrder(height),
                 _buildCategorySelector(height),
-
                 _buildNatureSelector(height),
                 _buildConfirmBtn()
               ],
@@ -153,7 +213,7 @@ class _FilterEngineState extends State<FilterEngine> {
           inactiveColor: AppTheme.greyWhiteColor,
           min: 0,
           max: 1500,
-          divisions: 150,
+          divisions: 160,
           labels: RangeLabels(
             _currentRangeValues.start.round().toString() + " DT",
             _currentRangeValues.end.round().toString() + " DT",
@@ -253,41 +313,25 @@ class _FilterEngineState extends State<FilterEngine> {
                     child: DropdownButtonHideUnderline(
                   child: ButtonTheme(
                     alignedDropdown: true,
-                    child: DropdownButton(
-                      hint: Text('Sélectionner une catégorie'),
-                      value: _currentCat,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _currentCat = newValue;
-                        });
+                    child: FutureBuilder(
+                      future: getCategories(),
+                      builder: (context, projectSnap) {
+                        if (projectSnap.hasData) {
+
+                          return DropdownButton(
+                            hint: Text('Sélectionner une catégorie'),
+                            value: _currentCat,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _currentCat = newValue;
+                              });
+                            },
+                            items: _buildCategoryDropdownItem(projectSnap.data),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
                       },
-                      items: _myCategories.map((CategoryItem) {
-                        return DropdownMenuItem(
-                            value: CategoryItem['id'].toString(),
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      CategoryItem['image'],
-                                      width: 25,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: AppTheme.primaryAccentColor,
-                                      borderRadius: BorderRadius.circular(20)),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  child: Text(
-                                    CategoryItem['name'],
-                                    style: TextStyle(),
-                                  ),
-                                )
-                              ],
-                            ));
-                      }).toList(),
                     ),
                   ),
                 ))
@@ -303,7 +347,37 @@ class _FilterEngineState extends State<FilterEngine> {
     );
   }
 
-
+  List<DropdownMenuItem> _buildCategoryDropdownItem(List<Cat> list) {
+    List<DropdownMenuItem> ll=<DropdownMenuItem>[];
+    list.forEach((element) {
+      ll.add(DropdownMenuItem(
+          value: element.categoryName,
+          child: Row(
+            children: [
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                    AppConfig.URL_GET_IMAGE + element.image,
+                    width: 25,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: AppTheme.primaryAccentColor,
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10.0),
+                child: Text(
+                  element.categoryName,
+                  style: TextStyle(),
+                ),
+              )
+            ],
+          )));
+    });
+    return ll;
+  }
 
   Widget _buildNatureSelector(double height) {
     return Column(
@@ -330,22 +404,17 @@ class _FilterEngineState extends State<FilterEngine> {
                 color: Colors.grey,
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
-              )
-          ),
+              )),
           choiceActiveStyle: C2ChoiceStyle(
               color: AppTheme.primaryAccentColor,
               labelStyle: TextStyle(
                 color: AppTheme.primaryAccentColor,
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
-              )
-          ),
+              )),
           onChanged: (val) => setState(() => tags = val),
-          choiceItems: C2Choice.listFrom<String, String>(
-            source: options,
-            value: (i, v) => v,
-            label: (i, v) => v,
-          ),
+          choiceItems: null,
+          choiceLoader: () => getChoices(),
         ),
         SizedBox(
           height: height * 2 / 100,
@@ -362,13 +431,33 @@ class _FilterEngineState extends State<FilterEngine> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Navigator.pop(context);
-          print(_currentRangeValues.start);
-          print(_currentRangeValues.end);
-          print(isSelected);
-          print(_currentCat);
-          print(_currentType);
-          print(tags);
+          Filter filterSettings = new Filter();
+          filterSettings.minPrice = _currentRangeValues.start.toInt();
+          filterSettings.maxPrice = _currentRangeValues.end.toInt();
+          if(isSelected[0]){
+            filterSettings.isNormal =1;
+          }else{
+            filterSettings.isNormal =-1;
+          }
+
+          if(_currentCat!=null){
+            filterSettings.category=_categories.firstWhere((element) => element.categoryName==_currentCat);
+          }
+          if(tags.isNotEmpty){
+           if(tags.indexOf('all')!=-1){
+            filterSettings.productType  = _productType.map((e) => e.TypeName).toList();
+
+           }else{
+
+             filterSettings.productType = tags;
+           }
+          }
+
+
+          Navigator.pop(context,filterSettings);
+
+          //print(filterSettings);
+
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(

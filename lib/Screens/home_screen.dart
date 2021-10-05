@@ -20,6 +20,8 @@ import 'package:nurture_cosmetic/Widgets/Drawer.dart';
 import 'package:nurture_cosmetic/Widgets/SearchEngine.dart';
 import 'package:http/http.dart' as http;
 
+import 'details_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -168,9 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: GestureDetector(
-          onTap: () {
-            this._futureProducts =
-                (Future(() async => (await this.getAllProducts())));
+          onTap: () async {
+            this._futureProducts = Future (() => this.getAllProducts());
+                //(Future(() async => ()));
+
             showSearch(
                 context: context,
                 delegate: DataSeach(this._futureProducts, null, null));
@@ -193,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 contentPadding:
                     EdgeInsets.only(top: 13), // add padding to adjust text
                 isDense: true,
-                hintText: "Search",
+                hintText: "Chercher...",
                 hintStyle: TextStyle(
                   color: AppTheme.greyColor,
                 ),
@@ -242,143 +245,203 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 150, //height of TabBarView
               color: AppTheme.whiteColor,
               child: TabBarView(children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Material(
-                    elevation: 2,
-                    borderRadius: BorderRadius.circular(30),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: AppTheme.primaryAccentColor,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/product_icon.png",
-                              width: 140, height: 140),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: Text('SHALIMAR',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.whiteColor)),
-                              ),
-                              Text('18/20',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppTheme.whiteColor)),
-                              Text('120 TND',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppTheme.whiteColor)),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.primaryColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8.0),
-                                        child: Text(
-                                          "Bio",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 16.0,
-                                              color: AppTheme.whiteColor),
+                FutureBuilder(
+                  future: getPopularProduct(),
+                  builder: (context,projectSnap){
+                    if(projectSnap.hasData){
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DetailsScreen(
+                                id: projectSnap.data.id,
+                              )
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(30),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppTheme.primaryAccentColor,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Row(
+                                children: [
+                                  Image.network(AppConfig.URL_GET_IMAGE +projectSnap.data.Image,
+                                      width: 140, height: 140),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top:15.0),
+                                        child: Container(
+                                          width: 200,
+                                          child: Flex(
+                                          direction: Axis.horizontal,
+                                           children: [
+                                             Flexible(
+                                               fit: FlexFit.tight,
+                                               child: AutoSizeText(
+                                                 projectSnap.data.ProductName,
+                                                 maxLines: 3,
+                                                 overflow: TextOverflow.fade,
+                                                 softWrap: true,
+                                                 style: TextStyle(
+                                                     fontWeight: FontWeight.bold,
+                                                     color: AppTheme.whiteColor),
+                                               ),
+                                             ),
+                                           ],
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                  ],
-                                ),
-                              )
-                            ],
+                                      Text(projectSnap.data.Price.toString()+' TND',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              color: AppTheme.whiteColor)),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.primaryColor,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5)),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0, right: 8.0),
+                                                child: Text(
+                                                  projectSnap.data.types[0].TypeName,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 16.0,
+                                                      color: AppTheme.whiteColor),
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
+                      );
+                    }else{
+                      return CircularProgressIndicator();
+                    }
+                  },
+
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Material(
-                    elevation: 2,
-                    borderRadius: BorderRadius.circular(30),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: AppTheme.primaryColor,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/product_icon.png",
-                              width: 140, height: 140),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: Text('SHALIMAR',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.whiteColor)),
-                              ),
-                              Text('18/20',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppTheme.whiteColor)),
-                              Text('120 TND',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppTheme.whiteColor)),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.primaryColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8.0),
-                                        child: Text(
-                                          "Bio",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 16.0,
-                                              color: AppTheme.whiteColor),
+                FutureBuilder(
+                  future: getLatestProduct(),
+                  builder: (context,projectSnap){
+                    if(projectSnap.hasData){
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DetailsScreen(
+                                id: projectSnap.data.id,
+                              )
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(30),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppTheme.primaryColor,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Row(
+                                children: [
+                                  Image.network(AppConfig.URL_GET_IMAGE +projectSnap.data.Image,
+                                      width: 140, height: 140),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top:15.0),
+                                        child: Container(
+                                          width: 200,
+                                          child: Flex(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              Flexible(
+                                                fit: FlexFit.tight,
+                                                child: AutoSizeText(
+                                                  projectSnap.data.ProductName,
+                                                  maxLines: 3,
+                                                  overflow: TextOverflow.fade,
+                                                  softWrap: true,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: AppTheme.whiteColor),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                  ],
-                                ),
-                              )
-                            ],
+                                      Text(projectSnap.data.Price.toString()+' TND',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              color: AppTheme.whiteColor)),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.primaryAccentColor,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5)),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0, right: 8.0),
+                                                child: Text(
+                                                  projectSnap.data.types[0].TypeName,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 16.0,
+                                                      color: AppTheme.whiteColor),
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
+                      );
+                    }else{
+                      return CircularProgressIndicator();
+                    }
+                  },
+
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
@@ -739,6 +802,53 @@ class _HomeScreenState extends State<HomeScreen> {
     return (Future(() => _products));
   }
 
+  Future<Product> getPopularProduct() async {
+    String tt;
+    String url = AppConfig.URL_Popular;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+
+    final response = await http.get(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'auth': '$tt',
+        },
+       );
+    int statusCode = response.statusCode;
+    dynamic data = jsonDecode(response.body);
+    Product product = Product.fromMap(data);
+
+    return (Future(() => product));
+  }
+  Future<Product> getLatestProduct() async {
+    String tt;
+    String url = AppConfig.URL_LATEST;
+    await session.getToken().then((value) async {
+      // Run extra code here
+      tt = value;
+    }, onError: (error) {
+      print(error);
+    });
+
+    final response = await http.get(url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'auth': '$tt',
+      },
+    );
+    int statusCode = response.statusCode;
+    dynamic data = jsonDecode(response.body);
+    Product product = Product.fromMap(data);
+
+    return (Future(() => product));
+  }
+
   Future<List<Product>> getProductByType(ProductType type) async {
     String tt;
     String url = AppConfig.URL_GET_ALL_PRODUCT_BY_TYPE;
@@ -789,4 +899,63 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return (Future(() => _products));
   }
+
+  Widget _buildTypes(List list) {
+    print(list);
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+      child: SizedBox(
+        height: 22.0,
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
+          itemCount: list.length,
+          itemBuilder: (context, i) {
+            if (i == 0) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Text(
+                      list[i].TypeName,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16.0,
+                          color: AppTheme.whiteColor),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(left: 5, right: 5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Text(
+                      list[i].TypeName,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16.0,
+                          color: AppTheme.whiteColor),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    );}
 }

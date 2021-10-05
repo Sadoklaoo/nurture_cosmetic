@@ -87,7 +87,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                               color: AppTheme.whiteColor)),
                     ),
                   ),
-                  buildDrawerButton(),
+              //    buildDrawerButton(),
                 ],
               ),
               Padding(
@@ -192,7 +192,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: IngredientsList(widget.product.ingredients),
               ),
-              SizedBox(
+             /* SizedBox(
                 height: 10,
               ),
               Padding(
@@ -205,7 +205,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                       fontSize: 15.0,
                       color: AppTheme.whiteColor),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

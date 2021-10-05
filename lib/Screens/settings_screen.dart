@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Center(
                     child: Text(
-                        "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                        "Vos parametres generales et conditions d'utilisations de l'aplication."),
                   ),
                 ),
                 SizedBox(
@@ -224,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget buildHelpButton() {
     return GestureDetector(
-      onTap: () => AppNavigation.goToHelp(context),
+      onTap: () => AppNavigation.goToClaimsOptions(context),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(

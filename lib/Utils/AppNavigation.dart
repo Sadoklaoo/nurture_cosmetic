@@ -77,6 +77,12 @@ class AppNavigation {
   static void goToHelp(BuildContext context) {
     Navigator.pushNamed(context, "/help");
   }
+  static void goToClaimsOptions(BuildContext context) {
+    Navigator.pushNamed(context, "/claims");
+  }
+  static void goToMyClaims(BuildContext context) {
+    Navigator.pushNamed(context, "/myclaims");
+  }
   static void goToTerms(BuildContext context) {
     Navigator.pushNamed(context, "/terms");
   }

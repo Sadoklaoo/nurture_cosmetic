@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_ui/liquid_ui.dart';
+import 'package:nurture_cosmetic/Screens/claims_option_screen.dart';
 import 'package:nurture_cosmetic/Screens/infoPages/skin_role_screen.dart';
 import 'package:nurture_cosmetic/Screens/account_pin_screen.dart';
 import 'package:nurture_cosmetic/Screens/new_account_screen.dart';
@@ -8,6 +9,7 @@ import 'package:nurture_cosmetic/Widgets/FilterEngine.dart';
 import 'Screens/account_number_screen.dart';
 import 'Screens/home_screen.dart';
 import 'Screens/login_screen.dart';
+import 'Screens/my_claims_screen.dart';
 import 'Screens/signup_screen.dart';
 import 'Screens/splash_screen.dart';
 import 'Screens/test_screen.dart';
@@ -52,6 +54,8 @@ var routes = <String, WidgetBuilder>{
   "/myAllergy": (BuildContext context) => MyAllergyScreen(),
   "/settingsNotifications": (BuildContext context) =>
       SettingNotificationsScreen(),
+  "/claims": (BuildContext context) => ClaimsOptionsScreen(),
+  "/myclaims": (BuildContext context) => MyClaimsScreen(),
   "/help": (BuildContext context) => HelpScreen(),
   "/terms": (BuildContext context) => TermsScreen(),
   "/translate": (BuildContext context) => TranslateScreen(),

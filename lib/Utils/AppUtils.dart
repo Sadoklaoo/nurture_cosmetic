@@ -1,6 +1,22 @@
 import 'package:intl/intl.dart';
-
+import 'package:nurture_cosmetic/Models/FilterSettings.dart';
+import 'package:nurture_cosmetic/Models/Product.dart';
 class AppUtils {
+
+  // static Future<List<Product>> FilterProductList(
+  //     Filter settings, Future<List<Product>> list) {
+  //   List<Product> newList = [];
+  //
+  //   list.then((value)  {
+  //     if(settings.category!=null){
+  //     newList=  value.where((element) => element.Categories.firstWhere((cat) => cat.categoryName==settings.category.categoryName)!=-1);
+  //     }
+  //
+  //   });
+  //  return Future(()=>newList);
+  //
+  // }
+
   static String convertDateFromString(
       String dateToConvert, String formatString) {
     DateTime convertedDate = DateTime.parse(dateToConvert);

@@ -87,7 +87,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Center(
                     child: Text(
-                        "lorem ipsum is Simply dummy text of the printing and typesetting industry."),
+                        "Vous trouvez ici vos produits favoris."),
                   ),
                 ),
                 SizedBox(
@@ -104,7 +104,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           fontSize: 15.0,
                           color: AppTheme.primaryColor),
                     ),
-                    Row(
+                  /*  Row(
                       children: [
                         GestureDetector(
                             onTap: () {
@@ -126,7 +126,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               color: AppTheme.primaryColor,
                             )),
                       ],
-                    )
+                    )*/
                   ],
                 ),
                 Padding(

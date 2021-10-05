@@ -68,7 +68,7 @@ class _HelpScreenState extends State<HelpScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Center(
-                          child: Text("Réclamation",
+                          child: Text("Ajout Réclamation",
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w400,

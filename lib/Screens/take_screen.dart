@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:nurture_cosmetic/Screens/result_details_screen.dart';
+import 'package:nurture_cosmetic/Screens/skip_result_screen.dart';
 import 'package:nurture_cosmetic/Utils/AppStrings.dart';
 import 'package:nurture_cosmetic/Utils/AppTheme.dart';
 import 'package:nurture_cosmetic/Widgets/Drawer.dart';
@@ -117,13 +119,17 @@ class _TakeScreenState extends State<TakeScreen> {
                   Divider(),
                   buildBrillances(),
                   buildTiraille(),
-                  buildRadio("Avez-vous la peau du visage qui brille ? ", _brillance, brillance),
-                  buildRadio("Avez-vous la peau du visage qui tiraille au quotidien ? ", _tiraille, tiraille),
-                  buildRadio("Faites-vous des réactions allergiques au savon, calcaire, à certains bijoux ... ? ", _reactions, reactions),
-                  buildRadio("Votre visage présente t\'il des ridules de déshydratation ... ou des marques d\'oreiller le matin au réveil ?", _ridules, ridules),
-                  buildRadio("Avez-vous des rougeurs type couperose, rosacée ou eczéma sur le visage ? ", _rougeurs, rougeurs),
-                  buildRadio("Avez-vous des cernes et des poches ? ", _cernes, cernes),
-                  buildRadio("Avez-vous des rides, ridules ou tâches ? ", _rides, rides),
+                  buildReaction(),
+                  buildRidules(),
+                  buildRougeurs(),
+                  buildTernes(),
+                  buildRides(),
+                  _buildTakeBtn()
+                  // buildRadio("Faites-vous des réactions allergiques au savon, calcaire, à certains bijoux ... ? ", _reactions, reactions),
+                  // buildRadio("Votre visage présente t\'il des ridules de déshydratation ... ou des marques d\'oreiller le matin au réveil ?", _ridules, ridules),
+                  // buildRadio("Avez-vous des rougeurs type couperose, rosacée ou eczéma sur le visage ? ", _rougeurs, rougeurs),
+                  // buildRadio("Avez-vous des cernes et des poches ? ", _cernes, cernes),
+                  // buildRadio("Avez-vous des rides, ridules ou tâches ? ", _rides, rides),
 
                 ],
               ),
@@ -379,6 +385,220 @@ class _TakeScreenState extends State<TakeScreen> {
               ],
             ),
           )),
+    );
+  }
+  Widget buildRougeurs() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 20.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Avez-vous des rougeurs type couperose, rosacée ou eczéma sur le visage ? ",
+                  style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  children: <Widget>[
+                    for (int i = 0; i < rougeurs.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            rougeurs[i],
+                          ),
+                          leading: Radio(
+                            value: i,
+                            groupValue: _rougeurs,
+                            activeColor: AppTheme.primaryAccentColor,
+                            onChanged: (int value) {
+                              setState(() {
+                                _rougeurs = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+  Widget buildTernes() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 20.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Avez-vous des cernes et des poches ? ',
+                  style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  children: <Widget>[
+                    for (int i = 0; i < cernes.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            cernes[i],
+                          ),
+                          leading: Radio(
+                            value: i,
+                            groupValue: _cernes,
+                            activeColor: AppTheme.primaryAccentColor,
+                            onChanged: (int value) {
+                              setState(() {
+                                _cernes = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+  Widget buildRides() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.0,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 20.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Avez-vous des rides, ridules ou tâches ?',
+                  style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  children: <Widget>[
+                    for (int i = 0; i < rides.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            rides[i],
+                          ),
+                          leading: Radio(
+                            value: i,
+                            groupValue: _rides,
+                            activeColor: AppTheme.primaryAccentColor,
+                            onChanged: (int value) {
+                              setState(() {
+                                _rides = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+
+  Widget _buildTakeBtn() {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15.0),
+
+        child: RaisedButton(
+          elevation: 2.0,
+          onPressed: () => {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SkipResultScreen()
+            ))
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          color: AppTheme.primaryAccentColor,
+          child: Text(
+            'Procéder',
+            style: TextStyle(
+              color: AppTheme.whiteColor,
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
     );
   }
 

@@ -154,8 +154,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                   Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: buildCategories(product.Categories)
-                  ),
+                      child: buildCategories(product.Categories)),
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 10.0, left: 20, right: 20),
@@ -225,7 +224,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     height: height * 1 / 100,
                   ),
                   _buildTypes(product.types),
-
                   SizedBox(
                     height: height * 3 / 100,
                   ),
@@ -243,7 +241,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ),
                         ],
                       ),
-
                       Flexible(
                         fit: FlexFit.tight,
                         child: AutoSizeText(
@@ -262,8 +259,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     onHorizontalDragUpdate: (details) {
                       int s = 0;
                       if (details.delta.dx < -s) {
-
-
                         Navigator.push(
                             context,
                             PageTransition(
@@ -308,7 +303,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           color: AppTheme.primaryColor),
                     ),
                   ),
-                  SizedBox(
+                /*  SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -325,7 +320,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: _buildSugguestions(),
-                  )
+                  )*/
                 ],
               );
             } else {
@@ -334,16 +329,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
           }),
     );
   }
+
   buildCategories(List<Cat> categories) {
     var categoriesNames = "";
     if (categories.length != 0) {
       categoriesNames = categories[0].categoryName;
       if (categories.length > 1) {
-
         var i = 0;
         categories.forEach((element) {
-          if(i > 0){
-            categoriesNames +=", "+element.categoryName;
+          if (i > 0) {
+            categoriesNames += ", " + element.categoryName;
           }
           i++;
         });
@@ -454,54 +449,266 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return DefaultTabController(
         length: 3, // length of tabs
         initialIndex: 0,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                child: TabBar(
-                  isScrollable: true,
-                  unselectedLabelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                  labelColor: AppTheme.primaryColor,
-                  unselectedLabelColor: AppTheme.greyColor,
-                  indicatorColor: Colors.transparent,
-                  labelPadding: EdgeInsets.only(left: 15),
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  tabs: [
-                    Tab(text: 'Populaire'),
-                    Tab(text: 'Nouveau'),
-                    Tab(text: 'Récommandé'),
-                  ],
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
+                Widget>[
+          Container(
+            child: TabBar(
+              isScrollable: true,
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+              labelColor: AppTheme.primaryColor,
+              unselectedLabelColor: AppTheme.greyColor,
+              indicatorColor: Colors.transparent,
+              labelPadding: EdgeInsets.only(left: 15),
+              labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              tabs: [
+                Tab(text: 'Populaire'),
+                Tab(text: 'Nouveau'),
+                Tab(text: 'Récommandé'),
+              ],
+            ),
+          ),
+          Container(
+              height: 150,
+               //height of TabBarView
+              color: AppTheme.whiteColor,
+              child: TabBarView(children: <Widget>[
+                new Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryAccentColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.network(
+                            AppConfig.URL_GET_IMAGE +
+                                "image_2021-08-27_230316.png",
+                            width: 140,
+                            height: 140,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                               Container(
+                                 width: 200,
+                                 child: Padding(
+                                      padding: const EdgeInsets.only(top:15.0),
+                                      child: Flexible(
+                                        fit: FlexFit.tight,
+                                        child: AutoSizeText(
+                                          'Masque Visage Hydratant & Apaisant à la Figue de Barbarie',
+                                          maxLines: 3,
+                                          overflow: TextOverflow.fade,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+                               ),
+                              /*Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  child: Text(
+                                      'Masque Visage Hydratant & Apaisant à la Figue de Barbarie',
+                                      maxLines: 4,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTheme.whiteColor)),
+                                ),
+                              ),*/
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Naturelle",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              Container(
-                  height: 200, //height of TabBarView
-                  color: AppTheme.darkBlueColor,
-                  child: TabBarView(children: <Widget>[
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 1',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/product_icon.png",
+                              width: 140, height: 140),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text('SHALIMAR',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.whiteColor)),
+                              ),
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Bio",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 2',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryAccentColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/product_icon.png",
+                              width: 140, height: 140),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text('SHALIMAR',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.whiteColor)),
+                              ),
+                              Text('18/20',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Text('120 TND',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppTheme.whiteColor)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Text(
+                                          "Bio",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 16.0,
+                                              color: AppTheme.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    Container(
-                      child: Center(
-                        child: Text('Display Tab 3',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ]))
-            ]));
+                  ),
+                ),
+              ]))
+        ]));
   }
 
   Future getCurrentUser() async {
@@ -537,8 +744,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       print(error);
     });
     await getCurrentUser().then((value) => {
-      id = value.id,
-    });
+          id = value.id,
+        });
     print(id);
     String body = '{"clientId":"$id","ProductId":"$productid"}';
     final response = await http.post(url,
@@ -600,8 +807,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       print(error);
     });
     await getCurrentUser().then((value) => {
-      id = value.id,
-    });
+          id = value.id,
+        });
     print(id);
     String body = '{"idUser":"$id","idProduct":"$productid"}';
     final response = await http.post(url,
@@ -707,13 +914,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: AppTheme.redColor,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10.0,top: 5,bottom: 5),
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 5, bottom: 5),
                             child: GestureDetector(
                                 onTap: () => {},
                                 child: FaIcon(
@@ -723,8 +930,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 )),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                                left: 3.0, right: 8.0),
+                            padding:
+                                const EdgeInsets.only(left: 3.0, right: 8.0),
                             child: Text(
                               "Ce produit n'est past compatible avec vous.",
                               textAlign: TextAlign.left,
@@ -734,16 +941,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   color: AppTheme.whiteColor),
                             ),
                           ),
-
                         ],
                       ),
                     ),
                   ],
                 ),
               );
-            }else{
-
-            }
+            } else {}
             return Container();
           } else {
             return Center(child: CircularProgressIndicator());
@@ -752,7 +956,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   buildDrawerButton(Product product) {
-
     return FutureBuilder(
         future: isProductFavorite(widget.id),
         builder: (context, projectSnap) {
